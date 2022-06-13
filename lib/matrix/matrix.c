@@ -180,7 +180,7 @@ void flatten(Matrix* a, MatrixAxis axis)
 
     matrixSize = a->row * a->col;
     switch(axis) {
-        case ROW:
+        case COL:
             m = createMatrix(matrixSize, 1);
             for(row = 0; row < a->row; row++) {
                 for(col = 0; col < a->col; col++) {
@@ -188,7 +188,7 @@ void flatten(Matrix* a, MatrixAxis axis)
                 }
             } 
             break;
-        case COL:
+        case ROW:
             m = createMatrix(1, matrixSize);
             for(row = 0; row < a->row; row++) {
                 for(col = 0; col < a->col; col++) {
