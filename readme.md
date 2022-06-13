@@ -5,12 +5,19 @@ A small project that was inspired by [Mark Kraay's Video](https://www.youtube.co
 ## Usage
 
 - Install a C compiler, preferably [GCC](https://sourceforge.net/projects/mingw-w64/).
+- [Optional] Install [Make](https://sourceforge.net/projects/ezwinports/files/make-4.3-without-guile-w32-bin.zip/download) to make use of `MakeFile` and instantly compile binaries.
 
+Without `MakeFile`:
 ```bash
 gcc lib/matrix/matrix.c -o output/matrix.o -c
 gcc main.c -o output/main.o -c
 gcc -o mnist output/main.o output/matrix.o
 ```
+With `MakeFile`:
+```bash
+make
+```
+
 You can then run the compiled `mnist.exe` program using `./mnist` in the console.
 
 ## Bibliography
@@ -18,6 +25,8 @@ You can then run the compiled `mnist.exe` program using `./mnist` in the console
 - [Gradient Descent](https://vitalflux.com/gradient-descent-explained-simply-with-examples/)
 - [Samson Zhong - Building a Neural Network From Scratch (Numpy & Maths)](https://www.youtube.com/watch?v=w8yWXqWQYmU&t=1612s)
 - [Neural Network from Scratch | Mathematics & Python Code](https://www.youtube.com/watch?v=pauPCy_s0Ok)
+- [Normalization VS Standardization of Data](https://stackoverflow.com/questions/63746182/correct-way-of-normalizing-and-scaling-the-mnist-dataset)
+- [What is a Makefile and how does it work?](https://opensource.com/article/18/8/what-how-makefile)
 
 ## License
 [MIT](https://github.com/LaplaceXD/mnist-neural-network/blob/master/LICENSE)
