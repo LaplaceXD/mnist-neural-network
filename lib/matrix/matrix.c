@@ -137,3 +137,50 @@ Matrix dot(Matrix a, Matrix b)
 
     return m;
 }
+
+void transpose(Matrix* a)
+{
+    Matrix m = createMatrix(a->col, a->row);
+    int row, col;
+    
+    for(row = 0; row < a->row; row++) {
+        for(col = 0; col < a->col; col++) {
+            m.entries[col][row] = a->entries[row][col];
+        }
+    }
+
+    freeMatrix(a);
+    *a = m;
+}
+
+void flatten(Matrix* a, MatrixAxis axis)
+{
+    Matrix m;
+    int row, col, matrixSize;
+
+    matrixSize = a->row * a->col;
+    switch(axis) {
+        case ROW:
+            m = createMatrix(matrixSize, 1);
+            for(row = 0; row < a->row; row++) {
+                for(col = 0; col < a->col; col++) {
+                    m.entries[row * a->col + col][0] = a->entries[row][col];
+                }
+            } 
+            break;
+        case COL:
+            m = createMatrix(1, matrixSize);
+            for(row = 0; row < a->row; row++) {
+                for(col = 0; col < a->col; col++) {
+                    m.entries[0][row * a->col + col] = a->entries[row][col];
+                }
+            } 
+            break;
+        default:
+            fprintf(stderr, "Invalid Axis Direction.");
+            exit(1);
+    }
+
+    freeMatrix(a);
+    *a = m;
+}
