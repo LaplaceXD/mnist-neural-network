@@ -124,6 +124,15 @@ Matrix dot(Matrix a, Matrix b)
     // sum is used to store the sum for each row-col dot multiplication
     int row, addTrav, col, sum;
 
+    // swap a and b, since it is possible that b.col == a.row
+    // and the calculations below require a to be traversed by row
+    // and b to be traversed by col
+    if(a.col != b.row) {
+        m = a;
+        a = b;
+        b = m;
+    }
+
     if(a.col != b.row) {
         fprintf(
             stderr, 
