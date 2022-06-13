@@ -43,6 +43,30 @@ void fillMatrix(Matrix* m, double val)
     }
 }
 
+void freeMatrix(Matrix* m)
+{
+    int row;
+    for(row = 0; row < m->row; row++) {
+        free(m->entries[row]);
+    }
+
+    free(m->entries);
+    m->row = 0;
+    m->col = 0;
+}
+
+void printMatrix(Matrix m)
+{
+    int row, col;
+    for(row = 0; row < m.row; row++) {
+        for(col = 0; col < m.col; col++) {
+            printf("%20d ", m.entries[row][col]);
+        }
+
+        printf("\n");
+    }
+}
+
 Matrix add(Matrix a, Matrix b)
 {
     Matrix m;
