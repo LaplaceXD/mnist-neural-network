@@ -29,7 +29,7 @@ Matrix createMatrix(int row, int col)
     return m; 
 }
 
-void fillMatrix(Matrix* m, int val)
+void fillMatrix(Matrix* m, double val)
 {
     int row, col;
     for(row = 0; row < m->row; row++) {

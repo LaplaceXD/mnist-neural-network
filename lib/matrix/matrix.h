@@ -10,11 +10,11 @@ typedef struct Matrix {
 typedef enum { ROW, COL } MatrixAxis;
 
 Matrix createMatrix(int, int);
-void fillMatrix(Matrix*, int);
+void fillMatrix(Matrix*, double);
 
 Matrix add(Matrix, Matrix);
-Matrix scale(int, Matrix); 
-Matrix dot(int, Matrix); 
+Matrix scale(double, Matrix); 
+Matrix dot(Matrix, Matrix); 
 void transpose(Matrix*); 
 void flatten(Matrix*, MatrixAxis); 
 
