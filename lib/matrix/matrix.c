@@ -179,28 +179,25 @@ void flatten(Matrix* a, MatrixAxis axis)
     int row, col, matrixSize;
 
     matrixSize = a->row * a->col;
-    switch(axis) {
-        case COL:
-            m = createMatrix(matrixSize, 1);
-            for(row = 0; row < a->row; row++) {
-                for(col = 0; col < a->col; col++) {
-                    m.entries[row * a->col + col][0] = a->entries[row][col];
-                }
-            } 
-            break;
-        case ROW:
-            m = createMatrix(1, matrixSize);
-            for(row = 0; row < a->row; row++) {
-                for(col = 0; col < a->col; col++) {
-                    m.entries[0][row * a->col + col] = a->entries[row][col];
-                }
-            } 
-            break;
-        default:
-            fprintf(stderr, "Invalid Axis Direction.");
-            exit(1);
+    if(axis == COL) {
+        m = createMatrix(matrixSize, 1);
+    } else if (axis == ROW) {
+        m = createMatrix(1, matrixSize);
+    } else {
+        fprintf(stderr, "Invalid Axis Direction.");
+        exit(1);
     }
 
+    for(row = 0; row < a->row; row++) {
+        for(col = 0; col < a->col; col++) {
+            if(axis == COL) {
+                m.entries[row * a->col + col][0] = a->entries[row][col];
+            } else if (axis == ROW) {
+                m.entries[0][row * a->col + col] = a->entries[row][col];
+            }
+        }
+    } 
+    
     freeMatrix(a);
     *a = m;
 }
