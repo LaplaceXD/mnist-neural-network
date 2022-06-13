@@ -7,7 +7,7 @@ A small project that was inspired by [Mark Kraay's Video](https://www.youtube.co
 - Install a C compiler, preferably [GCC](https://sourceforge.net/projects/mingw-w64/).
 
 ```bash
-gcc matrix.c -o output/matrix.o -c
+gcc lib/matrix/matrix.c -o output/matrix.o -c
 gcc main.c -o output/main.o -c
 gcc -o mnist output/main.o output/matrix.o
 ```
