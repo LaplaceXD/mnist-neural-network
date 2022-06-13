@@ -11,6 +11,8 @@ typedef enum { ROW, COL } MatrixAxis;
 
 Matrix createMatrix(int, int);
 void fillMatrix(Matrix*, double);
+void freeMatrix(Matrix*);
+void printMatrix(Matrix);
 
 Matrix add(Matrix, Matrix);
 Matrix scale(double, Matrix); 
