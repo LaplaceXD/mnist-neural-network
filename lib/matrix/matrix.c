@@ -72,3 +72,36 @@ Matrix scale(double val, Matrix a)
 
     return m;
 }
+
+Matrix dot(Matrix a, Matrix b)
+{
+    Matrix m;
+    // addTrav is for traversing the column a matrix col, and b matrix row for getting the products
+    // col is for traversing the b columns, and row is for traversing the a rows
+    // sum is used to store the sum for each row-col dot multiplication
+    int row, addTrav, col, sum;
+
+    if(a.col != b.row) {
+        fprintf(
+            stderr, 
+            "Matrices supplied can't be dotted. Mismatch in dimensions [A: %d x %d][B: %d x %d]",
+            a.row, a.col, b.row, b.col
+        );
+        exit(1);
+    }
+
+    m = createMatrix(a.col, b.row);
+    for(row = 0; row < a.row; row++) {
+        for(col = 0; col < b.col; col++) {
+            sum = 0;
+            
+            for(addTrav = 0; addTrav < a.col; addTrav++) {
+                sum += a.entries[row][addTrav] * b.entries[addTrav][col];
+            }
+
+            m.entries[row][col] = sum;
+        }
+    }
+
+    return m;
+}
