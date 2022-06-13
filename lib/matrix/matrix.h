@@ -75,9 +75,9 @@ Matrix scale(double val, Matrix a);
 /** @brief Dot multiplies two matrices.
  * 
  *  The two matrices should have a row and column that are equal.
- *  If there is no row in one matrix that equals the column of
- *  other, then the function throws an error. Else, it returns
- *  the resulting matrix of the dot operation.
+ *  If there is no row in one matrix that equals the column of the
+ *  other matrix, then the function throws an error. Else, it
+ *  returns the resulting matrix of the dot operation.
  * 
  *  @param a Factor matrix. 
  *  @param b Factor matrix. 
