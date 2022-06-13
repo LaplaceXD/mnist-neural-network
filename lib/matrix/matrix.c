@@ -38,3 +38,23 @@ void fillMatrix(Matrix* m, int val)
         }
     }
 }
+
+Matrix add(Matrix a, Matrix b)
+{
+    Matrix m;
+    int row, col;
+
+    if(a.row != b.row || a.col != b.col) {
+        fprintf(stderr, "Matrices supplied can't be added. Mismatch in dimensions [A: %d x %d][B: %d x %d]", a.row, a.col, b.row, b.col);
+        exit(1);
+    }
+
+    m = createMatrix(a.row, a.col);
+    for(row = 0; row < a.row; row++) {
+        for(col = 0; col < a.col; col++) {
+            m.entries[row][col] = a.entries[row][col] + b.entries[row][col];
+        }
+    }
+
+    return m;
+}
