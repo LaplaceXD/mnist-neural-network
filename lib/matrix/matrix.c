@@ -1,3 +1,14 @@
+/** @file matrix.c
+ *  @brief A library made for working with matrices.
+ * 
+ *  This library contains various functions which allows
+ *  users to create, and manipulate matrices through various
+ *  operations (e.g., add, dot, scale, transpose, etc.). 
+ *
+ *  @author Jonh Alexis Buot (LaplaceXD)
+ *  @bug No know bugs.
+ */
+
 #include <stdio.h>
 #include <stdlib.h>
 #include "matrix.h"
