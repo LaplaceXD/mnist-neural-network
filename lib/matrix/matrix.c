@@ -29,3 +29,12 @@ Matrix createMatrix(int row, int col)
     return m; 
 }
 
+void fillMatrix(Matrix* m, int val)
+{
+    int row, col;
+    for(row = 0; row < m->row; row++) {
+        for(col = 0; col < m->col; col++) {
+            m->entries[row][col] = val;
+        }
+    }
+}
