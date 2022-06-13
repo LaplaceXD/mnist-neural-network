@@ -13,7 +13,7 @@ Matrix createMatrix(int, int);
 void fillMatrix(Matrix*, int);
 
 Matrix add(Matrix, Matrix);
-Matrix scalar(int, Matrix); 
+Matrix scale(int, Matrix); 
 Matrix dot(int, Matrix); 
 void transpose(Matrix*); 
 void flatten(Matrix*, MatrixAxis); 
