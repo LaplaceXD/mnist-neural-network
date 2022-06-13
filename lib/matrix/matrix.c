@@ -33,7 +33,7 @@ Matrix createMatrix(int row, int col)
         exit(1);
     }
     
-    for(idx = 0; idx < col; idx++) {
+    for(idx = 0; idx < row; idx++) {
         m.entries[idx] = (double *) malloc(col * sizeof(double));
         if(m.entries[idx] == NULL) {
             fprintf(stderr, "Memory allocation failed.");
