@@ -7,7 +7,7 @@ typedef struct Matrix {
     int col;
 } Matrix;
 
-typedef enum { ROW, COL } MatrixAxis;
+typedef enum MatrixAxis { ROW, COL } MatrixAxis;
 
 Matrix createMatrix(int, int);
 void fillMatrix(Matrix*, double);
