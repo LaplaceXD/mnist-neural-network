@@ -142,7 +142,7 @@ Matrix dot(Matrix a, Matrix b)
         exit(1);
     }
 
-    m = createMatrix(a.col, b.row);
+    m = createMatrix(a.row, b.col);
     for(row = 0; row < a.row; row++) {
         for(col = 0; col < b.col; col++) {
             sum = 0;
