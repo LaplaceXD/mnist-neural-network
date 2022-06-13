@@ -8,7 +8,11 @@ Matrix createMatrix(int row, int col)
     int idx;
     
     if(row <= 0 || col <= 0) {
-        fprintf(stderr, "Matrix creation failed. Invalid dimensions were supplied: %d x %d.", row, col);
+        fprintf(
+            stderr,
+            "Matrix creation failed. Invalid dimensions were supplied: %d x %d.",
+            row, col
+        );
         exit(1);
     }
     
@@ -45,7 +49,11 @@ Matrix add(Matrix a, Matrix b)
     int row, col;
 
     if(a.row != b.row || a.col != b.col) {
-        fprintf(stderr, "Matrices supplied can't be added. Mismatch in dimensions [A: %d x %d][B: %d x %d]", a.row, a.col, b.row, b.col);
+        fprintf(
+            stderr,
+            "Matrices supplied can't be added. Mismatch in dimensions [A: %d x %d][B: %d x %d]",
+            a.row, a.col, b.row, b.col
+        );
         exit(1);
     }
 
