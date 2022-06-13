@@ -58,3 +58,17 @@ Matrix add(Matrix a, Matrix b)
 
     return m;
 }
+
+Matrix scale(double val, Matrix a)
+{
+    Matrix m = createMatrix(a.row, a.col);
+    int row, col;
+    
+    for(row = 0; row < a.row; row++) {
+        for(col = 0; col < a.col; col++) {
+            m.entries[row][col] = val * a.entries[row][col];
+        }
+    }
+
+    return m;
+}
