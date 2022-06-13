@@ -71,7 +71,7 @@ void printMatrix(Matrix m)
     int row, col;
     for(row = 0; row < m.row; row++) {
         for(col = 0; col < m.col; col++) {
-            printf("%20d ", m.entries[row][col]);
+            printf("%5.2lf ", m.entries[row][col]);
         }
 
         printf("\n");
