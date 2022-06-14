@@ -11,8 +11,8 @@ NeuralNetwork createNeuralNet()
 
 void fillWeights(Matrix *wts, WeightInitType init)
 {
-    double mult;
-    int row, col, bound;
+    double mult, bound;
+    int row, col;
 
     switch(init) {
         case HE:
@@ -66,6 +66,7 @@ Layer createLayer(int nodes, int prevNodes, LayerType type, WeightInitType initW
             layer.weights = createMatrix(nodes, prevNodes);
             layer.bias = createMatrix(nodes, 1);
             fillWeights(&layer.weights, initWts);
+            fillMatrix(&layer.bias, 0);
             break;
         default:
             fprintf(stderr, "Invalid Layer Type.");
