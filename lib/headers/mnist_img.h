@@ -12,8 +12,8 @@
 #define _MNIST_IMG_H
 #define DATA_TYPE Image
 
-#include "headers/data.h"
-#include "headers/matrix.h"
+#include "data.h"
+#include "matrix.h"
 
 #define BUFFER_SIZE 2048
 #define IMG_HEIGHT 28
