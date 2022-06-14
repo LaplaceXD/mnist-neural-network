@@ -73,6 +73,11 @@ void transformImage(Image *img, TransformFunc transform)
 
 void batchTransformImages(Image *imgs, int size, TransformFunc transform)
 {
+    if(size <= 0) {
+        fprintf(stderr, "Standardization Failed. Size should be a positive integer.");
+        exit(1);
+    }
+    
     int idx;
     for(idx = 0; idx < size; idx++) {
         transformImage(imgs+idx, transform);
