@@ -40,8 +40,8 @@ typedef struct LayerNode {
 NeuralNetwork createNeuralNet();
 /** @brief Add a layer to a Neural Network.
  * 
- *  @param nn The Neural Network where the layer would
- *  be attached to.
+ *  @param nn A pointer to the Neural Network where 
+ *  the layer would be attached to.
  *  @param nodes The number of nodes in the layer.
  *  @param type The type of the layer (Input, Hidden, Output).
  *  @param initWts The initialization type for the weights
@@ -50,4 +50,11 @@ NeuralNetwork createNeuralNet();
  *  (Random, Zero).
  *  @return Void. 
  */
-void addLayer(NeuralNetwork nn, int nodes, LayerType type, WeightInitType initWts);
+void addLayer(NeuralNetwork *nn, int nodes, LayerType type, WeightInitType initWts);
+/** @brief Frees the Neural Network from memory.
+ * 
+ *  @param nn A pointer to the Neural Network where 
+ *  the layer would be attached to.
+ *  @return Void. 
+ */
+void freeNeuralNet(NeuralNetwork *nn);
