@@ -11,7 +11,7 @@
 
 #include <stdio.h>
 #include <stdlib.h>
-#include "matrix.h"
+#include "headers/matrix.h"
 
 Matrix createMatrix(int row, int col)
 {
