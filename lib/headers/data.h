@@ -33,6 +33,7 @@
      * 
      *  @param dest The destination array, where all of the data
      *  returned from the callback are stored.
+     *  @param fileName The name of the csv to be read.
      *  @param rows The number of row to be read from the csv.
      *  @param rowSize The size of each rows in the csv including
      *  the delimiters.
@@ -41,7 +42,7 @@
      *  appropriate data that is to be stored in dest.
      *  @return Void. 
      */
-    void readCSVData(DATA_TYPE *dest, int rows, int rowSize, ReadFunc cb);
+    void readCSVData(DATA_TYPE *dest, char *fileName, int rows, int rowSize, ReadFunc cb);
     #endif 
 
 /** @brief Normalizes the values in an array.
