@@ -11,8 +11,8 @@
 #define _DATA_H
 
     #ifndef DATA_TYPE
-    typedef struct Data {} Data;
     #define DATA_TYPE Data
+    typedef struct Data {} Data;
 
     /** @brief Type definition for the callback to be passed
      *  to readCSVData function. This callback needs a buffer
