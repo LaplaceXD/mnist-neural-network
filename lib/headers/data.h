@@ -11,6 +11,7 @@
 #define _DATA_H
 
 #include <stdio.h>
+#include <stdlib.h>
 
 #define ReadCSVDataType(DATA_TYPE) \
 /** @brief A function that reads data from a csv.
