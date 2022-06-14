@@ -1,5 +1,11 @@
 #include <string.h>
+#include "headers/data.h"
 #include "headers/mnist_img.h"
+
+void readMnistCSV(Image *dest, MnistMetadata meta)
+{
+    readCSVData(dest, meta.fileName, meta.imgCount, meta.imgBufferSize, bufferToImage);
+}
 
 Image bufferToImage(char *buffer)
 {
