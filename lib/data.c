@@ -46,7 +46,7 @@ void normalizeData(double *data, int size)
 void standardizeData(double *data, int size)
 {
     int idx;
-    double mean, stddev;
+    double mean, stddev, diff;
     
     mean = 0;
     for(idx = 0; idx < size; idx++) {
@@ -56,7 +56,8 @@ void standardizeData(double *data, int size)
 
     stddev = 0;
     for(idx = 0; idx < size; idx++) {
-        stddev += pow(data[idx] - mean, 2);
+        diff = data[idx] - mean;
+        stddev += diff * diff;
     }
     stddev = sqrt(stddev / size);
 
