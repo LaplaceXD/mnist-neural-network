@@ -4,17 +4,18 @@
 #include "headers/data.h"
 #include "headers/matrix.h"
 
-NeuralNetwork createNeuralNet()
+NeuralNetwork createNeuralNet(NeuralNetOpt opt)
 {
-    return NULL; 
+    NeuralNetwork nn = { opt, NULL };
+    return nn; 
 }
 
-void fillWeights(Matrix *wts, WeightInitType init)
+void fillWeights(Matrix *wts, double distSize, DistType dist)
 {
     double mult, bound;
     int row, col;
 
-    switch(init) {
+    switch(dist) {
         case HE:
             mult = sqrt(2.0 / wts->row);
             break;
@@ -27,24 +28,20 @@ void fillWeights(Matrix *wts, WeightInitType init)
         case RANDOM:
             mult = 1;
             break;
-        case NONE:
-            break;
         default:
             fprintf(stderr, "Invalid Weight Type.");
             exit(1);
     }
 
-    if(init != NONE) {
-        bound = 1.0 / sqrt(wts->row * wts->col);
-        for(row = 0; row < wts->row; row++) {
-            for(col = 0; col < wts->col; col++) {
-                wts->entries[row][col] = randn(-1 * bound, bound) * mult;
-            }
+    bound = distSize / sqrt(wts->row * wts->col);
+    for(row = 0; row < wts->row; row++) {
+        for(col = 0; col < wts->col; col++) {
+            wts->entries[row][col] = randn(-1 * bound, bound) * mult;
         }
     }
 }
 
-Layer createLayer(int nodes, int prevNodes, LayerType type, WeightInitType initWts)
+Layer createLayer(int nodes, int prevNodes, LayerType type, NeuralNetOpt nnOpt)
 {
     if(nodes <= 0) {
         fprintf(stderr, "Layer Creation Failed. Nodes should be a positive integer.");
@@ -65,7 +62,7 @@ Layer createLayer(int nodes, int prevNodes, LayerType type, WeightInitType initW
         case OUTPUT:
             layer.weights = createMatrix(nodes, prevNodes);
             layer.bias = createMatrix(nodes, 1);
-            fillWeights(&layer.weights, initWts);
+            fillWeights(&layer.weights, nnOpt.distSize, nnOpt.dist);
             fillMatrix(&layer.bias, 0);
             break;
         default:
@@ -76,33 +73,32 @@ Layer createLayer(int nodes, int prevNodes, LayerType type, WeightInitType initW
     return layer;
 }
 
-void addLayer(NeuralNetwork *nn, int nodes, LayerType type, WeightInitType initWts)
+void addLayer(NeuralNetwork *nn, int nodes, LayerType type)
 {
     int prevLayerNodes;
-    NeuralNetwork *trav, temp;
+    LayerList *trav, temp;
 
-    for(trav = nn; *trav != NULL; trav = &(*trav)->next) {
+    for(trav = &nn->layerList; *trav != NULL; trav = &(*trav)->next) {
         prevLayerNodes = (*trav)->layer.nodes;
     }
 
-    temp = (NeuralNetwork) malloc(sizeof(struct LayerNode));
+    temp = (LayerList) malloc(sizeof(struct LayerNode));
     if(temp == NULL) {
         fprintf(stderr, "Memory allocation failed.");
         exit(1);
     }
 
-    temp->layer = createLayer(nodes, prevLayerNodes, type, initWts);
+    temp->layer = createLayer(nodes, prevLayerNodes, type, nn->options);
     temp->next = NULL;
     *trav = temp;
 }
 
 void freeNeuralNet(NeuralNetwork *nn)
 {
-    NeuralNetwork temp;
+    LayerList *trav, temp;
 
-    while(*nn != NULL) {
-        temp = *nn;
-        *nn = temp->next;
+    for(trav = &nn->layerList; *trav != NULL; trav = &(*trav)->next) {
+        temp = *trav;
 
         temp->layer.nodes = 0;
         freeMatrix(&temp->layer.bias);

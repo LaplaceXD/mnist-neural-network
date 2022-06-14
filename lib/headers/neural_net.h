@@ -15,7 +15,7 @@
 /** @brief The different weight initialization strategies that can be utilized for the neural net.
  * https://towardsdatascience.com/weight-initialization-techniques-in-neural-networks-26c649eb3b78
  */
-typedef enum { RANDOM, ZERO, HE, XAVIER, HE_XAVIER, NONE } WeightInitType;
+typedef enum { RANDOM, ZERO, HE, XAVIER, HE_XAVIER } DistType;
 /** @brief The different layer types. */
 typedef enum { INPUT, HIDDEN, OUTPUT } LayerType;
 
@@ -31,23 +31,36 @@ typedef struct Layer {
 typedef struct LayerNode {
     Layer layer;
     struct LayerNode *next;
-} *NeuralNetwork;
+} *LayerList;
+
+/** @brief Stucture for the NeuralNetOptions. */
+typedef struct NeuralNetOpt {
+    DistType dist;
+    double distSize;
+} NeuralNetOpt;
+
+/** @brief Stucture for the NeuralNetwork. */
+typedef struct NeuralNetwork {
+    NeuralNetOpt options;
+    LayerList layerList;
+} NeuralNetwork;
 
 /** @brief Creates a Neural Network.
  *  
+ *  @param opt Configured options in creating the
+ *  Neural Network.
  *  @return Void.
  */
-NeuralNetwork createNeuralNet();
+NeuralNetwork createNeuralNet(NeuralNetOpt opt);
 /** @brief Add a layer to a Neural Network.
  * 
  *  @param nn A pointer to the Neural Network where 
  *  the layer would be attached to.
  *  @param nodes The number of nodes in the layer.
  *  @param type The type of the layer (Input, Hidden, Output).
- *  @param initWts The initialization type for the weights.
  *  @return Void. 
  */
-void addLayer(NeuralNetwork *nn, int nodes, LayerType type, WeightInitType initWts);
+void addLayer(NeuralNetwork *nn, int nodes, LayerType type);
 /** @brief Frees the Neural Network from memory.
  * 
  *  @param nn A pointer to the Neural Network where 
