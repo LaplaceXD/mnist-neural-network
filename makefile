@@ -19,7 +19,7 @@ all: make_output_dir compile merge
 make_output_dir:
 ifeq ("$(wildcard ${OUTPUT_DIR})", "")
 	@echo "Creating output directory..."
-	mkdir output
+	@mkdir output
 endif
 
 compile:
