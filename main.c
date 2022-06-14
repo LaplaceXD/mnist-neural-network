@@ -16,7 +16,7 @@ int main(int argc, char **argv)
     printMatrix(imgs[0].pixels);
     printf("\n");
 
-    batchTransformImages(imgs, trainData.imgCount, standardizeValues);
+    batchTransformImages(imgs, trainData.imgCount, normalizeValues);
     
     printf("=================%d : %d ================\n", 1, imgs[0].value);
     printMatrix(imgs[0].pixels);
