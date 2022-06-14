@@ -30,6 +30,8 @@ You can then run the compiled `mnist.exe` program using `./mnist` in the console
 - [Neural Network from Scratch | Mathematics & Python Code](https://www.youtube.com/watch?v=pauPCy_s0Ok)
 - [Normalization VS Standardization of Data](https://stackoverflow.com/questions/63746182/correct-way-of-normalizing-and-scaling-the-mnist-dataset)
 - [What is a Makefile and how does it work?](https://opensource.com/article/18/8/what-how-makefile)
+- [Weight Initialization Techniques in Neural Networks](https://towardsdatascience.com/weight-initialization-techniques-in-neural-networks-26c649eb3b78)
+- [https://medium.com/@glenmeyerowitz/bias-initialization-in-a-neural-network-2e5d26fed0f0](https://medium.com/@glenmeyerowitz/bias-initialization-in-a-neural-network-2e5d26fed0f0)
 
 ## License
 [MIT](https://github.com/LaplaceXD/mnist-neural-network/blob/master/LICENSE)
