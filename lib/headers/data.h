@@ -10,9 +10,10 @@
 #ifndef _DATA_H
 #define _DATA_H
 
-#define DATA_TYPE Data
-typedef struct Data {} Data;
-
+#ifndef DATA_TYPE
+    #define DATA_TYPE Data
+    typedef struct Data {} Data;
+#endif
 /** @brief Type definition for the callback to be passed
  *  to readCSVData function. This callback needs a buffer
  *  as an argument and returns a value of type DATA_TYPE
@@ -67,4 +68,4 @@ void normalizeValues(double * data, int size);
  */
 void standardizeValues(double * data, int size);
 
-#endif
+#endif /* _DATA_H */

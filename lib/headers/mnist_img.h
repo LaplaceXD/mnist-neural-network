@@ -60,7 +60,7 @@ void readMnistCSV(Image *dest, MnistMetadata meta);
  *  @return An Image struct containing the data parsed from
  *  the buffer.
  */
-Image *bufferToImage(char *buffer);
+Image bufferToImage(char *buffer);
 /** @brief Normalizes image pixel values to ensure that the pixel values
  *  are withing the 0 to 1 range.
  * 
@@ -75,6 +75,6 @@ void normalizeImage(Image *img);
  *  @param size The size of the array. 
  *  @return Void.
  */
-void batchNormalizeImages(Image *imgs, int size)
+void batchNormalizeImages(Image *imgs, int size);
 
 #endif
