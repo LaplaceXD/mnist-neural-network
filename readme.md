@@ -12,9 +12,10 @@ Without `MakeFile`:
 gcc lib/matrix.c -o output/matrix.o -c
 gcc lib/data.c -o output/data.o -c
 gcc lib/mnist_img.c -o output/mnist_img.o -c
+gcc lib/neural_net.c -o output/neural_net.o -c
 gcc main.c -o output/main.o -c
 cd output
-gcc -o mnist main.o matrix.o data.o mnist_img.o -c
+gcc -o mnist main.o matrix.o data.o mnist_img.o neural_net.o -c
 ```
 With `MakeFile`:
 ```bash
@@ -31,7 +32,7 @@ You can then run the compiled `mnist.exe` program using `./mnist` in the console
 - [Normalization VS Standardization of Data](https://stackoverflow.com/questions/63746182/correct-way-of-normalizing-and-scaling-the-mnist-dataset)
 - [What is a Makefile and how does it work?](https://opensource.com/article/18/8/what-how-makefile)
 - [Weight Initialization Techniques in Neural Networks](https://towardsdatascience.com/weight-initialization-techniques-in-neural-networks-26c649eb3b78)
-- [https://medium.com/@glenmeyerowitz/bias-initialization-in-a-neural-network-2e5d26fed0f0](https://medium.com/@glenmeyerowitz/bias-initialization-in-a-neural-network-2e5d26fed0f0)
+- [Bias Initialization in a Neural Network](https://medium.com/@glenmeyerowitz/bias-initialization-in-a-neural-network-2e5d26fed0f0)
 
 ## License
 [MIT](https://github.com/LaplaceXD/mnist-neural-network/blob/master/LICENSE)
