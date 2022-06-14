@@ -10,13 +10,14 @@
 
 #include <stdio.h>
 #include <math.h>
+#include <string.h>
 #include "headers/data.h"
 
 void readCSVData(DATA_TYPE *dest, char *fileName, int rows, int rowSize, ReadFunc cb)
 {
     int idx;
     char rowBuffer[rowSize];
-    FILE* csv = fopen(fileName, "r");
+    FILE* csv = fopen(strcat(fileName, ".csv"), "r");
 
     for(idx = 0; idx < rows && fgets(rowBuffer, rowSize, csv); idx++) {
         dest[idx] = cb(rowBuffer);
