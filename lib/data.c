@@ -13,16 +13,21 @@
 #include <string.h>
 #include "headers/data.h"
 
+int isDoubleEq(double x, double y)
+{
+    return fabs(x - y) <= __DBL_EPSILON__;
+}
+
 void normalizeData(double *data, int size)
 {
-    int idx;
+    int idx, row, col; 
     double min, max, range;
 
     min = max = data[0];
-    for(idx = 0; idx < size; idx++) {
-        if(fabs(data[idx] - min) < __DBL_EPSILON__) {
+    for(idx = 1; idx < size; idx++) {
+        if(!isDoubleEq(data[idx], min) && data[idx] < min) {
             min = data[idx];
-        } else if(fabs(max - data[idx]) < __DBL_EPSILON__) {
+        } else if (!isDoubleEq(data[idx], max) && data[idx] > max) {
             max = data[idx];
         }
     }
