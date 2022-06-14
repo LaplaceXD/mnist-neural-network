@@ -1,7 +1,9 @@
 #include <string.h>
 #include <stdlib.h>
-#include "headers/mnist_img.h"
 #include "headers/data.h"
+#include "headers/mnist_img.h"
+
+ReadCSVDataType(Image);
 
 const MnistMetadata TRAIN_DATA = {
     "dataset/mnist_train",

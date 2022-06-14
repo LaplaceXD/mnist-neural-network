@@ -12,18 +12,15 @@
 #define _MNIST_IMG_H
 
 #include "matrix.h"
+#define BUFFER_SIZE 2048
+#define IMG_HEIGHT 28
+#define IMG_WIDTH 28
+
 /** @brief Stucture for MNIST dataset images.*/
 typedef struct Image {
     int value;
     Matrix pixels; 
 } Image;
-
-#define DATA_TYPE Image
-#include "data.h"
-
-#define BUFFER_SIZE 2048
-#define IMG_HEIGHT 28
-#define IMG_WIDTH 28
 
 /** @brief Contains all the necessary data to parse a CSV.*/
 typedef struct CSVMetadata {

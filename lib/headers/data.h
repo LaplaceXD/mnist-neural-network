@@ -10,16 +10,9 @@
 #ifndef _DATA_H
 #define _DATA_H
 
-#ifndef DATA_TYPE
-    #define DATA_TYPE Data
-    typedef struct Data {} Data;
-#endif
-/** @brief Type definition for the callback to be passed
- *  to readCSVData function. This callback needs a buffer
- *  as an argument and returns a value of type DATA_TYPE
- *  defined in the directive.
- */
-typedef DATA_TYPE (*ReadFunc)(char *buffer); 
+#include <stdio.h>
+
+#define ReadCSVDataType(DATA_TYPE) \
 /** @brief A function that reads data from a csv.
  * 
  *  Each row in the csv is held inside a buffer,
@@ -40,9 +33,18 @@ typedef DATA_TYPE (*ReadFunc)(char *buffer);
  *  @param cb The callback function where the user can manipulate
  *  the buffer returned by the function, and then return the
  *  appropriate data that is to be stored in dest.
- *  @return Void. 
- */
-void readCSVData(DATA_TYPE *dest, char *fileName, int rows, int rowSize, ReadFunc cb);
+ *  @return Void. \
+ */ \
+void readCSVData(DATA_TYPE *dest, char *fileName, int rows, int rowSize, DATA_TYPE (*cb)(char *buffer)) \
+{ \
+    int idx; \
+    char rowBuffer[rowSize]; \
+    FILE* csv = fopen(strcat(fileName, ".csv"), "r"); \
+     \
+    for(idx = 0; idx < rows && fgets(rowBuffer, rowSize, csv); idx++) { \
+        dest[idx] = cb(rowBuffer); \
+    } \
+}
 
 /** @brief Normalizes the values in an array.
  * 
