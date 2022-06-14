@@ -46,6 +46,10 @@ void readCSVData(DATA_TYPE *dest, char *fileName, int rows, int rowSize, DATA_TY
     } \
 }
 
+/** @brief Type definition for Data Transforming functions.
+ */
+typedef void (*TransformFunc)(double *data, int size);
+
 /** @brief Normalizes the values in an array.
  * 
  * This is calculated by scaling subtracting
@@ -56,7 +60,7 @@ void readCSVData(DATA_TYPE *dest, char *fileName, int rows, int rowSize, DATA_TY
  * @param size The size of the array.
  * @return Void.
  */
-void normalizeData(double * data, int size);
+void normalizeValues(double * data, int size);
 /** @brief Standardizes the values in an array.
  * 
  * This is calculated by subtracting the mean
@@ -68,6 +72,6 @@ void normalizeData(double * data, int size);
  * @param size The size of the array.
  * @return Void.
  */
-void standardizeData(double * data, int size);
+void standardizeValues(double * data, int size);
 
 #endif /* _DATA_H */

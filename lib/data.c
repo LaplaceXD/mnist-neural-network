@@ -18,7 +18,7 @@ int isDoubleEq(double x, double y)
     return fabs(x - y) <= __DBL_EPSILON__;
 }
 
-void normalizeData(double *data, int size)
+void normalizeValues(double *data, int size)
 {
     int idx, row, col; 
     double min, max, range;
@@ -38,7 +38,7 @@ void normalizeData(double *data, int size)
     }
 }
 
-void standardizeData(double *data, int size)
+void standardizeValues(double *data, int size)
 {
     int idx;
     double mean, stddev, diff;
