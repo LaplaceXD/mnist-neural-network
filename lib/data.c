@@ -12,7 +12,7 @@
 #include <math.h>
 #include "headers/data.h"
 
-void readCSVData(DATA_TYPE *dest, int *fileName, int rows, int rowSize, ReadFunc cb)
+void readCSVData(DATA_TYPE *dest, char *fileName, int rows, int rowSize, ReadFunc cb)
 {
     int idx;
     char rowBuffer[rowSize];
