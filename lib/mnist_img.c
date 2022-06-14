@@ -1,6 +1,19 @@
 #include <string.h>
-#include "headers/data.h"
+#include <stdlib.h>
 #include "headers/mnist_img.h"
+#include "headers/data.h"
+
+const MnistMetadata TRAIN_DATA = {
+    "dataset/mnist_train",
+    60000,
+    BUFFER_SIZE
+};
+
+const MnistMetadata TEST_DATA = {
+    "dataset/mnist_test",
+    10000,
+    BUFFER_SIZE
+};
 
 void readMnistCSV(Image *dest, MnistMetadata meta)
 {
@@ -26,15 +39,15 @@ Image bufferToImage(char *buffer)
 
 void normalizeImage(Image *img)
 {
-    int row, bufferPos, size = img->pixels.row * img->pixels.col;
-    double pixelBuffer[size];
+    int row, size = img->pixels.row * img->pixels.col;
+    double pixelBuffer[size], *bufferPos;
 
     for(row = 0; row < img->pixels.row; row++) {
         bufferPos = pixelBuffer + row * img->pixels.col;
         memcpy(bufferPos, img->pixels.entries[row], sizeof(double) * img->pixels.col);
     }
 
-    normalizeValues(pixelBuffer, size);
+    normalizeData(pixelBuffer, size);
 
     for(row = 0; row < img->pixels.row; row++) {
         bufferPos = pixelBuffer + row * img->pixels.col;

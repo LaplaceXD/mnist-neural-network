@@ -10,20 +10,20 @@
 
 #ifndef _MNIST_IMG_H
 #define _MNIST_IMG_H
-#define DATA_TYPE Image
 
-#include "data.h"
 #include "matrix.h"
-
-#define BUFFER_SIZE 2048
-#define IMG_HEIGHT 28
-#define IMG_WIDTH 28
-
 /** @brief Stucture for MNIST dataset images.*/
 typedef struct Image {
     int value;
     Matrix pixels; 
 } Image;
+
+#define DATA_TYPE Image
+#include "data.h"
+
+#define BUFFER_SIZE 2048
+#define IMG_HEIGHT 28
+#define IMG_WIDTH 28
 
 /** @brief Contains all the necessary data to parse a CSV.*/
 typedef struct CSVMetadata {
@@ -33,18 +33,10 @@ typedef struct CSVMetadata {
 } MnistMetadata;
 
 /** @brief Options for MNIST data training CSV.*/
-const MnistMetadata TRAIN_DATA = {
-    "dataset/mnist_train",
-    60000,
-    BUFFER_SIZE
-};
+extern const MnistMetadata TRAIN_DATA;  
 
 /** @brief Options for MNIST data testing CSV.*/
-const MnistMetadata TEST_DATA = {
-    "dataset/mnist_test",
-    10000,
-    BUFFER_SIZE
-};
+extern const MnistMetadata TEST_DATA;
 
 /** @brief Read Mnist Dataset.
  * 
