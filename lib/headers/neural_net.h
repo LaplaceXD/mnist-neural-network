@@ -63,8 +63,7 @@ NeuralNetwork createNeuralNet(NeuralNetOpt opt);
 void addLayer(NeuralNetwork *nn, int nodes, LayerType type);
 /** @brief Frees the Neural Network from memory.
  * 
- *  @param nn A pointer to the Neural Network where 
- *  the layer would be attached to.
+ *  @param nn A pointer to the Neural Network to be freed. 
  *  @return Void. 
  */
 void freeNeuralNet(NeuralNetwork *nn);
