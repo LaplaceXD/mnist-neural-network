@@ -44,10 +44,7 @@ NeuralNetwork createNeuralNet();
  *  the layer would be attached to.
  *  @param nodes The number of nodes in the layer.
  *  @param type The type of the layer (Input, Hidden, Output).
- *  @param initWts The initialization type for the weights
- *  (Random, Zero).  
- *  @param initBias The initialization type for the biases
- *  (Random, Zero).
+ *  @param initWts The initialization type for the weights.
  *  @return Void. 
  */
 void addLayer(NeuralNetwork *nn, int nodes, LayerType type, WeightInitType initWts);
