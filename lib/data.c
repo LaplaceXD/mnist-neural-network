@@ -23,6 +23,11 @@ void normalizeValues(double *data, int size)
     int idx, row, col; 
     double min, max, range;
 
+    if(size <= 0) {
+        fprintf(stderr, "Normalization failed. Size should be a positive integer.");
+        exit(1);
+    }
+
     min = max = data[0];
     for(idx = 1; idx < size; idx++) {
         if(!isDoubleEq(data[idx], min) && data[idx] < min) {
@@ -33,8 +38,10 @@ void normalizeValues(double *data, int size)
     }
 
     range = max - min;
-    for(idx = 0; idx < size; idx++) {
-        data[idx] = (data[idx] - min) / range;
+    if(!isDoubleEq(range, 0)) {
+        for(idx = 0; idx < size; idx++) {
+            data[idx] = (data[idx] - min) / range;
+        }
     }
 }
 
@@ -42,6 +49,11 @@ void standardizeValues(double *data, int size)
 {
     int idx;
     double mean, stddev, diff;
+    
+    if(size <= 0) {
+        fprintf(stderr, "Standardization Failed. Size should be a positive integer.");
+        exit(1);
+    }
     
     mean = 0;
     for(idx = 0; idx < size; idx++) {
@@ -55,8 +67,10 @@ void standardizeValues(double *data, int size)
         stddev += diff * diff;
     }
     stddev = sqrt(stddev / size);
-
-    for(idx = 0; idx < size; idx++) {
-        data[idx] = (data[idx] - mean) / stddev;
+    
+    if(!isDoubleEq(stddev, 0)) {
+        for(idx = 0; idx < size; idx++) {
+            data[idx] = (data[idx] - mean) / stddev;
+        }
     }
 }

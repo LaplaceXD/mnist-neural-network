@@ -37,6 +37,11 @@
  */ \
 void readCSVData(DATA_TYPE *dest, char *fileName, int rows, int rowSize, DATA_TYPE (*cb)(char *buffer)) \
 { \
+    if(rows <= 0 || rowSize <= 0) { \
+        fprintf(stderr, "CSV Reading Failed. Rows and their sizes should be a positive integer."); \
+        exit(1); \
+    } \
+     \
     int idx; \
     char rowBuffer[rowSize]; \
     FILE* csv = fopen(strcat(fileName, ".csv"), "r"); \
