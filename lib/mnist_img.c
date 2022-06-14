@@ -1,3 +1,17 @@
+/** @file mnist_img.c
+ *  @brief A library made for working with mnist
+ *  digit dataset.
+ *
+ *  This library contains the constants for the data
+ *  to be used in training and testing the neural network.
+ *  It also has functions for reading image to buffer, 
+ *  reading the MNIST CSV and transforming images pixel
+ *  values to normalized or standardized forms.
+ *
+ *  @author Jonh Alexis Buot (LaplaceXD)
+ *  @bug No know bugs.
+ */
+
 #include <string.h>
 #include <stdlib.h>
 #include "headers/data.h"

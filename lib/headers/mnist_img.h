@@ -71,4 +71,4 @@ void transformImage(Image *img, TransformFunc transform);
  */
 void batchTransformImages(Image *imgs, int size, TransformFunc transform);
 
-#endif
+#endif /* _MNIST_IMG_H */
