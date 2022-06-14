@@ -12,6 +12,7 @@
 #define _MNIST_IMG_H
 
 #include "matrix.h"
+#include "data.h"
 #define BUFFER_SIZE 2048
 #define IMG_HEIGHT 28
 #define IMG_WIDTH 28
@@ -54,16 +55,20 @@ Image bufferToImage(char *buffer);
  *  are withing the 0 to 1 range.
  * 
  *  @param img A pointer to an image, whose pixels are to be
- *  normalized. 
+ *  normalized.
+ *  @param transform A transforming function that is used to
+ *  convert the image values. 
  *  @return Void.
  */
-void normalizeImage(Image *img);
+void transformImage(Image *img, TransformFunc transform);
 /** @brief Normalizes a batch of images in an array.
  * 
  *  @param imgs An array of images to be normalized. 
  *  @param size The size of the array. 
+ *  @param transform A transforming function that is used to
+ *  convert the image values. 
  *  @return Void.
  */
-void batchNormalizeImages(Image *imgs, int size);
+void batchTransformImages(Image *imgs, int size, TransformFunc transform);
 
 #endif

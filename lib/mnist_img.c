@@ -39,7 +39,7 @@ Image bufferToImage(char *buffer)
     return img;
 }
 
-void normalizeImage(Image *img)
+void transformImage(Image *img, TransformFunc transform)
 {
     int row, size = img->pixels.row * img->pixels.col;
     double pixelBuffer[size], *bufferPos;
@@ -49,7 +49,7 @@ void normalizeImage(Image *img)
         memcpy(bufferPos, img->pixels.entries[row], sizeof(double) * img->pixels.col);
     }
 
-    normalizeData(pixelBuffer, size);
+    transform(pixelBuffer, size);
 
     for(row = 0; row < img->pixels.row; row++) {
         bufferPos = pixelBuffer + row * img->pixels.col;
@@ -57,10 +57,10 @@ void normalizeImage(Image *img)
     }
 }
 
-void batchNormalizeImages(Image *imgs, int size)
+void batchTransformImages(Image *imgs, int size, TransformFunc transform)
 {
     int idx;
     for(idx = 0; idx < size; idx++) {
-        normalizeImage(imgs+idx);
+        transformImage(imgs+idx, transform);
     }
 }
