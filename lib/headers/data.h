@@ -78,3 +78,10 @@ void normalizeValues(double * data, int size);
  * @return Void.
  */
 void standardizeValues(double * data, int size);
+/** @brief Returns a random number within the range [min, max].
+ * 
+ * @param min The minimum possible random number.
+ * @param max The maximum possible random number.
+ * @return A random number between min and max.
+ */
+double randn(double min, double max);

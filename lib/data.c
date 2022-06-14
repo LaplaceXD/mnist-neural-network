@@ -75,3 +75,9 @@ void standardizeValues(double *data, int size)
         }
     }
 }
+
+double randn(double min, double max) 
+{
+    double range = max - min; 
+    return min + ((double) rand() / RAND_MAX) * range;
+}
