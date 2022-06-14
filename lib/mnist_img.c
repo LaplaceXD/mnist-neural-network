@@ -23,3 +23,29 @@ Image bufferToImage(char *buffer)
 
     return img;
 }
+
+void normalizeImage(Image *img)
+{
+    int row, bufferPos, size = img->pixels.row * img->pixels.col;
+    double pixelBuffer[size];
+
+    for(row = 0; row < img->pixels.row; row++) {
+        bufferPos = pixelBuffer + row * img->pixels.col;
+        memcpy(bufferPos, img->pixels.entries[row], sizeof(double) * img->pixels.col);
+    }
+
+    normalizeValues(pixelBuffer, size);
+
+    for(row = 0; row < img->pixels.row; row++) {
+        bufferPos = pixelBuffer + row * img->pixels.col;
+        memcpy(img->pixels.entries[row], bufferPos, sizeof(double) * img->pixels.col);
+    }
+}
+
+void batchNormalizeImages(Image *imgs, int size)
+{
+    int idx;
+    for(idx = 0; idx < size; idx++) {
+        normalizeImage(imgs+idx);
+    }
+}
