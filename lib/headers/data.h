@@ -7,8 +7,7 @@
  *  @author Jonh Alexis Buot (LaplaceXD)
  *  @bug No known bugs.
  */
-#ifndef _DATA_H
-#define _DATA_H
+#pragma once
 
 #include <stdio.h>
 #include <stdlib.h>
@@ -79,5 +78,3 @@ void normalizeValues(double * data, int size);
  * @return Void.
  */
 void standardizeValues(double * data, int size);
-
-#endif /* _DATA_H */

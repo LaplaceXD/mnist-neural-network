@@ -8,8 +8,7 @@
  *  @bug No known bugs.
  */
 
-#ifndef _MATRIX_H
-#define _MATRIX_H
+#pragma once
 
 /** @brief Structure of the Matrix which contains its 
  *  entries, and dimensions (rows, columns).
@@ -97,5 +96,3 @@ void transpose(Matrix* a);
  *  @return Void.
  */
 void flatten(Matrix* a, MatrixAxis axis); 
-
-#endif /* _MATRIX_H */

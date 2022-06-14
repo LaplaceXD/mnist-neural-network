@@ -7,12 +7,11 @@
  *  @author Jonh Alexis Buot (LaplaceXD)
  *  @bug No known bugs.
  */
-
-#ifndef _MNIST_IMG_H
-#define _MNIST_IMG_H
+#pragma once
 
 #include "matrix.h"
 #include "data.h"
+
 #define BUFFER_SIZE 2048
 #define IMG_HEIGHT 28
 #define IMG_WIDTH 28
@@ -70,5 +69,3 @@ void transformImage(Image *img, TransformFunc transform);
  *  @return Void.
  */
 void batchTransformImages(Image *imgs, int size, TransformFunc transform);
-
-#endif /* _MNIST_IMG_H */
