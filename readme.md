@@ -9,9 +9,12 @@ A small project that was inspired by [Mark Kraay's Video](https://www.youtube.co
 
 Without `MakeFile`:
 ```bash
-gcc lib/matrix/matrix.c -o output/matrix.o -c
+gcc lib/matrix.c -o output/matrix.o -c
+gcc lib/data.c -o output/data.o -c
+gcc lib/mnist_img.c -o output/mnist_img.o -c
 gcc main.c -o output/main.o -c
-gcc -o mnist output/main.o output/matrix.o
+cd output
+gcc -o mnist main.o matrix.o data.o mnist_img.o -c
 ```
 With `MakeFile`:
 ```bash
