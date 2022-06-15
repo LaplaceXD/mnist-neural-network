@@ -15,7 +15,7 @@
 /** @brief The different weight initialization strategies that can be utilized for the neural net.
  * https://towardsdatascience.com/weight-initialization-techniques-in-neural-networks-26c649eb3b78
  */
-typedef enum { RANDOM, ZERO, HE, XAVIER, HE_XAVIER } DistType;
+typedef enum { RANDOM, ZERO, HE, XAVIER, HE_XAVIER } DistStrategy;
 /** @brief The different layer types. */
 typedef enum { INPUT, HIDDEN, OUTPUT } LayerType;
 
@@ -41,7 +41,7 @@ typedef struct LayerDesign {
 
 /** @brief Stucture for the NeuralNetOptions. */
 typedef struct NeuralNetOpt {
-    DistType dist;
+    DistStrategy distStrat;
     double distSize;
     double initialBias;
 } NeuralNetOpt;

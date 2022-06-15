@@ -23,12 +23,12 @@ NeuralNetwork createNeuralNet(NeuralNetOpt opt, LayerDesign *layers, int size)
     return nn; 
 }
 
-void fillWeights(Matrix *wts, double distSize, DistType dist)
+void fillWeights(Matrix *wts, double distSize, DistStrategy distStrat)
 {
     double mult, bounds;
     int row, col;
 
-    switch(dist) {
+    switch(distStrat) {
         case HE:
             mult = sqrt(2.0 / wts->row);
             break;
@@ -49,7 +49,7 @@ void fillWeights(Matrix *wts, double distSize, DistType dist)
             exit(1);
     }
 
-    if(dist != ZERO) {
+    if(distStrat != ZERO) {
         bounds = distSize / sqrt(wts->row * wts->col);
         fillMatrixRandn(wts, -1 * bounds, bounds, mult);
     }
@@ -78,7 +78,7 @@ Layer createLayer(int nodes, int prevNodes, LayerType type, NeuralNetOpt nnOpt)
     } else {
         layer.weights = createMatrix(nodes, prevNodes);
         layer.bias = createMatrix(nodes, 1);
-        fillWeights(&layer.weights, nnOpt.distSize, nnOpt.dist);
+        fillWeights(&layer.weights, nnOpt.distSize, nnOpt.distStrat);
         fillMatrix(&layer.bias, nnOpt.initialBias);
     }
 
