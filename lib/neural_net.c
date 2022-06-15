@@ -4,9 +4,22 @@
 #include "headers/neural_net.h"
 #include "headers/matrix.h"
 
-NeuralNetwork createNeuralNet(NeuralNetOpt opt)
+NeuralNetwork createNeuralNet(NeuralNetOpt opt, LayerDesign *layers, int size)
 {
     NeuralNetwork nn = { opt, NULL };
+    int idx;
+    
+    if(size < 0) {
+        fprintf(stderr, "Neural Network Creation Failed. Size should be a non-negative integer.");
+        exit(1);
+    }
+    
+    if(layers != NULL) {
+        for(idx = 0; idx < size; idx++) {
+            addLayer(&nn, layers[idx].nodes, layers[idx].type);
+        }
+    }
+
     return nn; 
 }
 
