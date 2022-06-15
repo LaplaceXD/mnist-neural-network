@@ -15,6 +15,7 @@
 #define BUFFER_SIZE 2048
 #define IMG_HEIGHT 28
 #define IMG_WIDTH 28
+#define IMG_SIZE IMG_HEIGHT * IMG_WIDTH
 
 /** @brief Stucture for MNIST dataset images.*/
 typedef struct Image {
