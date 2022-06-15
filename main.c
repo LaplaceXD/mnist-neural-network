@@ -10,7 +10,7 @@ int main(int argc, char **argv)
     srand((unsigned int) time(NULL)); // initialize randomizer
  
     LayerDesign layers[] = {{IMG_SIZE, INPUT}, {16, HIDDEN}, {16, HIDDEN}, {10, OUTPUT}};
-    NeuralNetOpt opt = { .distStrat = HE_XAVIER, .distSize = 1, .initialBias = 1 };
+    NeuralNetOpt opt = { .distStrat = HE_XAVIER, .distSize = 1, .initialBias = 0 };
     NeuralNetwork nn = createNeuralNet(opt, layers, 4);
     
     /* =============== TRAINING ================== */
@@ -26,7 +26,7 @@ int main(int argc, char **argv)
     /* =============== TESTING ================== */
     Image testImgs[TEST_DATA.SIZE];
     readImageSet(testImgs, TEST_DATA);
-    transformImageSet( testImgs, TEST_DATA.SIZE, normalize);
+    transformImageSet(testImgs, TEST_DATA.SIZE, normalize);
 
     // WIP
 
