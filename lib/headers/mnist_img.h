@@ -10,9 +10,9 @@
 #pragma once
 
 #include "matrix.h"
-#include "data.h"
+#include "util.h"
 
-#define BUFFER_SIZE 2048
+#define BUFFER_SIZE_DEFAULT 2048
 #define IMG_HEIGHT 28
 #define IMG_WIDTH 28
 #define IMG_SIZE IMG_HEIGHT * IMG_WIDTH
@@ -25,9 +25,9 @@ typedef struct Image {
 
 /** @brief Contains all the necessary data to parse a CSV.*/
 typedef struct CSVMetadata {
-    char fileName[128];
-    int imgCount;
-    int imgBufferSize;
+    char FILE_NAME[128];
+    int SIZE;
+    int BUFFER_SIZE;
 } MnistMetadata;
 
 /** @brief Options for MNIST data training CSV.*/

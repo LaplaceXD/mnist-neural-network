@@ -14,7 +14,7 @@
 
 #include <string.h>
 #include <stdlib.h>
-#include "headers/data.h"
+#include "headers/util.h"
 #include "headers/mnist_img.h"
 
 ReadCSVDataType(Image);
@@ -22,18 +22,18 @@ ReadCSVDataType(Image);
 const MnistMetadata TRAIN_DATA = {
     "dataset/mnist_train",
     60000,
-    BUFFER_SIZE
+    BUFFER_SIZE_DEFAULT
 };
 
 const MnistMetadata TEST_DATA = {
     "dataset/mnist_test",
     10000,
-    BUFFER_SIZE
+    BUFFER_SIZE_DEFAULT
 };
 
 void readMnistCSV(Image *dest, MnistMetadata meta)
 {
-    readCSVData(dest, meta.fileName, meta.imgCount, meta.imgBufferSize, bufferToImage);
+    readCSVData(dest, meta.FILE_NAME, meta.SIZE, meta.BUFFER_SIZE, bufferToImage);
 }
 
 Image bufferToImage(char *buffer)
