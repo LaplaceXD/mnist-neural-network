@@ -1,7 +1,7 @@
+#include <stdio.h>
 #include <stdlib.h>
 #include <math.h>
 #include "headers/neural_net.h"
-#include "headers/data.h"
 #include "headers/matrix.h"
 
 NeuralNetwork createNeuralNet(NeuralNetOpt opt)
@@ -12,7 +12,7 @@ NeuralNetwork createNeuralNet(NeuralNetOpt opt)
 
 void fillWeights(Matrix *wts, double distSize, DistType dist)
 {
-    double mult, bound;
+    double mult, bounds;
     int row, col;
 
     switch(dist) {
@@ -28,16 +28,17 @@ void fillWeights(Matrix *wts, double distSize, DistType dist)
         case RANDOM:
             mult = 1;
             break;
+        case ZERO:
+            fillMatrix(wts, 0);
+            break;
         default:
             fprintf(stderr, "Invalid Weight Type.");
             exit(1);
     }
 
-    bound = distSize / sqrt(wts->row * wts->col);
-    for(row = 0; row < wts->row; row++) {
-        for(col = 0; col < wts->col; col++) {
-            wts->entries[row][col] = randn(-1 * bound, bound) * mult;
-        }
+    if(dist != ZERO) {
+        bounds = distSize / sqrt(wts->row * wts->col);
+        fillMatrixRandn(wts, -1 * bounds, bounds, mult);
     }
 }
 
