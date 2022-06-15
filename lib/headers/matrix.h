@@ -36,6 +36,17 @@ Matrix createMatrix(int row, int col);
  *  @return Void.
  */
 void fillMatrix(Matrix* m, double val);
+/** @brief Fills all of the entries of matrix m, with a randomly generated
+ *  value.
+ * 
+ *  @param m A pointer to the matrix to be filled with a value. 
+ *  @param min The minimum possible value to be randomly generated. 
+ *  @param max The maximum possible value to be randomly generated. 
+ *  @param mult A scaling factor to the randomly generated values
+ *  (set to 1, if you don't want to scale the values).
+ *  @return Void.
+ */
+void fillMatrixRandn(Matrix* m, double min, double max, double mult);
 /** @brief Frees the dynamically stored entries of the matrix,
  *  and sets the matrix's dimensions to 0x0.
  * 
@@ -70,7 +81,7 @@ Matrix add(Matrix a, Matrix b);
  *  @param val The factor the matrix should be scaled by. 
  *  @return A Matrix that has been scaled by a factor val.
  */
-Matrix scale(double val, Matrix a); 
+Matrix scale(Matrix a, double val); 
 /** @brief Dot multiplies two matrices.
  * 
  *  The two matrices should have a row and column that are equal.

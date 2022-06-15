@@ -12,6 +12,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include "headers/matrix.h"
+#include "headers/data.h"
 
 Matrix createMatrix(int row, int col)
 {
@@ -52,6 +53,16 @@ void fillMatrix(Matrix* m, double val)
     for(row = 0; row < m->row; row++) {
         for(col = 0; col < m->col; col++) {
             m->entries[row][col] = val;
+        }
+    }
+}
+
+void fillMatrixRandn(Matrix* m, double min, double max, double mult)
+{
+    int row, col;
+    for(row = 0; row < m->row; row++) {
+        for(col = 0; col < m->col; col++) {
+            m->entries[row][col] = randn(min, max) * mult;
         }
     }
 }
@@ -104,7 +115,7 @@ Matrix add(Matrix a, Matrix b)
     return m;
 }
 
-Matrix scale(double val, Matrix a)
+Matrix scale(Matrix a, double val)
 {
     Matrix m = createMatrix(a.row, a.col);
     int row, col;
