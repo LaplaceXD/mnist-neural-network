@@ -59,7 +59,7 @@ typedef struct NeuralNetwork {
  *  @param layers An array of layers to be initialized
  *  in the Neural Network.
  *  @param size The number of layers in the layers array.
- *  @return Void.
+ *  @return A Neural Network.
  */
 NeuralNetwork createNeuralNet(NeuralNetOpt opt, LayerDesign *layers, int size);
 /** @brief Creates the options for the Neural Network.
@@ -69,7 +69,7 @@ NeuralNetwork createNeuralNet(NeuralNetOpt opt, LayerDesign *layers, int size);
  *  @param distSize The spread of the distribution.
  *  @param initialBias The initial bias value used to
  *  intialize the biases of the layers.
- *  @return Void.
+ *  @return Options for a Neural Network.
  */
 NeuralNetOpt createNeuralNetOpt(DistType dist, double distSize, double initialBias);
 /** @brief Add a layer to a Neural Network.
