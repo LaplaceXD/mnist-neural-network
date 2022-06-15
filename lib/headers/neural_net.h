@@ -71,15 +71,6 @@ NeuralNetwork createNeuralNet(NeuralNetOpt opt, LayerDesign *layers, int size);
  *  intialize the biases of the layers.
  *  @return Options for a Neural Network.
  */
-NeuralNetOpt createNeuralNetOpt(DistType dist, double distSize, double initialBias);
-/** @brief Add a layer to a Neural Network.
- * 
- *  @param nn A pointer to the Neural Network where 
- *  the layer would be attached to.
- *  @param nodes The number of nodes in the layer.
- *  @param type The type of the layer (Input, Hidden, Output).
- *  @return Void. 
- */
 void addLayer(NeuralNetwork *nn, int nodes, LayerType type);
 /** @brief Removes a layer from the Neural Network,
  *  based on a given position.
