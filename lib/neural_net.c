@@ -168,8 +168,9 @@ void freeNeuralNet(NeuralNetwork *nn)
 {
     LayerList *trav, temp;
 
-    for(trav = &nn->layerList; *trav != NULL; trav = &(*trav)->next) {
+    for(trav = &nn->layerList; *trav != NULL;) {
         temp = *trav;
+        trav = &(*trav)->next;
 
         temp->layer.nodes = 0;
         freeMatrix(&temp->layer.bias);
