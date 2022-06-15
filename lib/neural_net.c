@@ -23,6 +23,12 @@ NeuralNetwork createNeuralNet(NeuralNetOpt opt, LayerDesign *layers, int size)
     return nn; 
 }
 
+NeuralNetOpt createNeuralNetOpt(DistType dist, double distSize, double initialBias)
+{
+    NeuralNetOpt opt = { dist, distSize, initialBias };
+    return opt;
+}
+
 void fillWeights(Matrix *wts, double distSize, DistType dist)
 {
     double mult, bounds;
@@ -79,7 +85,7 @@ Layer createLayer(int nodes, int prevNodes, LayerType type, NeuralNetOpt nnOpt)
         layer.weights = createMatrix(nodes, prevNodes);
         layer.bias = createMatrix(nodes, 1);
         fillWeights(&layer.weights, nnOpt.distSize, nnOpt.dist);
-        fillMatrix(&layer.bias, 0);
+        fillMatrix(&layer.bias, nnOpt.initialBias);
     }
 
     return layer;
