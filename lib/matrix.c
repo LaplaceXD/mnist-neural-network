@@ -11,8 +11,8 @@
 
 #include <stdio.h>
 #include <stdlib.h>
+#include <math.h>
 #include "headers/matrix.h"
-#include "headers/data.h"
 
 Matrix createMatrix(int row, int col)
 {
@@ -60,9 +60,12 @@ void fillMatrix(Matrix* m, double val)
 void fillMatrixRandn(Matrix* m, double min, double max, double mult)
 {
     int row, col;
+    double boundRand, range = min - max;
+
     for(row = 0; row < m->row; row++) {
         for(col = 0; col < m->col; col++) {
-            m->entries[row][col] = randn(min, max) * mult;
+            boundRand = min + ((double) (rand() % RAND_MAX) / RAND_MAX) * range;
+            m->entries[row][col] = boundRand * mult;
         }
     }
 }
