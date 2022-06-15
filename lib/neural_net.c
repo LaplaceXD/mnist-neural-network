@@ -122,8 +122,7 @@ void insertLayer(NeuralNetwork *nn, int position, int nodes, LayerType type)
         idx++;
     }
 
-    // if trav is null, then idx should be equal to position
-    // since the neural net currently has position - 1 layers
+    // Check if position is not insertable
     if((*trav == NULL && idx < position) || position <= 0) {
         fprintf(stderr, "Invalid position. Can't insert new layer into neural network.");
         exit(1);
@@ -139,9 +138,7 @@ void insertLayer(NeuralNetwork *nn, int position, int nodes, LayerType type)
     temp->next = *trav;
     *trav = temp;
 
-    // Next layer should be reinitialized, due to
-    // the change of nodes in the previous layer,
-    // as a new layer is inserted
+    // Reinitialize succeeding layer due to the change of nodes
     trav = &(*trav)->next;
     if(*trav != NULL) {
         freeMatrix(&(*trav)->layer.weights);
@@ -160,14 +157,14 @@ void deleteLayer(NeuralNetwork *nn, int position)
         prevLayerNodes = (*trav)->layer.nodes;
     }
 
-    // Check if trav is pointing to a NULL
-    // or the position is not positive
+    // Check if position is not deletable
     if(*trav == NULL || position <= 0) {
         fprintf(stderr, "Invalid position. Can't delete layer from neural network.");
         exit(1);
     }
     
     temp = *trav;
+    // Reinitialize succeeding layer due to the change of nodes
     *trav = temp->next;
     if(*trav != NULL) {
         freeMatrix(&(*trav)->layer.weights);
