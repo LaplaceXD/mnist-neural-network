@@ -100,6 +100,12 @@ void insertLayer(NeuralNetwork *nn, int position, int nodes, LayerType type)
     idx = 1;
     for(trav = &nn->layerList; *trav != NULL && idx < position; trav = &(*trav)->next) {
         prevLayerNodes = (*trav)->layer.nodes;
+        idx++;
+    }
+
+    if(idx < position || position <= 0) {
+        fprintf(stderr, "Invalid position. Can't insert new layer into neural network.");
+        exit(1);
     }
 
     temp = (LayerList) malloc(sizeof(struct LayerNode));
@@ -111,6 +117,31 @@ void insertLayer(NeuralNetwork *nn, int position, int nodes, LayerType type)
     temp->layer = createLayer(nodes, prevLayerNodes, type, nn->options);
     temp->next = *trav;
     *trav = temp;
+}
+
+void deleteLayer(NeuralNetwork *nn, int position)
+{
+    int idx;
+    LayerList *trav, temp;
+
+    
+    idx = 1;
+    for(
+        trav = &nn->layerList;
+        *trav != NULL && idx < position;
+        trav = &(*trav)->next, idx++
+    ) {}
+
+    if(idx < position || position <= 0) {
+        fprintf(stderr, "Invalid position. Can't delete layer from neural network.");
+        exit(1);
+    }
+    
+    temp = *trav;
+    temp->layer.nodes = 0;
+    freeMatrix(&temp->layer.bias);
+    freeMatrix(&temp->layer.weights);
+    free(temp); 
 }
 
 void freeNeuralNet(NeuralNetwork *nn)
