@@ -13,7 +13,9 @@ MAIN = main
 OUT_NAME := $(strip ${OUT_NAME})
 OUTPUT_DUPES := $(wildcard ${OUTPUT_DIR}*)
 OUTPUT_COUNT := $(words ${OUTPUT_DUPES})
-OUTPUT_DIR := "${OUTPUT_DIR} (${OUTPUT_COUNT})"
+ifeq ("${OUTPUT_COUNT}", "0")
+	OUTPUT_DIR := "${OUTPUT_DIR}(${OUTPUT_COUNT})"
+endif
 
 LIB_SRCS := $(wildcard ${LIB_DIR}/*.c)
 LIB_BINS := $(LIB_SRCS:lib/%.c=%)
