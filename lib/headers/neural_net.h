@@ -61,6 +61,26 @@ NeuralNetwork createNeuralNet(NeuralNetOpt opt);
  *  @return Void. 
  */
 void addLayer(NeuralNetwork *nn, int nodes, LayerType type);
+/** @brief Removes a layer from the Neural Network,
+ *  based on a given position.
+ * 
+ *  @param nn A pointer to the Neural Network where 
+ *  the layer would be attached to.
+ *  @param position The position of the layer in the
+ *  Neural Network (starting at 1).
+ *  @return Void. 
+ */
+void insertLayer(NeuralNetwork *nn, int position, int nodes, LayerType type);
+/** @brief Deletes a layer from the Neural Network,
+ *  based on a given position.
+ * 
+ *  @param nn A pointer to the Neural Network where 
+ *  the layer would be attached to.
+ *  @param position The position of the layer in the
+ *  Neural Network (starting at 1).
+ *  @return Void. 
+ */
+void deleteLayer(NeuralNetwork *nn, int position);
 /** @brief Frees the Neural Network from memory.
  * 
  *  @param nn A pointer to the Neural Network to be freed. 
