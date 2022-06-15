@@ -1,12 +1,12 @@
 /** @file mnist_img.c
  *  @brief A library made for working with mnist
- *  digit dataset.
+ *  digit image set.
  *
  *  This library contains the constants for the data
  *  to be used in training and testing the neural network.
  *  It also has functions for reading image to buffer, 
  *  reading the MNIST CSV and transforming images pixel
- *  values to normalized or standardized forms.
+ *  values.
  *
  *  @author Jonh Alexis Buot (LaplaceXD)
  *  @bug No know bugs.
@@ -15,23 +15,23 @@
 #include <string.h>
 #include <stdlib.h>
 #include "headers/util.h"
-#include "headers/mnist_img.h"
+#include "headers/image_set.h"
 
 ReadCSVDataType(Image);
 
-const MnistMetadata TRAIN_DATA = {
+const ImageSetMetaData TRAIN_DATA = {
     "dataset/mnist_train",
     60000,
     BUFFER_SIZE_DEFAULT
 };
 
-const MnistMetadata TEST_DATA = {
+const ImageSetMetaData TEST_DATA = {
     "dataset/mnist_test",
     10000,
     BUFFER_SIZE_DEFAULT
 };
 
-void readMnistCSV(Image *dest, MnistMetadata meta)
+void readImageSet(Image *dest, ImageSetMetaData meta)
 {
     readCSVData(dest, meta.FILE_NAME, meta.SIZE, meta.BUFFER_SIZE, bufferToImage);
 }
@@ -53,7 +53,7 @@ Image bufferToImage(char *buffer)
     return img;
 }
 
-void transformImage(Image *img, TransformFunc transform)
+void transformImage(Image *img, TransformFunc transformCb)
 {
     int row, size = img->pixels.row * img->pixels.col;
     double pixelBuffer[size], *bufferPos;
@@ -63,7 +63,7 @@ void transformImage(Image *img, TransformFunc transform)
         memcpy(bufferPos, img->pixels.entries[row], sizeof(double) * img->pixels.col);
     }
 
-    transform(pixelBuffer, size);
+    transformCb(pixelBuffer, size);
 
     for(row = 0; row < img->pixels.row; row++) {
         bufferPos = pixelBuffer + row * img->pixels.col;
@@ -71,7 +71,7 @@ void transformImage(Image *img, TransformFunc transform)
     }
 }
 
-void batchTransformImages(Image *imgs, int size, TransformFunc transform)
+void transformImageSet(Image *imgs, int size, TransformFunc transformCb)
 {
     if(size <= 0) {
         fprintf(stderr, "Standardization Failed. Size should be a positive integer.");
@@ -80,11 +80,11 @@ void batchTransformImages(Image *imgs, int size, TransformFunc transform)
     
     int idx;
     for(idx = 0; idx < size; idx++) {
-        transformImage(imgs+idx, transform);
+        transformImage(imgs+idx, transformCb);
     }
 }
 
-void freeImages(Image *imgs, int size)
+void freeImageSet(Image *imgs, int size)
 {
     int idx;
     for(idx = 0; idx < size; idx++) {

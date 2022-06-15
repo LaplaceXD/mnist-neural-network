@@ -1,8 +1,8 @@
 /** @file mnist_img.h
- *  @brief Function prototypes for the mnist img library.
+ *  @brief Function prototypes for the image set library.
  *
  *  This contains the prototypes, type definitions,
- *  constants, and globals for the mnist img library.
+ *  constants, and globals for the image set library.
  * 
  *  @author Jonh Alexis Buot (LaplaceXD)
  *  @bug No known bugs.
@@ -28,22 +28,22 @@ typedef struct CSVMetadata {
     char FILE_NAME[128];
     int SIZE;
     int BUFFER_SIZE;
-} MnistMetadata;
+} ImageSetMetaData;
 
 /** @brief Options for MNIST data training CSV.*/
-extern const MnistMetadata TRAIN_DATA;  
+extern const ImageSetMetaData TRAIN_DATA;  
 
 /** @brief Options for MNIST data testing CSV.*/
-extern const MnistMetadata TEST_DATA;
+extern const ImageSetMetaData TEST_DATA;
 
-/** @brief Read Mnist Dataset.
+/** @brief Read Image Dataset.
  * 
  *  @param dest The destination array where all the images
  *  are to be stored.
  *  @param meta The metadata for the Mnist CSV to be used.
  *  @return Void.
  */
-void readMnistCSV(Image *dest, MnistMetadata meta); 
+void readImageSet(Image *dest, ImageSetMetaData meta); 
 /** @brief Convert CSV rows into Image structs.
  * 
  *  @param buffer A string version of the rows of the CSV. 
@@ -56,24 +56,24 @@ Image bufferToImage(char *buffer);
  * 
  *  @param img A pointer to an image, whose pixels are to be
  *  normalized.
- *  @param transform A transforming function that is used to
- *  convert the image values. 
+ *  @param transformCb A transform callback function that \
+ *  is used to convert the image values. 
  *  @return Void.
  */
-void transformImage(Image *img, TransformFunc transform);
+void transformImage(Image *img, TransformFunc transformCb);
 /** @brief Normalizes a batch of images in an array.
  * 
  *  @param imgs An array of images to be normalized. 
  *  @param size The size of the dataset. 
- *  @param transform A transforming function that is used to
- *  convert the image values. 
+ *  @param transformCb A transform callback function that \
+ *  is used to convert the image values. 
  *  @return Void.
  */
-void batchTransformImages(Image *imgs, int size, TransformFunc transform);
+void transformImageSet(Image *imgs, int size, TransformFunc transformCb);
 /** @brief Frees up loaded images from memory.
  * 
  *  @param imgs An array of images to be freed. 
  *  @param size The size of the dataset. 
  *  @return Void.
  */
-void freeImages(Image *imgs, int size);
+void freeImageSet(Image *imgs, int size);
