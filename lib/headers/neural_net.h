@@ -33,10 +33,17 @@ typedef struct LayerNode {
     struct LayerNode *next;
 } *LayerList;
 
+/** @brief Stucture for the LayerDesign. */
+typedef struct LayerDesign {
+    int nodes;
+    LayerType type; 
+} LayerDesign;
+
 /** @brief Stucture for the NeuralNetOptions. */
 typedef struct NeuralNetOpt {
     DistType dist;
     double distSize;
+    double initialBias;
 } NeuralNetOpt;
 
 /** @brief Stucture for the NeuralNetwork. */
@@ -49,9 +56,22 @@ typedef struct NeuralNetwork {
  *  
  *  @param opt Configured options in creating the
  *  Neural Network.
+ *  @param layers An array of layers to be initialized
+ *  in the Neural Network.
+ *  @param size The number of layers in the layers array.
  *  @return Void.
  */
-NeuralNetwork createNeuralNet(NeuralNetOpt opt);
+NeuralNetwork createNeuralNet(NeuralNetOpt opt, LayerDesign *layers, int size);
+/** @brief Creates the options for the Neural Network.
+ *  
+ *  @param dist The distribution type used to initialize
+ *  the weights of the layers.
+ *  @param distSize The spread of the distribution.
+ *  @param initialBias The initial bias value used to
+ *  intialize the biases of the layers.
+ *  @return Void.
+ */
+NeuralNetOpt createNeuralNetOpt(DistType dist, double distSize, double initialBias);
 /** @brief Add a layer to a Neural Network.
  * 
  *  @param nn A pointer to the Neural Network where 
