@@ -49,14 +49,14 @@ Layer createLayer(int nodes, int prevNodes, LayerType type, NeuralNetOpt nnOpt)
         exit(1);
     }
 
-    if (type != INPUT || type != HIDDEN || type != OUTPUT) {
+    if (type != INPUT && type != HIDDEN && type != OUTPUT) {
         fprintf(stderr, "Invalid Layer Type.");
         exit(1);
     }
 
     Layer layer = {
         .nodes = nodes,
-        .type = type,
+        .type = type
     };
 
     if(prevNodes == 0) {
