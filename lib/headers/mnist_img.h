@@ -64,9 +64,16 @@ void transformImage(Image *img, TransformFunc transform);
 /** @brief Normalizes a batch of images in an array.
  * 
  *  @param imgs An array of images to be normalized. 
- *  @param size The size of the array. 
+ *  @param size The size of the dataset. 
  *  @param transform A transforming function that is used to
  *  convert the image values. 
  *  @return Void.
  */
 void batchTransformImages(Image *imgs, int size, TransformFunc transform);
+/** @brief Frees up loaded images from memory.
+ * 
+ *  @param imgs An array of images to be freed. 
+ *  @param size The size of the dataset. 
+ *  @return Void.
+ */
+void freeImages(Image *imgs, int size);

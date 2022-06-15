@@ -83,3 +83,12 @@ void batchTransformImages(Image *imgs, int size, TransformFunc transform)
         transformImage(imgs+idx, transform);
     }
 }
+
+void freeImages(Image *imgs, int size)
+{
+    int idx;
+    for(idx = 0; idx < size; idx++) {
+        imgs[idx].value = 0;
+        freeMatrix(&imgs[idx].pixels);
+    }
+}
