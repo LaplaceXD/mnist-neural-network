@@ -103,7 +103,9 @@ void insertLayer(NeuralNetwork *nn, int position, int nodes, LayerType type)
         idx++;
     }
 
-    if(idx < position || position <= 0) {
+    // if trav is null, then idx should be equal to position
+    // since the neural net currently has position - 1 layers
+    if((*trav == NULL && idx < position) || position <= 0) {
         fprintf(stderr, "Invalid position. Can't insert new layer into neural network.");
         exit(1);
     }
@@ -117,27 +119,45 @@ void insertLayer(NeuralNetwork *nn, int position, int nodes, LayerType type)
     temp->layer = createLayer(nodes, prevLayerNodes, type, nn->options);
     temp->next = *trav;
     *trav = temp;
+
+    // Next layer should be reinitialized, due to
+    // the change of nodes in the previous layer,
+    // as a new layer is inserted
+    trav = &(*trav)->next;
+    if(*trav != NULL) {
+        freeMatrix(&(*trav)->layer.weights);
+        freeMatrix(&(*trav)->layer.bias);
+        (*trav)->layer = createLayer((*trav)->layer.nodes, temp->layer.nodes, (*trav)->layer.type, nn->options);
+    }
 }
 
 void deleteLayer(NeuralNetwork *nn, int position)
 {
-    int idx;
+    int idx, prevLayerNodes = 0;
     LayerList *trav, temp;
 
-    
     idx = 1;
-    for(
-        trav = &nn->layerList;
-        *trav != NULL && idx < position;
-        trav = &(*trav)->next, idx++
-    ) {}
+    for(trav = &nn->layerList; *trav != NULL && idx < position; trav = &(*trav)->next, idx++) {
+        prevLayerNodes = (*trav)->layer.nodes;
+    }
 
-    if(idx < position || position <= 0) {
+    // Check if trav is pointing to a NULL
+    // or the position is not positive
+    if(*trav == NULL || position <= 0) {
         fprintf(stderr, "Invalid position. Can't delete layer from neural network.");
         exit(1);
     }
     
     temp = *trav;
+    *trav = temp->next;
+    if(*trav != NULL) {
+        freeMatrix(&(*trav)->layer.weights);
+        freeMatrix(&(*trav)->layer.bias);
+        if(position != 1) {
+            (*trav)->layer = createLayer((*trav)->layer.nodes, prevLayerNodes, (*trav)->layer.type, nn->options);
+        }
+    }
+    
     temp->layer.nodes = 0;
     freeMatrix(&temp->layer.bias);
     freeMatrix(&temp->layer.weights);
