@@ -17,6 +17,9 @@
 #include "headers/util.h"
 #include "headers/image_set.h"
 
+#define throwInvalidArgs(arg, msg) { fprintf(stderr, "Invalid %s Argument. %s", arg, msg); exit(1); }
+#define SHOULD_BE_POSITIVE "It should be a positive integer."
+
 ReadCSVDataType(Image);
 
 const ImageSetMetaData TRAIN_DATA = {
@@ -73,11 +76,8 @@ void transformImage(Image *img, TransformFunc transformCb)
 
 void transformImageSet(Image *imgs, int size, TransformFunc transformCb)
 {
-    if(size <= 0) {
-        fprintf(stderr, "Standardization Failed. Size should be a positive integer.");
-        exit(1);
-    }
-    
+    if(size <= 0) throwInvalidArgs("size", SHOULD_BE_POSITIVE);
+
     int idx;
     for(idx = 0; idx < size; idx++) {
         transformImage(imgs+idx, transformCb);
