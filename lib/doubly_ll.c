@@ -73,8 +73,10 @@ void deleteFromList(DoublyLinkedList *ll, int index, CleanupCallback cleanupCb)
     }
 
     temp = *trav;
-    temp->prev->next = temp->next;
-    temp->next->prev = temp->prev;
+    *trav = temp->next;
+    if(*trav != NULL) {
+        (*trav)->prev = temp->prev;
+    }
     cleanupCb(temp->item);
     free(temp);
 }
