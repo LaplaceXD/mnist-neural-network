@@ -24,6 +24,8 @@ typedef struct ErrorMessages {
     char *INVALID_LAYER_SHAPE;
     char *INVALID_LAYER_TYPE;
     char *INVALID_POSITION;
+    char *INVALID_POSITION_TOO_BIG;
+    char *INVALID_POSITION_PLUS_ONE;
     char *FAILED_MEMORY_ALLOCATION;
 } ErrorMessages;
 
@@ -32,7 +34,9 @@ const ErrorMessages ERROR = {
     .INVALID_DIST_STRAT = "Neural Network Creation Failed. Invalid Distribution Strategy.",
     .INVALID_LAYER_SHAPE = "Layer Creation Failed. Invalid Node Argument should be a positive integer.",
     .INVALID_LAYER_TYPE = "Layer Creation Failed. Invalid Layer Type.",
-    .INVALID_POSITION = "Invalid Postion Argument should be a positive integer.",
+    .INVALID_POSITION = "Invalid Postion Argument. Position should be a positive integer.",
+    .INVALID_POSITION_TOO_BIG = "Invalid Postion Argument. Position should not be bigger than the size of the Network.",
+    .INVALID_POSITION_PLUS_ONE = "Invalid Postion Argument. Position should not be bigger than the size of the Network plus one.",
     .FAILED_MEMORY_ALLOCATION = "Memory Allocation Failed."
 };
 
@@ -143,7 +147,8 @@ void addLayer(NeuralNetwork *nn, int nodes, LayerType type)
 void insertLayer(NeuralNetwork *nn, int pos, int nodes, LayerType type)
 {
     if(nodes <= 0) throw(ERROR.INVALID_LAYER_SHAPE);
-    if(pos <= 0 || pos > nn->layers.size + 1) throw(ERROR.INVALID_POSITION);
+    if(pos <= 0) throw(ERROR.INVALID_POSITION);
+    if(pos > nn->layers.size + 1) throw(ERROR.INVALID_POSITION_PLUS_ONE);
     if(type != INPUT && type != HIDDEN && type != OUTPUT) throw(ERROR.INVALID_LAYER_TYPE); 
     
     int index, prevLayerNodes;
@@ -176,7 +181,8 @@ void freeLayer(void *item)
 
 void deleteLayer(NeuralNetwork *nn, int pos)
 {
-    if(pos <= 0 || pos > nn->layers.size) throw(ERROR.INVALID_POSITION);
+    if(pos <= 0) throw(ERROR.INVALID_POSITION);
+    if(pos > nn->layers.size) throw(ERROR.INVALID_POSITION_TOO_BIG);
 
     int index, prevLayerNodes;
     Layer *prev, *curr;
