@@ -128,7 +128,7 @@ Matrix dot(Matrix a, Matrix b)
     Matrix m;
     int row, addTrav, col, sum;
 
-    // swap a and b, a.col != b.row, since it's possible that
+    // swap a and b, if a.col != b.row, since it's possible that
     // b.col == a.row. This is also necessary for the dot calculation
     // to work, since it is required that a is to be traversed by row
     // and b to be traversed by col
