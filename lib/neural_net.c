@@ -1,3 +1,14 @@
+/** @file neural_net.c
+ *  @brief A library made for working with neural networks.
+ *  This has a dependency to matrix.c library.
+ * 
+ *  This library contains various functions which allows
+ *  users to create neural networks. It also has functions
+ *  for creating, deleting, and inserting layers. 
+ *
+ *  @author Jonh Alexis Buot (LaplaceXD)
+ *  @bug No know bugs.
+ */
 #include <stdio.h>
 #include <stdlib.h>
 #include <math.h>
