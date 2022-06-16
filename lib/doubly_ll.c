@@ -90,6 +90,8 @@ void deleteFromList(DoublyLinkedList *ll, int index, CleanupCallback cleanupCb)
     }
     cleanupCb(temp->item);
     free(temp);
+
+    ll->size--;
 }
 
 void *getItem(DoublyLinkedList ll, int index)
