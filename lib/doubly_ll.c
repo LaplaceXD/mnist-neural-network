@@ -80,3 +80,18 @@ void deleteFromList(DoublyLinkedList *ll, int index, CleanupCallback cleanupCb)
     cleanupCb(temp->item);
     free(temp);
 }
+
+void *getItem(DoublyLinkedList ll, int index)
+{
+    if(index < 0) throw(DLL_ERR.INVALID_INDEX_TOO_SMALL);
+    if(index > ll.size) throw(DLL_ERR.INVALID_INDEX_TOO_BIG);
+    if(index == ll.size) throw(DLL_ERR.INVALID_INDEX_EQUAL);
+
+    int idx;
+    List trav = ll.list;
+    for(idx = 1; idx < index; idx++) {
+        trav = trav->next;
+    }
+
+    return trav->item;
+}
