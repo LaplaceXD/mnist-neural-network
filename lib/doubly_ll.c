@@ -94,6 +94,22 @@ void deleteFromList(DoublyLinkedList *ll, int index, CleanupCallback cleanupCb)
     ll->size--;
 }
 
+void clearList(DoublyLinkedList *ll, CleanupCallback cleanupCb)
+{
+    List *trav, temp;   
+    
+    for(*trav == &ll->list; *trav != NULL;) {
+        temp = *trav;
+        *trav = &(*trav)->next;
+
+        cleanupCb(temp->item);
+        free(temp);
+    }
+
+    ll->list = NULL;
+    ll->size = 0;
+}
+
 void *getItem(DoublyLinkedList ll, int index)
 {
     if(index < 0) throw(DLL_ERR.INVALID_INDEX_TOO_SMALL);
