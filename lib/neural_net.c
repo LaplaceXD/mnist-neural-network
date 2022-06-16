@@ -18,7 +18,7 @@
 
 #define throw(err) { fprintf(stderr, "%s\n", err); exit(1); }
 
-typedef struct ErrorMessages {
+typedef struct NNErrMsg {
     char *INVALID_SIZE;
     char *INVALID_DIST_STRAT;
     char *INVALID_LAYER_SHAPE;
@@ -27,9 +27,9 @@ typedef struct ErrorMessages {
     char *INVALID_POSITION_TOO_BIG;
     char *INVALID_POSITION_PLUS_ONE;
     char *FAILED_MEMORY_ALLOCATION;
-} ErrorMessages;
+} NNErrMsg;
 
-const ErrorMessages ERROR = {
+const NNErrMsg NN_ERR = {
     .INVALID_SIZE = "Neural Network Creation Failed. Invalid Size Argument. It should be a non-negative integer.",
     .INVALID_DIST_STRAT = "Neural Network Creation Failed. Invalid Distribution Strategy.",
     .INVALID_LAYER_SHAPE = "Layer Creation Failed. Invalid Node Argument should be a positive integer.",
@@ -42,7 +42,7 @@ const ErrorMessages ERROR = {
 
 NeuralNetwork createNeuralNet(NeuralNetOpt opt, LayerDesign *layers, int size)
 {
-    if(size < 0) throw(ERROR.INVALID_SIZE);
+    if(size < 0) throw(NN_ERR.INVALID_SIZE);
     
     int idx;
     NeuralNetwork nn = { 
@@ -81,7 +81,7 @@ void fillWeights(Matrix *wts, double distSize, DistStrategy distStrat)
             fillMatrix(wts, 0);
             break;
         default:
-            throw(ERROR.INVALID_DIST_STRAT)
+            throw(NN_ERR.INVALID_DIST_STRAT)
     }
 
     if(distStrat != ZERO) {
@@ -93,7 +93,7 @@ void fillWeights(Matrix *wts, double distSize, DistStrategy distStrat)
 void activateLayer(Layer *layer, int prevNodes, NeuralNetOpt nnOpt)
 {
     if(prevNodes < 0) {
-        throw(ERROR.INVALID_LAYER_SHAPE);
+        throw(NN_ERR.INVALID_LAYER_SHAPE);
     } else if(prevNodes == 0) {
         layer->weights = createMatrix(0, 0);
         layer->bias = createMatrix(0, 0);
@@ -107,7 +107,7 @@ void activateLayer(Layer *layer, int prevNodes, NeuralNetOpt nnOpt)
 
 void reactivateLayer(Layer *layer, int prevNodes, NeuralNetOpt nnOpt)
 {
-    if(prevNodes < 0) throw(ERROR.INVALID_LAYER_SHAPE);
+    if(prevNodes < 0) throw(NN_ERR.INVALID_LAYER_SHAPE);
     
     freeMatrix(&layer->weights);
     freeMatrix(&layer->bias);
@@ -116,11 +116,11 @@ void reactivateLayer(Layer *layer, int prevNodes, NeuralNetOpt nnOpt)
 
 Layer *createLayer(int nodes, int prevNodes, LayerType type, NeuralNetOpt nnOpt)
 {
-    if(nodes <= 0 || prevNodes < 0) throw(ERROR.INVALID_LAYER_SHAPE);
-    if(type != INPUT && type != HIDDEN && type != OUTPUT) throw(ERROR.INVALID_LAYER_TYPE); 
+    if(nodes <= 0 || prevNodes < 0) throw(NN_ERR.INVALID_LAYER_SHAPE);
+    if(type != INPUT && type != HIDDEN && type != OUTPUT) throw(NN_ERR.INVALID_LAYER_TYPE); 
 
     Layer *layer = (Layer *) malloc(sizeof(Layer));
-    if(layer == NULL) throw(ERROR.FAILED_MEMORY_ALLOCATION);
+    if(layer == NULL) throw(NN_ERR.FAILED_MEMORY_ALLOCATION);
     
     layer->nodes = nodes;
     layer->type = type;
@@ -131,8 +131,8 @@ Layer *createLayer(int nodes, int prevNodes, LayerType type, NeuralNetOpt nnOpt)
 
 void addLayer(NeuralNetwork *nn, int nodes, LayerType type)
 {
-    if(nodes <= 0) throw(ERROR.INVALID_LAYER_SHAPE);
-    if(type != INPUT && type != HIDDEN && type != OUTPUT) throw(ERROR.INVALID_LAYER_TYPE);
+    if(nodes <= 0) throw(NN_ERR.INVALID_LAYER_SHAPE);
+    if(type != INPUT && type != HIDDEN && type != OUTPUT) throw(NN_ERR.INVALID_LAYER_TYPE);
 
     int prevLayerNodes;
     Layer *prev, *layer;
@@ -146,10 +146,10 @@ void addLayer(NeuralNetwork *nn, int nodes, LayerType type)
 
 void insertLayer(NeuralNetwork *nn, int pos, int nodes, LayerType type)
 {
-    if(nodes <= 0) throw(ERROR.INVALID_LAYER_SHAPE);
-    if(pos <= 0) throw(ERROR.INVALID_POSITION);
-    if(pos > nn->layers.size + 1) throw(ERROR.INVALID_POSITION_PLUS_ONE);
-    if(type != INPUT && type != HIDDEN && type != OUTPUT) throw(ERROR.INVALID_LAYER_TYPE); 
+    if(nodes <= 0) throw(NN_ERR.INVALID_LAYER_SHAPE);
+    if(pos <= 0) throw(NN_ERR.INVALID_POSITION);
+    if(pos > nn->layers.size + 1) throw(NN_ERR.INVALID_POSITION_PLUS_ONE);
+    if(type != INPUT && type != HIDDEN && type != OUTPUT) throw(NN_ERR.INVALID_LAYER_TYPE); 
     
     int index, prevLayerNodes;
     Layer *prev, *curr, *next;
@@ -181,8 +181,8 @@ void freeLayer(void *item)
 
 void deleteLayer(NeuralNetwork *nn, int pos)
 {
-    if(pos <= 0) throw(ERROR.INVALID_POSITION);
-    if(pos > nn->layers.size) throw(ERROR.INVALID_POSITION_TOO_BIG);
+    if(pos <= 0) throw(NN_ERR.INVALID_POSITION);
+    if(pos > nn->layers.size) throw(NN_ERR.INVALID_POSITION_TOO_BIG);
 
     int index, prevLayerNodes;
     Layer *prev, *curr;
