@@ -98,9 +98,9 @@ void clearList(DoublyLinkedList *ll, CleanupCallback cleanupCb)
 {
     List *trav, temp;   
     
-    for(*trav == &ll->list; *trav != NULL;) {
+    for(trav = &ll->list; *trav != NULL;) {
         temp = *trav;
-        *trav = &(*trav)->next;
+        trav = &(*trav)->next;
 
         cleanupCb(temp->item);
         free(temp);
