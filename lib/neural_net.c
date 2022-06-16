@@ -135,10 +135,10 @@ void addLayer(NeuralNetwork *nn, int nodes, LayerType type)
     *trav = temp;
 }
 
-void insertLayer(NeuralNetwork *nn, int position, int nodes, LayerType type)
+void insertLayer(NeuralNetwork *nn, int pos, int nodes, LayerType type)
 {
     if(nodes < 0) throw(ERROR.INVALID_LAYER_SHAPE);
-    if(position <= 0) throw(ERROR.INVALID_POSITION);
+    if(pos <= 0) throw(ERROR.INVALID_POSITION);
     if(type != INPUT && type != HIDDEN && type != OUTPUT) throw(ERROR.INVALID_LAYER_TYPE); 
     
     int prevLayerNodes, idx;
@@ -146,12 +146,12 @@ void insertLayer(NeuralNetwork *nn, int position, int nodes, LayerType type)
 
     idx = 1;
     prevLayerNodes = 0; 
-    for(trav = &nn->layerList; *trav != NULL && idx < position; trav = &(*trav)->next) {
+    for(trav = &nn->layerList; *trav != NULL && idx < pos; trav = &(*trav)->next) {
         prevLayerNodes = (*trav)->layer.nodes;
         idx++;
     }
 
-    if(idx < position && *trav == NULL) throw(ERROR.INVALID_POSITION);
+    if(idx < pos && *trav == NULL) throw(ERROR.INVALID_POSITION);
 
     temp = (LayerList) malloc(sizeof(struct LayerNode));
     if(temp == NULL) throw(ERROR.FAILED_MEMORY_ALLOCATION);
@@ -167,16 +167,16 @@ void insertLayer(NeuralNetwork *nn, int position, int nodes, LayerType type)
     }
 }
 
-void deleteLayer(NeuralNetwork *nn, int position)
+void deleteLayer(NeuralNetwork *nn, int pos)
 {
-    if(position <= 0) throw(ERROR.INVALID_POSITION);
+    if(pos <= 0) throw(ERROR.INVALID_POSITION);
     
     int idx, prevLayerNodes;
     LayerList *trav, temp, nextLayer;
 
     idx = 1;
     prevLayerNodes = 0;
-    for(trav = &nn->layerList; *trav != NULL && idx < position; trav = &(*trav)->next) {
+    for(trav = &nn->layerList; *trav != NULL && idx < pos; trav = &(*trav)->next) {
         prevLayerNodes = (*trav)->layer.nodes;
         idx++;
     }
@@ -191,7 +191,7 @@ void deleteLayer(NeuralNetwork *nn, int position)
     
     // Reinitialize succeeding layer due to the change of nodes
     if(*trav != NULL) {
-        if(position == 1) {
+        if(pos == 1) {
             freeMatrix(&(*trav)->layer.weights);
             freeMatrix(&(*trav)->layer.bias);
         } else {
