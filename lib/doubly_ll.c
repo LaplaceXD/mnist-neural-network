@@ -106,3 +106,8 @@ void *getItem(DoublyLinkedList ll, int index)
 
     return trav->item;
 }
+
+int isListEmpty(DoublyLinkedList ll)
+{
+    return ll.size == 0 ? 1 : 0;
+}

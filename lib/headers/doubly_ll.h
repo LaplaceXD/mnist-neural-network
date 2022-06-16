@@ -70,3 +70,10 @@ void deleteFromList(DoublyLinkedList *ll, int index, CleanupCallback cleanupCb);
  *  @return A pointer to the item of the list.
  */
 void* getItem(DoublyLinkedList ll, int index);
+/** @brief Checks if a list is empty.
+ *  
+ *  @param ll The list to be checked.
+ *  @return 1 - If the list is empty, and 0 - If the list
+ *  is not empty.
+ */ 
+int isListEmpty(DoublyLinkedList ll);
