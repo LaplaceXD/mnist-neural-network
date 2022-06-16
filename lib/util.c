@@ -8,10 +8,12 @@
  *  @author Jonh Alexis Buot (LaplaceXD)
  *  @bug No know bugs.
  */
-
 #include <stdio.h>
 #include <math.h>
 #include "headers/util.h"
+
+#define throwInvalidArgs(arg, msg) { fprintf(stderr, "Invalid %s Argument. %s", arg, msg); exit(1); }
+#define SHOULD_BE_POSITIVE "It should be a positive integer."
 
 int isDoubleEq(double x, double y)
 {
@@ -20,13 +22,10 @@ int isDoubleEq(double x, double y)
 
 double min(double *arr, int size)
 {
+    if(size <= 0) throwInvalidArgs("size", SHOULD_BE_POSITIVE);
+    
     int idx;
     double minimum;
-    
-    if(size <= 0) {
-        fprintf(stderr, "Size should be a positive integer.");
-        exit(1);
-    }
 
     minimum = arr[0];
     for(idx = 1; idx < size; idx++) {
@@ -40,13 +39,10 @@ double min(double *arr, int size)
 
 double max(double *arr, int size)
 {
+    if(size <= 0) throwInvalidArgs("size", SHOULD_BE_POSITIVE);
+    
     int idx;
     double maximum;
-    
-    if(size <= 0) {
-        fprintf(stderr, "Size should be a positive integer.");
-        exit(1);
-    }
 
     maximum = arr[0];
     for(idx = 1; idx < size; idx++) {
@@ -60,13 +56,10 @@ double max(double *arr, int size)
 
 double average(double *arr, int size)
 {
+    if(size <= 0) throwInvalidArgs("size", SHOULD_BE_POSITIVE);
+    
     int idx;
     double sum;
-    
-    if(size <= 0) {
-        fprintf(stderr, "Size should be a positive integer.");
-        exit(1);
-    }
 
     sum = 0;
     for(idx = 0; idx < size; idx++) {
@@ -78,13 +71,10 @@ double average(double *arr, int size)
 
 double stddev(double *arr, int size)
 {
+    if(size <= 0) throwInvalidArgs("size", SHOULD_BE_POSITIVE);
+    
     int idx;
     double sumOfSquares, mean, diff;
-
-    if(size <= 0) {
-        fprintf(stderr, "Size should be a positive integer.");
-        exit(1);
-    }
 
     mean = average(arr, size);
     sumOfSquares = 0;
@@ -104,13 +94,10 @@ double randn(double min, double max)
 
 void normalize(double *data, int size)
 {
+    if(size <= 0) throwInvalidArgs("size", SHOULD_BE_POSITIVE);
+    
     int idx; 
     double minimum, maximum, range;
-
-    if(size <= 0) {
-        fprintf(stderr, "Normalization failed. Size should be a positive integer.");
-        exit(1);
-    }
 
     minimum = min(data, size);
     maximum = max(data, size);
@@ -125,13 +112,10 @@ void normalize(double *data, int size)
 
 void standardize(double *data, int size)
 {
+    if(size <= 0) throwInvalidArgs("size", SHOULD_BE_POSITIVE);
+    
     int idx;
     double mean, sdev;
-    
-    if(size <= 0) {
-        fprintf(stderr, "Standardization Failed. Size should be a positive integer.");
-        exit(1);
-    }
     
     mean = average(data, size);
     sdev = stddev(data, size);
