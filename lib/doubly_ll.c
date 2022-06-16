@@ -13,21 +13,11 @@
 #include <stdlib.h>
 #include "headers/doubly_ll.h"
 
-#define throw(err) { fprintf(stderr, "%s\n", err); exit(1); }
-
-typedef struct ErrMsgDLL {
-    char *FAILED_MEMORY_ALLOCATION;
-    char *INVALID_INDEX_TOO_SMALL;
-    char *INVALID_INDEX_TOO_BIG;
-    char *INVALID_INDEX_EQUAL;
-} ErrMsgDLL;
-
-const ErrMsgDLL DLL_ERR = {
-    .FAILED_MEMORY_ALLOCATION = "Node can't be created. Memory Allocation Failed.",
-    .INVALID_INDEX_TOO_SMALL = "Invalid index supplied. Index can't be a negative number.",
-    .INVALID_INDEX_TOO_BIG = "Invalid index supplied. Index can't be bigger than the size of the list.",
-    .INVALID_INDEX_EQUAL = "Invalid index supplied. Index can't be equal to the size of the list."
-};
+#define throwInvalidArgs(arg, msg) { fprintf(stderr, "Invalid %s Argument. %s", arg, msg); exit(1); }
+#define throwMallocFailed() { fprintf(stderr, "Memory Allocation Failed."); exit(1); }
+#define SHOULD_BE_NON_NEGATIVE "It should be a non-negative integer."
+#define SHOULD_BE_LESS_THAN_LIST "It should not be bigger than or equal to the size of the list."
+#define SHOULD_BE_LESS_THAN_OR_EQUAL_TO_LIST "It should not be bigger than the size of the list."
 
 DoublyLinkedList createList()
 {
@@ -42,8 +32,8 @@ void addToList(DoublyLinkedList *ll, void *item)
 
 void insertToList(DoublyLinkedList *ll, int index, void *item)
 {
-    if(index < 0) throw(DLL_ERR.INVALID_INDEX_TOO_SMALL);
-    if(index > ll->size) throw(DLL_ERR.INVALID_INDEX_TOO_BIG);
+    if(index < 0) throwInvalidArgs("index", SHOULD_BE_NON_NEGATIVE);
+    if(index > ll->size) throwInvalidArgs("index", SHOULD_BE_LESS_THAN_OR_EQUAL_TO_LIST);
     
     int idx;
     List *trav, temp, prev;
@@ -56,7 +46,7 @@ void insertToList(DoublyLinkedList *ll, int index, void *item)
     }
         
     temp = (List) malloc(sizeof(Node));
-    if(temp == NULL) throw(DLL_ERR.FAILED_MEMORY_ALLOCATION);
+    if(temp == NULL) throwMallocFailed();
 
     temp->item = item;
     temp->next = *trav;
@@ -71,9 +61,8 @@ void insertToList(DoublyLinkedList *ll, int index, void *item)
 
 void deleteFromList(DoublyLinkedList *ll, int index, CleanupCallback cleanupCb)
 {
-    if(index < 0) throw(DLL_ERR.INVALID_INDEX_TOO_SMALL);
-    if(index > ll->size) throw(DLL_ERR.INVALID_INDEX_TOO_BIG);
-    if(index == ll->size) throw(DLL_ERR.INVALID_INDEX_EQUAL);
+    if(index < 0) throwInvalidArgs("index", SHOULD_BE_NON_NEGATIVE);
+    if(index >= ll->size) throwInvalidArgs("index", SHOULD_BE_LESS_THAN_LIST);
 
     int idx;
     List *trav, temp;
@@ -117,9 +106,8 @@ void clearList(DoublyLinkedList *ll, CleanupCallback cleanupCb)
 
 void *getItem(DoublyLinkedList ll, int index)
 {
-    if(index < 0) throw(DLL_ERR.INVALID_INDEX_TOO_SMALL);
-    if(index > ll.size) throw(DLL_ERR.INVALID_INDEX_TOO_BIG);
-    if(index == ll.size) throw(DLL_ERR.INVALID_INDEX_EQUAL);
+    if(index < 0) throwInvalidArgs("index", SHOULD_BE_NON_NEGATIVE);
+    if(index >= ll.size) throwInvalidArgs("index", SHOULD_BE_LESS_THAN_LIST);
 
     int idx;
     List trav = ll.list;

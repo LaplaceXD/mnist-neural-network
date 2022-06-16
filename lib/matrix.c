@@ -8,11 +8,15 @@
  *  @author Jonh Alexis Buot (LaplaceXD)
  *  @bug No know bugs.
  */
-
 #include <stdio.h>
 #include <stdlib.h>
 #include <math.h>
 #include "headers/matrix.h"
+
+#define throwInvalidArgs(arg, msg) { fprintf(stderr, "Invalid %s Argument. %s", arg, msg); exit(1); }
+#define throwMallocFailed() { fprintf(stderr, "Memory Allocation Failed."); exit(1); }
+#define throwMismatchedDimensions(msg) { fprintf(stderr, "Matrix Dimensions Mismatched. %s", msg); exit(1); }
+#define SHOULD_BE_POSITIVE "It should be a positive integer."
 
 Matrix createMatrix(int row, int col)
 {
@@ -22,25 +26,14 @@ Matrix createMatrix(int row, int col)
     if (row == 0 && col == 0) {
         m.entries = NULL;
     } else if(row <= 0 || col <= 0) {
-        fprintf(
-            stderr,
-            "Matrix creation failed. Invalid dimensions were supplied: %d x %d.",
-            row, col
-        );
-        exit(1);
+        throwInvalidArgs("row or col", SHOULD_BE_POSITIVE);
     } else {
         m.entries = (double **) malloc(row * sizeof(double*));
-        if(m.entries == NULL) {
-            fprintf(stderr, "Memory allocation failed.");
-            exit(1);
-        }
+        if(m.entries == NULL) throwMallocFailed();
         
         for(idx = 0; idx < row; idx++) {
             m.entries[idx] = (double *) malloc(col * sizeof(double));
-            if(m.entries[idx] == NULL) {
-                fprintf(stderr, "Memory allocation failed.");
-                exit(1);
-            }
+            if(m.entries[idx] == NULL) throwMallocFailed();
         }
     }
     
@@ -96,17 +89,10 @@ void printMatrix(Matrix m)
 
 Matrix add(Matrix a, Matrix b)
 {
+    if(a.row != b.row || a.col != b.col) throwInvalidArgs("Matrices can't be added.", "");
+
     Matrix m;
     int row, col;
-
-    if(a.row != b.row || a.col != b.col) {
-        fprintf(
-            stderr,
-            "Matrices supplied can't be added. Mismatch in dimensions [A: %d x %d][B: %d x %d]",
-            a.row, a.col, b.row, b.col
-        );
-        exit(1);
-    }
 
     m = createMatrix(a.row, a.col);
     for(row = 0; row < a.row; row++) {
@@ -149,14 +135,7 @@ Matrix dot(Matrix a, Matrix b)
         b = m;
     }
 
-    if(a.col != b.row) {
-        fprintf(
-            stderr, 
-            "Matrices supplied can't be dotted. Mismatch in dimensions [A: %d x %d][B: %d x %d]",
-            a.row, a.col, b.row, b.col
-        );
-        exit(1);
-    }
+    if(a.col != b.row) throwMismatchedDimensions("Matrices can't be dotted.");
 
     m = createMatrix(a.row, b.col);
     for(row = 0; row < a.row; row++) {
@@ -200,8 +179,7 @@ void flatten(Matrix* a, MatrixAxis axis)
     } else if (axis == ROW) {
         m = createMatrix(1, matrixSize);
     } else {
-        fprintf(stderr, "Invalid Axis Direction.");
-        exit(1);
+        throwInvalidArgs("axis", "");
     }
 
     for(row = 0; row < a->row; row++) {
