@@ -118,6 +118,53 @@ void *getItem(DoublyLinkedList ll, int index)
     return trav->item;
 }
 
+void *travList(DoublyLinkedList *ll, TravDirection dir)
+{
+    void *item = NULL;
+    static List list = NULL;
+    static int beyondLast = 0;
+    static int isFirst = 1;
+
+    if(ll != NULL) {
+        list = ll->list;
+        beyondLast = 0;
+        isFirst = 1;
+    }
+
+    if(list != NULL) {
+        switch(dir) {
+            case NEXT:
+                if(list->next == NULL) {
+                    beyondLast = 1;
+                } else if (isFirst == 1) {
+                    isFirst = 0;
+                } else {
+                    list = list->next;
+                }
+
+                item = beyondLast == 1 ? NULL : list->item;
+                break;
+            case PREV:
+                if(list->prev != NULL) {
+                    if(beyondLast == 1) {
+                        beyondLast = 0;
+                    } else {
+                        list = list->prev;
+                    }
+                    
+                    item = list->item;
+                } else {
+                    isFirst = 1;
+                }
+                break;
+            default:
+                throwInvalidArgs("dir", "");
+        }
+    }
+
+    return item;
+}
+
 int isListEmpty(DoublyLinkedList ll)
 {
     return ll.size == 0 ? 1 : 0;

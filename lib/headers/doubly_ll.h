@@ -11,6 +11,9 @@
  */
 #pragma once
 
+/** @brief A callback for cleaning up the item inside of node in the list. */
+typedef enum TravDirection { NEXT, PREV } TravDirection;
+
 /** @brief Structure for the nodes in the List */
 typedef struct Node {
     void *item; 
@@ -78,6 +81,26 @@ void clearList(DoublyLinkedList *ll, CleanupCallback cleanupCb);
  *  @return A pointer to the item of the list.
  */
 void* getItem(DoublyLinkedList ll, int index);
+/** @brief Traverses a list forwards or backwards, 
+ *  returning an item, if any, for each traversal.
+ * 
+ *  Only the first call to this function should the list
+ *  be passed, since it maintains a static pointer to the
+ *  contents of the list. Thus, the next calls should
+ *  have a NULL value passed, if you want to get more
+ *  items from the list.
+ * 
+ *  @example
+ *  trav(&ll, NEXT);
+ *  trav(NULL, PREV);
+ *  
+ *  @param ll A pointer to the list to be traversed.
+ *  @param dir The direction of the traversal, NEXT 
+ *  or PREV.
+ *  @return A pointer to the item of the list, else
+ *  a NULL is returned.
+ */ 
+void *travList(DoublyLinkedList *ll, TravDirection dir);
 /** @brief Checks if a list is empty.
  *  
  *  @param ll The list to be checked.
