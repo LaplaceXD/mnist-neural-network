@@ -123,7 +123,7 @@ void *getItem(DoublyLinkedList ll, int index)
 
     int idx;
     List trav = ll.list;
-    for(idx = 1; idx < index; idx++) {
+    for(idx = 1; idx <= index; idx++) {
         trav = trav->next;
     }
 
