@@ -123,14 +123,14 @@ Matrix scale(Matrix a, double val)
 
 Matrix dot(Matrix a, Matrix b)
 {
+    if(a.col != b.row && b.col != a.row) throwMismatchedDimensions("Matrices can't be dotted.");
+    
     Matrix m;
-    // addTrav is for traversing the column a matrix col, and b matrix row for getting the products
-    // col is for traversing the b columns, and row is for traversing the a rows
-    // sum is used to store the sum for each row-col dot multiplication
     int row, addTrav, col, sum;
 
-    // swap a and b, since it is possible that b.col == a.row
-    // and the calculations below require a to be traversed by row
+    // swap a and b, a.col != b.row, since it's possible that
+    // b.col == a.row. This is also necessary for the dot calculation
+    // to work, since it is required that a is to be traversed by row
     // and b to be traversed by col
     if(a.col != b.row) {
         m = a;
@@ -138,13 +138,10 @@ Matrix dot(Matrix a, Matrix b)
         b = m;
     }
 
-    if(a.col != b.row) throwMismatchedDimensions("Matrices can't be dotted.");
-
     m = createMatrix(a.row, b.col);
     for(row = 0; row < a.row; row++) {
         for(col = 0; col < b.col; col++) {
             sum = 0;
-            
             for(addTrav = 0; addTrav < a.col; addTrav++) {
                 sum += a.entries[row][addTrav] * b.entries[addTrav][col];
             }
