@@ -54,3 +54,24 @@ void insertToList(DoublyLinkedList *ll, int index, void *item)
 
     ll->size++;
 }
+
+void deleteFromList(DoublyLinkedList *ll, int index, CleanupCallback cleanupCb)
+{
+    if(index < 0) throw(DLL_ERR.INVALID_INDEX_TOO_SMALL);
+    if(index > ll->size) throw(DLL_ERR.INVALID_INDEX_TOO_BIG);
+    if(index == ll->size) throw(DLL_ERR.INVALID_INDEX_EQUAL);
+
+    int idx;
+    List *trav, temp;
+
+    idx = 0;
+    for(trav = &ll->list; *trav != NULL && idx != index; trav = &(*trav)->next) {
+        idx++;
+    }
+
+    temp = *trav;
+    temp->prev->next = temp->next;
+    temp->next->prev = temp->prev;
+    cleanupCb(temp->item);
+    free(temp);
+}
