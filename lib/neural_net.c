@@ -4,15 +4,32 @@
 #include "headers/neural_net.h"
 #include "headers/matrix.h"
 
+#define throw(err) { fprintf(stderr, "%s\n", err); exit(1); }
+
+typedef struct ErrorMessages {
+    char *INVALID_SIZE;
+    char *INVALID_DIST_STRAT;
+    char *INVALID_LAYER_SHAPE;
+    char *INVALID_LAYER_TYPE;
+    char *INVALID_POSITION;
+    char *FAILED_MEMORY_ALLOCATION;
+} ErrorMessages;
+
+const ErrorMessages ERROR = {
+    .INVALID_SIZE = "Neural Network Creation Failed. Invalid Size Argument. It should be a non-negative integer.",
+    .INVALID_DIST_STRAT = "Neural Network Creation Failed. Invalid Distribution Strategy.",
+    .INVALID_LAYER_SHAPE = "Layer Creation Failed. Invalid Node Argument should be a non-negative integer.",
+    .INVALID_LAYER_TYPE = "Layer Creation Failed. Invalid Layer Type.",
+    .INVALID_POSITION = "Invalid Postion Argument should be a positive integer.",
+    .FAILED_MEMORY_ALLOCATION = "Memory Allocation Failed."
+};
+
 NeuralNetwork createNeuralNet(NeuralNetOpt opt, LayerDesign *layers, int size)
 {
+    if(size < 0) throw(ERROR.INVALID_SIZE);
+    
     NeuralNetwork nn = { opt, NULL };
     int idx;
-    
-    if(size < 0) {
-        fprintf(stderr, "Neural Network Creation Failed. Size should be a non-negative integer.");
-        exit(1);
-    }
     
     if(layers != NULL) {
         for(idx = 0; idx < size; idx++) {
@@ -45,8 +62,7 @@ void fillWeights(Matrix *wts, double distSize, DistStrategy distStrat)
             fillMatrix(wts, 0);
             break;
         default:
-            fprintf(stderr, "Invalid Weight Type.");
-            exit(1);
+            throw(ERROR.INVALID_DIST_STRAT)
     }
 
     if(distStrat != ZERO) {
@@ -57,15 +73,8 @@ void fillWeights(Matrix *wts, double distSize, DistStrategy distStrat)
 
 Layer createLayer(int nodes, int prevNodes, LayerType type, NeuralNetOpt nnOpt)
 {
-    if(nodes <= 0 || prevNodes < 0) {
-        fprintf(stderr, "Layer Creation Failed. Nodes should be a positive integer.");
-        exit(1);
-    }
-
-    if (type != INPUT && type != HIDDEN && type != OUTPUT) {
-        fprintf(stderr, "Invalid Layer Type.");
-        exit(1);
-    }
+    if(nodes <= 0 || prevNodes < 0) throw(ERROR.INVALID_LAYER_SHAPE);
+    if(type != INPUT && type != HIDDEN && type != OUTPUT) throw(ERROR.INVALID_LAYER_TYPE); 
 
     Layer layer = {
         .nodes = nodes,
@@ -85,8 +94,21 @@ Layer createLayer(int nodes, int prevNodes, LayerType type, NeuralNetOpt nnOpt)
     return layer;
 }
 
+void reinitializeLayer(Layer *layer, int prevLayerNodes, NeuralNetOpt nnOpt)
+{
+    if(prevLayerNodes < 0) throw(ERROR.INVALID_LAYER_SHAPE);
+
+    Layer newLayer = createLayer(layer->nodes, prevLayerNodes, layer->type, nnOpt);    
+    free(&layer->weights);
+    free(&layer->bias);
+    *layer = newLayer;
+}
+
 void addLayer(NeuralNetwork *nn, int nodes, LayerType type)
 {
+    if(nodes < 0) throw(ERROR.INVALID_LAYER_SHAPE);
+    if(type != INPUT && type != HIDDEN && type != OUTPUT) throw(ERROR.INVALID_LAYER_TYPE); 
+    
     int prevLayerNodes = 0;
     LayerList *trav, temp;
 
@@ -95,10 +117,7 @@ void addLayer(NeuralNetwork *nn, int nodes, LayerType type)
     }
 
     temp = (LayerList) malloc(sizeof(struct LayerNode));
-    if(temp == NULL) {
-        fprintf(stderr, "Memory allocation failed.");
-        exit(1);
-    }
+    if(temp == NULL) throw(ERROR.FAILED_MEMORY_ALLOCATION);
 
     temp->layer = createLayer(nodes, prevLayerNodes, type, nn->options);
     temp->next = NULL;
@@ -107,26 +126,24 @@ void addLayer(NeuralNetwork *nn, int nodes, LayerType type)
 
 void insertLayer(NeuralNetwork *nn, int position, int nodes, LayerType type)
 {
-    int prevLayerNodes = 0, idx;
-    LayerList *trav, temp;
+    if(nodes < 0) throw(ERROR.INVALID_LAYER_SHAPE);
+    if(position <= 0) throw(ERROR.INVALID_POSITION);
+    if(type != INPUT && type != HIDDEN && type != OUTPUT) throw(ERROR.INVALID_LAYER_TYPE); 
     
+    int prevLayerNodes, idx;
+    LayerList *trav, temp;
+
     idx = 1;
+    prevLayerNodes = 0; 
     for(trav = &nn->layerList; *trav != NULL && idx < position; trav = &(*trav)->next) {
         prevLayerNodes = (*trav)->layer.nodes;
         idx++;
     }
 
-    // Check if position is not insertable
-    if((*trav == NULL && idx < position) || position <= 0) {
-        fprintf(stderr, "Invalid position. Can't insert new layer into neural network.");
-        exit(1);
-    }
+    if(idx < position && *trav == NULL) throw(ERROR.INVALID_POSITION);
 
     temp = (LayerList) malloc(sizeof(struct LayerNode));
-    if(temp == NULL) {
-        fprintf(stderr, "Memory allocation failed.");
-        exit(1);
-    }
+    if(temp == NULL) throw(ERROR.FAILED_MEMORY_ALLOCATION);
 
     temp->layer = createLayer(nodes, prevLayerNodes, type, nn->options);
     temp->next = *trav;
@@ -135,43 +152,41 @@ void insertLayer(NeuralNetwork *nn, int position, int nodes, LayerType type)
     // Reinitialize succeeding layer due to the change of nodes
     trav = &(*trav)->next;
     if(*trav != NULL) {
-        freeMatrix(&(*trav)->layer.weights);
-        freeMatrix(&(*trav)->layer.bias);
-        (*trav)->layer = createLayer((*trav)->layer.nodes, temp->layer.nodes, (*trav)->layer.type, nn->options);
+        reinitializeLayer(&(*trav)->layer, prevLayerNodes, nn->options);
     }
 }
 
 void deleteLayer(NeuralNetwork *nn, int position)
 {
-    int idx, prevLayerNodes = 0;
-    LayerList *trav, temp;
+    if(position <= 0) throw(ERROR.INVALID_POSITION);
+    
+    int idx, prevLayerNodes;
+    LayerList *trav, temp, nextLayer;
 
     idx = 1;
-    for(trav = &nn->layerList; *trav != NULL && idx < position; trav = &(*trav)->next, idx++) {
+    prevLayerNodes = 0;
+    for(trav = &nn->layerList; *trav != NULL && idx < position; trav = &(*trav)->next) {
         prevLayerNodes = (*trav)->layer.nodes;
+        idx++;
     }
 
-    // Check if position is not deletable
-    if(*trav == NULL || position <= 0) {
-        fprintf(stderr, "Invalid position. Can't delete layer from neural network.");
-        exit(1);
-    }
-    
+    if(*trav == NULL) throw(ERROR.INVALID_POSITION);
     temp = *trav;
-    // Reinitialize succeeding layer due to the change of nodes
     *trav = temp->next;
-    if(*trav != NULL) {
-        freeMatrix(&(*trav)->layer.weights);
-        freeMatrix(&(*trav)->layer.bias);
-        if(position != 1) {
-            (*trav)->layer = createLayer((*trav)->layer.nodes, prevLayerNodes, (*trav)->layer.type, nn->options);
-        }
-    }
     
-    temp->layer.nodes = 0;
     freeMatrix(&temp->layer.bias);
     freeMatrix(&temp->layer.weights);
     free(temp); 
+    
+    // Reinitialize succeeding layer due to the change of nodes
+    if(*trav != NULL) {
+        if(position == 1) {
+            freeMatrix(&(*trav)->layer.weights);
+            freeMatrix(&(*trav)->layer.bias);
+        } else {
+            reinitializeLayer(&(*trav)->layer, prevLayerNodes, nn->options);
+        }
+    }
 }
 
 void freeNeuralNet(NeuralNetwork *nn)
@@ -182,7 +197,6 @@ void freeNeuralNet(NeuralNetwork *nn)
         temp = *trav;
         trav = &(*trav)->next;
 
-        temp->layer.nodes = 0;
         freeMatrix(&temp->layer.bias);
         freeMatrix(&temp->layer.weights);
         free(temp); 
