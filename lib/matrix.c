@@ -40,6 +40,12 @@ Matrix createMatrix(int row, int col)
     return m; 
 }
 
+Matrix createZeroMatrix()
+{
+    Matrix m = { NULL, 0, 0 };
+    return m;
+}
+
 void fillMatrix(Matrix* m, double val)
 {
     int row, col;
