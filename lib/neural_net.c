@@ -12,8 +12,9 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <math.h>
-#include "headers/neural_net.h"
 #include "headers/matrix.h"
+#include "headers/doubly_ll.h"
+#include "headers/neural_net.h"
 
 #define throw(err) { fprintf(stderr, "%s\n", err); exit(1); }
 
@@ -29,7 +30,7 @@ typedef struct ErrorMessages {
 const ErrorMessages ERROR = {
     .INVALID_SIZE = "Neural Network Creation Failed. Invalid Size Argument. It should be a non-negative integer.",
     .INVALID_DIST_STRAT = "Neural Network Creation Failed. Invalid Distribution Strategy.",
-    .INVALID_LAYER_SHAPE = "Layer Creation Failed. Invalid Node Argument should be a non-negative integer.",
+    .INVALID_LAYER_SHAPE = "Layer Creation Failed. Invalid Node Argument should be a positive integer.",
     .INVALID_LAYER_TYPE = "Layer Creation Failed. Invalid Layer Type.",
     .INVALID_POSITION = "Invalid Postion Argument should be a positive integer.",
     .FAILED_MEMORY_ALLOCATION = "Memory Allocation Failed."
@@ -39,8 +40,11 @@ NeuralNetwork createNeuralNet(NeuralNetOpt opt, LayerDesign *layers, int size)
 {
     if(size < 0) throw(ERROR.INVALID_SIZE);
     
-    NeuralNetwork nn = { opt, NULL };
     int idx;
+    NeuralNetwork nn = { 
+        .options = opt,
+        .layers = createList()
+    };
     
     if(layers != NULL) {
         for(idx = 0; idx < size; idx++) {
@@ -82,134 +86,121 @@ void fillWeights(Matrix *wts, double distSize, DistStrategy distStrat)
     }
 }
 
-Layer createLayer(int nodes, int prevNodes, LayerType type, NeuralNetOpt nnOpt)
+void activateLayer(Layer *layer, int prevNodes, NeuralNetOpt nnOpt)
+{
+    if(prevNodes < 0) {
+        throw(ERROR.INVALID_LAYER_SHAPE);
+    } else if(prevNodes == 0) {
+        layer->weights = createMatrix(0, 0);
+        layer->bias = createMatrix(0, 0);
+    } else {
+        layer->weights = createMatrix(layer->nodes, prevNodes);
+        layer->bias = createMatrix(layer->nodes, 1);
+        fillWeights(&layer->weights, nnOpt.distSize, nnOpt.distStrat);
+        fillMatrix(&layer->bias, nnOpt.initialBias);
+    }
+}
+
+void reactivateLayer(Layer *layer, int prevNodes, NeuralNetOpt nnOpt)
+{
+    if(prevNodes < 0) throw(ERROR.INVALID_LAYER_SHAPE);
+    
+    free(&layer->weights);
+    free(&layer->bias);
+    activateLayer(layer, prevNodes, nnOpt);
+}
+
+Layer *createLayer(int nodes, int prevNodes, LayerType type, NeuralNetOpt nnOpt)
 {
     if(nodes <= 0 || prevNodes < 0) throw(ERROR.INVALID_LAYER_SHAPE);
     if(type != INPUT && type != HIDDEN && type != OUTPUT) throw(ERROR.INVALID_LAYER_TYPE); 
 
-    Layer layer = {
-        .nodes = nodes,
-        .type = type
-    };
-
-    if(prevNodes == 0) {
-        layer.weights = createMatrix(0, 0);
-        layer.bias = createMatrix(0, 0);
-    } else {
-        layer.weights = createMatrix(nodes, prevNodes);
-        layer.bias = createMatrix(nodes, 1);
-        fillWeights(&layer.weights, nnOpt.distSize, nnOpt.distStrat);
-        fillMatrix(&layer.bias, nnOpt.initialBias);
-    }
+    Layer *layer = (Layer *) malloc(sizeof(Layer));
+    if(layer == NULL) throw(ERROR.FAILED_MEMORY_ALLOCATION);
+    
+    layer->nodes = nodes;
+    layer->type = type;
+    activateLayer(layer, prevNodes, nnOpt);
 
     return layer;
 }
 
-void reinitializeLayer(Layer *layer, int prevLayerNodes, NeuralNetOpt nnOpt)
-{
-    if(prevLayerNodes < 0) throw(ERROR.INVALID_LAYER_SHAPE);
-
-    Layer newLayer = createLayer(layer->nodes, prevLayerNodes, layer->type, nnOpt);    
-    free(&layer->weights);
-    free(&layer->bias);
-    *layer = newLayer;
-}
-
 void addLayer(NeuralNetwork *nn, int nodes, LayerType type)
 {
-    if(nodes < 0) throw(ERROR.INVALID_LAYER_SHAPE);
-    if(type != INPUT && type != HIDDEN && type != OUTPUT) throw(ERROR.INVALID_LAYER_TYPE); 
+    if(nodes <= 0) throw(ERROR.INVALID_LAYER_SHAPE);
+    if(type != INPUT && type != HIDDEN && type != OUTPUT) throw(ERROR.INVALID_LAYER_TYPE);
+
+    int prevLayerNodes;
+    Layer *prev, *layer;
     
-    int prevLayerNodes = 0;
-    LayerList *trav, temp;
+    prev = isListEmpty(nn->layers) ? NULL : (Layer *) getItem(nn->layers, nn->layers.size - 1);
+    prevLayerNodes = prev == NULL ? 0 : prev->nodes;
 
-    for(trav = &nn->layerList; *trav != NULL; trav = &(*trav)->next) {
-        prevLayerNodes = (*trav)->layer.nodes;
-    }
-
-    temp = (LayerList) malloc(sizeof(struct LayerNode));
-    if(temp == NULL) throw(ERROR.FAILED_MEMORY_ALLOCATION);
-
-    temp->layer = createLayer(nodes, prevLayerNodes, type, nn->options);
-    temp->next = NULL;
-    *trav = temp;
+    layer = createLayer(nodes, prevLayerNodes, type, nn->options);
+    addToList(&nn->layers, layer); 
 }
 
 void insertLayer(NeuralNetwork *nn, int pos, int nodes, LayerType type)
 {
-    if(nodes < 0) throw(ERROR.INVALID_LAYER_SHAPE);
-    if(pos <= 0) throw(ERROR.INVALID_POSITION);
+    if(nodes <= 0) throw(ERROR.INVALID_LAYER_SHAPE);
+    if(pos <= 0 || pos > nn->layers.size + 1) throw(ERROR.INVALID_POSITION);
     if(type != INPUT && type != HIDDEN && type != OUTPUT) throw(ERROR.INVALID_LAYER_TYPE); 
     
-    int prevLayerNodes, idx;
-    LayerList *trav, temp;
+    int index, prevLayerNodes;
+    Layer *prev, *curr, *next;
 
-    idx = 1;
-    prevLayerNodes = 0; 
-    for(trav = &nn->layerList; *trav != NULL && idx < pos; trav = &(*trav)->next) {
-        prevLayerNodes = (*trav)->layer.nodes;
-        idx++;
+    index = pos - 1; // position always starts at 1, index always starts at 0
+    prev = isListEmpty(nn->layers) || pos == 1 ? NULL : (Layer *) getItem(nn->layers, index - 1);
+    prevLayerNodes = prev == NULL ? 0 : prev->nodes;
+    
+    curr = createLayer(nodes, prevLayerNodes, type, nn->options);
+    insertToList(&nn->layers, index, curr);
+
+    // Reinitialize succeeding layer
+    if(index + 1 < nn->layers.size) {
+        next = (Layer *) getItem(nn->layers, index + 1);
+        reactivateLayer(next, curr->nodes, nn->options);
     }
+}
 
-    if(idx < pos && *trav == NULL) throw(ERROR.INVALID_POSITION);
+void freeLayer(void *item) 
+{
+    Layer *layer = (Layer *) item;
 
-    temp = (LayerList) malloc(sizeof(struct LayerNode));
-    if(temp == NULL) throw(ERROR.FAILED_MEMORY_ALLOCATION);
-
-    temp->layer = createLayer(nodes, prevLayerNodes, type, nn->options);
-    temp->next = *trav;
-    *trav = temp;
-
-    // Reinitialize succeeding layer due to the change of nodes
-    trav = &(*trav)->next;
-    if(*trav != NULL) {
-        reinitializeLayer(&(*trav)->layer, prevLayerNodes, nn->options);
-    }
+    layer->type = INPUT;
+    layer->nodes = 0;
+    freeMatrix(&layer->weights);
+    freeMatrix(&layer->bias);
+    free(layer);
 }
 
 void deleteLayer(NeuralNetwork *nn, int pos)
 {
-    if(pos <= 0) throw(ERROR.INVALID_POSITION);
-    
-    int idx, prevLayerNodes;
-    LayerList *trav, temp, nextLayer;
+    if(pos <= 0 || pos > nn->layers.size) throw(ERROR.INVALID_POSITION);
 
-    idx = 1;
-    prevLayerNodes = 0;
-    for(trav = &nn->layerList; *trav != NULL && idx < pos; trav = &(*trav)->next) {
-        prevLayerNodes = (*trav)->layer.nodes;
-        idx++;
-    }
+    int index, prevLayerNodes;
+    Layer *prev, *curr;
 
-    if(*trav == NULL) throw(ERROR.INVALID_POSITION);
-    temp = *trav;
-    *trav = temp->next;
+    index = pos - 1; // position always starts at 1, index always starts at 0
+    deleteFromList(&nn->layers, index, freeLayer);
     
-    freeMatrix(&temp->layer.bias);
-    freeMatrix(&temp->layer.weights);
-    free(temp); 
-    
-    // Reinitialize succeeding layer due to the change of nodes
-    if(*trav != NULL) {
-        if(pos == 1) {
-            freeMatrix(&(*trav)->layer.weights);
-            freeMatrix(&(*trav)->layer.bias);
-        } else {
-            reinitializeLayer(&(*trav)->layer, prevLayerNodes, nn->options);
-        }
+    // Reinitialize previously succeeding layer
+    if(index == 1) {
+        curr = (Layer *) getItem(nn->layers, index);
+        freeMatrix(&curr->weights);
+        freeMatrix(&curr->bias);
+    } else if (index < nn->layers.size) {
+        curr = (Layer *) getItem(nn->layers, index);
+        prev = isListEmpty(nn->layers) || pos == 1 ? NULL : (Layer *) getItem(nn->layers, index - 1);
+        prevLayerNodes = prev == NULL ? 0 : prev->nodes;
+        reactivateLayer(curr, prevLayerNodes, nn->options);
     }
 }
 
 void freeNeuralNet(NeuralNetwork *nn)
 {
-    LayerList *trav, temp;
-
-    for(trav = &nn->layerList; *trav != NULL;) {
-        temp = *trav;
-        trav = &(*trav)->next;
-
-        freeMatrix(&temp->layer.bias);
-        freeMatrix(&temp->layer.weights);
-        free(temp); 
-    }
+    clearList(&nn->layers, freeLayer);
+    nn->options.distSize = 0;
+    nn->options.distStrat = ZERO;
+    nn->options.initialBias = 0;
 }

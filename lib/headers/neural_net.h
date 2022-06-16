@@ -11,6 +11,7 @@
 #pragma once   
 
 #include "matrix.h"
+#include "doubly_ll.h"
 
 /** @brief The different weight initialization strategies that can be utilized for the neural net.
  * https://towardsdatascience.com/weight-initialization-techniques-in-neural-networks-26c649eb3b78
@@ -26,12 +27,6 @@ typedef struct Layer {
     Matrix weights;
     Matrix bias;
 } Layer;
-
-/** @brief Stucture for the LayerNode. */
-typedef struct LayerNode {
-    Layer layer;
-    struct LayerNode *next;
-} *LayerList;
 
 /** @brief Stucture for the LayerDesign. */
 typedef struct LayerDesign {
@@ -49,7 +44,7 @@ typedef struct NeuralNetOpt {
 /** @brief Stucture for the NeuralNetwork. */
 typedef struct NeuralNetwork {
     NeuralNetOpt options;
-    LayerList layerList;
+    DoublyLinkedList layers;
 } NeuralNetwork;
 
 /** @brief Creates a Neural Network.
