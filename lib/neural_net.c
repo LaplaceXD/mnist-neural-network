@@ -76,8 +76,8 @@ void activateLayer(Layer *layer, int prevNodes, NeuralNetOpt nnOpt)
     if(prevNodes < 0) {
         throwInvalidArgs("prevNodes", SHOULD_BE_NON_NEGATIVE);
     } else if(prevNodes == 0) {
-        layer->weights = createMatrix(0, 0);
-        layer->bias = createMatrix(0, 0);
+        layer->weights = createZeroMatrix();
+        layer->bias = createZeroMatrix();
     } else {
         layer->weights = createMatrix(layer->nodes, prevNodes);
         layer->bias = createMatrix(layer->nodes, 1);
