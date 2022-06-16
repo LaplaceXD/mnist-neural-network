@@ -105,8 +105,8 @@ void reactivateLayer(Layer *layer, int prevNodes, NeuralNetOpt nnOpt)
 {
     if(prevNodes < 0) throw(ERROR.INVALID_LAYER_SHAPE);
     
-    free(&layer->weights);
-    free(&layer->bias);
+    freeMatrix(&layer->weights);
+    freeMatrix(&layer->bias);
     activateLayer(layer, prevNodes, nnOpt);
 }
 
