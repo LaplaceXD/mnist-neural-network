@@ -41,30 +41,27 @@ void addToList(DoublyLinkedList *ll, void *item);
  *  at a given position.
  *  
  *  @param ll A pointer to the list.
- *  @param pos The position where the item is
- *  to be inserted.
+ *  @param index The index where the item is
+ *  to be inserted (starts at 0).
  *  @param item A pointer to the item to
  *  be inserted. 
  *  @return Void.
  */
-void insertToList(DoublyLinkedList *ll, int pos, void *item);
+void insertToList(DoublyLinkedList *ll, int index, void *item);
 /** @brief Deletes an item from the list
  *  at a given position.
  *  
  *  @param ll A pointer to the list.
- *  @param pos The position of the item in the
- *  list to be deleted.
- *  @param item A pointer to the item to
- *  be inserted. 
+ *  @param index The index of the item to
+ *  be deleted (starts at 0).
  *  @return Void.
  */
-void deleteFromList(DoublyLinkedList *ll, int pos);
+void deleteFromList(DoublyLinkedList *ll, int index);
 /** @brief Returns an item from the list at a given
  *  position.
  *  
  *  @param ll A pointer to the list.
- *  @param pos The position of the item in the
- *  list to be deleted.
+ *  @param index The index of the item (starts at 0).
  *  @return A pointer to the item of the list.
  */
-void* getItem(DoublyLinkedList ll, int pos);
+void* getItem(DoublyLinkedList ll, int index);
