@@ -18,7 +18,7 @@ typedef struct Node {
     struct Node *next;
 } Node, *List;
 
-/** @brief */
+/** @brief Structure for the doubly linked list. */
 typedef struct DoublyLinkedList {
     int size;
     List list;

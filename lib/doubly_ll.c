@@ -1,3 +1,14 @@
+/** @file doubly_ll.c
+ *  @brief A library made for working with doubly linked
+ *  list in c.
+ * 
+ *  This library contains various functions such as creating a
+ *  list; adding, deleting, and inserting items in the list; and
+ *  getting items from the list.
+ * 
+ *  @author Jonh Alexis Buot (LaplaceXD)
+ *  @bug No know bugs.
+ */
 #include <stdio.h>
 #include <stdlib.h>
 #include "headers/doubly_ll.h"
