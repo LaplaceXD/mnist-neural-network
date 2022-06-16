@@ -29,6 +29,11 @@ typedef enum MatrixAxis { ROW, COL } MatrixAxis;
  *  @return A Matrix with dimensions row x col.
  */
 Matrix createMatrix(int row, int col);
+/** @brief Returns a Matrix struct with a 0 x 0 dimension.
+ * 
+ *  @return A Matrix with dimensions 0 x 0.
+ */
+Matrix createZeroMatrix();
 /** @brief Fills all of the entries of matrix m, with the given value.
  * 
  *  @param m A pointer to the matrix to be filled with a value. 
