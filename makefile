@@ -13,7 +13,7 @@ MAIN = main
 OUT_NAME := $(strip ${OUT_NAME})
 OUTPUT_DUPES := $(wildcard ${OUTPUT_DIR}*)
 OUTPUT_COUNT := $(words ${OUTPUT_DUPES})
-ifeq ("${OUTPUT_COUNT}", "0")
+ifneq (${OUTPUT_COUNT}, 0)
 	OUTPUT_DIR := "${OUTPUT_DIR}(${OUTPUT_COUNT})"
 endif
 
