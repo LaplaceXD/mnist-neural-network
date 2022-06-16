@@ -119,7 +119,7 @@ void addLayer(NeuralNetwork *nn, int nodes, LayerType type)
     int prevLayerNodes;
     Layer *prev, *layer;
     
-    prev = isListEmpty(nn->layers) ? NULL : (Layer *) getItem(nn->layers, nn->layers.size - 1);
+    prev = isListEmpty(nn->layers) ? NULL : (Layer *) getItemByIndex(nn->layers, nn->layers.size - 1);
     prevLayerNodes = prev == NULL ? 0 : prev->nodes;
 
     layer = createLayer(nodes, prevLayerNodes, type, nn->options);
@@ -137,7 +137,7 @@ void insertLayer(NeuralNetwork *nn, int pos, int nodes, LayerType type)
     Layer *prev, *curr, *next;
 
     index = pos - 1; // position always starts at 1, index always starts at 0
-    prev = isListEmpty(nn->layers) || pos == 1 ? NULL : (Layer *) getItem(nn->layers, index - 1);
+    prev = isListEmpty(nn->layers) || pos == 1 ? NULL : (Layer *) getItemByIndex(nn->layers, index - 1);
     prevLayerNodes = prev == NULL ? 0 : prev->nodes;
     
     curr = createLayer(nodes, prevLayerNodes, type, nn->options);
@@ -145,7 +145,7 @@ void insertLayer(NeuralNetwork *nn, int pos, int nodes, LayerType type)
 
     // Reinitialize succeeding layer
     if(index + 1 < nn->layers.size) {
-        next = (Layer *) getItem(nn->layers, index + 1);
+        next = (Layer *) getItemByIndex(nn->layers, index + 1);
         reactivateLayer(next, curr->nodes, nn->options);
     }
 }
@@ -174,12 +174,12 @@ void deleteLayer(NeuralNetwork *nn, int pos)
     
     // Reinitialize previously succeeding layer
     if(index == 1) {
-        curr = (Layer *) getItem(nn->layers, index);
+        curr = (Layer *) getItemByIndex(nn->layers, index);
         freeMatrix(&curr->weights);
         freeMatrix(&curr->bias);
     } else if (index < nn->layers.size) {
-        curr = (Layer *) getItem(nn->layers, index);
-        prev = isListEmpty(nn->layers) || pos == 1 ? NULL : (Layer *) getItem(nn->layers, index - 1);
+        curr = (Layer *) getItemByIndex(nn->layers, index);
+        prev = isListEmpty(nn->layers) || pos == 1 ? NULL : (Layer *) getItemByIndex(nn->layers, index - 1);
         prevLayerNodes = prev == NULL ? 0 : prev->nodes;
         reactivateLayer(curr, prevLayerNodes, nn->options);
     }

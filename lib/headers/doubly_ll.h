@@ -74,13 +74,13 @@ void deleteFromList(DoublyLinkedList *ll, int index, CleanupCallback cleanupCb);
  */
 void clearList(DoublyLinkedList *ll, CleanupCallback cleanupCb);
 /** @brief Returns an item from the list at a given
- *  position.
+ *  index.
  *  
  *  @param ll A pointer to the list.
  *  @param index The index of the item (starts at 0).
  *  @return A pointer to the item of the list.
  */
-void* getItem(DoublyLinkedList ll, int index);
+void* getItemByIndex(DoublyLinkedList ll, int index);
 /** @brief Traverses a list forwards or backwards, 
  *  returning an item, if any, for each traversal.
  * 

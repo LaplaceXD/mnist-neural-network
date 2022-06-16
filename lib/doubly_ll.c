@@ -104,7 +104,7 @@ void clearList(DoublyLinkedList *ll, CleanupCallback cleanupCb)
     ll->size = 0;
 }
 
-void *getItem(DoublyLinkedList ll, int index)
+void *getItemByIndex(DoublyLinkedList ll, int index)
 {
     if(index < 0) throwInvalidArgs("index", SHOULD_BE_NON_NEGATIVE);
     if(index >= ll.size) throwInvalidArgs("index", SHOULD_BE_LESS_THAN_LIST);
@@ -151,7 +151,7 @@ void *travList(DoublyLinkedList *ll, TravDirection dir)
                     } else {
                         list = list->prev;
                     }
-                    
+
                     item = list->item;
                 } else {
                     isFirst = 1;
