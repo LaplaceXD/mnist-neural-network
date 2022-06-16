@@ -100,7 +100,7 @@ void* getItemByIndex(DoublyLinkedList ll, int index);
  *  @return A pointer to the item of the list, else
  *  a NULL is returned.
  */ 
-void *travList(DoublyLinkedList *ll, TravDirection dir);
+void *getItem(DoublyLinkedList *ll, TravDirection dir);
 /** @brief Checks if a list is empty.
  *  
  *  @param ll The list to be checked.
