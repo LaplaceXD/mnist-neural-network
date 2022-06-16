@@ -31,8 +31,8 @@ void addToList(DoublyLinkedList *ll, void *item)
 
 void insertToList(DoublyLinkedList *ll, int index, void *item)
 {
-    if(index < 0) throw(DLL_ERR.INVALID_INDEX_TOO_SMALL)
-    if(index > ll->size) throw(DLL_ERR.INVALID_INDEX_TOO_BIG)
+    if(index < 0) throw(DLL_ERR.INVALID_INDEX_TOO_SMALL);
+    if(index > ll->size) throw(DLL_ERR.INVALID_INDEX_TOO_BIG);
     
     int idx;
     List *trav, temp, prev;
@@ -50,6 +50,9 @@ void insertToList(DoublyLinkedList *ll, int index, void *item)
     temp->item = item;
     temp->next = *trav;
     temp->prev = prev;
+    if(*trav != NULL) {
+        (*trav)->prev = temp;
+    }
     *trav = temp;
 
     ll->size++;
