@@ -14,8 +14,8 @@ typedef struct ErrMsgDLL {
 const ErrMsgDLL DLL_ERR = {
     .FAILED_MEMORY_ALLOCATION = "Node can't be created. Memory Allocation Failed.",
     .INVALID_INDEX_TOO_SMALL = "Invalid index supplied. Index can't be a negative number.",
-    .INVALID_INDEX_TOO_BIG = "Invalid index supplied. Index can't be bigger than the size of the array.",
-    .INVALID_INDEX_EQUAL = "Invalid index supplied. Index can't be bigger than the size of the array."
+    .INVALID_INDEX_TOO_BIG = "Invalid index supplied. Index can't be bigger than the size of the list.",
+    .INVALID_INDEX_EQUAL = "Invalid index supplied. Index can't be equal to the size of the list."
 };
 
 DoublyLinkedList createList()
