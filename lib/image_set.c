@@ -8,6 +8,8 @@
  *  reading the MNIST CSV and transforming images pixel
  *  values.
  *
+ *  DEPENDENCIES: util, matrix
+ * 
  *  @author Jonh Alexis Buot (LaplaceXD)
  *  @bug No know bugs.
  */
@@ -15,6 +17,7 @@
 #include <string.h>
 #include <stdlib.h>
 #include "headers/util.h"
+#include "headers/matrix.h"
 #include "headers/image_set.h"
 
 #define throwInvalidArgs(arg, msg) { fprintf(stderr, "Invalid %s Argument. %s", arg, msg); exit(1); }

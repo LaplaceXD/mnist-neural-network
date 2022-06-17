@@ -5,7 +5,9 @@
  *  This library contains various functions which allows
  *  users to create neural networks. It also has functions
  *  for creating, deleting, and inserting layers. 
- *
+ *  
+ *  DEPENDENCIES: matrix, doubly_ll
+ * 
  *  @author Jonh Alexis Buot (LaplaceXD)
  *  @bug No know bugs.
  */

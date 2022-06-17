@@ -4,6 +4,8 @@
  *  This contains the prototypes, type definitions,
  *  constants, and globals for the image set library.
  * 
+ *  DEPENDENCIES: util, matrix
+ * 
  *  @author Jonh Alexis Buot (LaplaceXD)
  *  @bug No known bugs.
  */

@@ -3,7 +3,9 @@
  * 
  *  This contains the prototypes, type definitions,
  *  constants, and globals for the nueral net library.
- * 
+ *
+ *  DEPENDENCIES: matrix, doubly_ll
+ *  
  *  @author Jonh Alexis Buot (LaplaceXD)
  *  @bug No known bugs.
  */
