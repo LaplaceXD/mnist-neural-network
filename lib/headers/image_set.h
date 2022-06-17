@@ -30,13 +30,13 @@ typedef struct CSVMetadata {
     char FILE_NAME[128];
     int SIZE;
     int BUFFER_SIZE;
-} ImageSetMetaData;
+} ImageSetMetadata;
 
 /** @brief Options for MNIST data training CSV.*/
-extern const ImageSetMetaData TRAIN_DATA;  
+extern const ImageSetMetadata TRAIN_DATA;  
 
 /** @brief Options for MNIST data testing CSV.*/
-extern const ImageSetMetaData TEST_DATA;
+extern const ImageSetMetadata TEST_DATA;
 
 /** @brief Read Image Dataset.
  * 
@@ -45,7 +45,7 @@ extern const ImageSetMetaData TEST_DATA;
  *  @param meta The metadata for the Mnist CSV to be used.
  *  @return Void.
  */
-void readImageSet(Image *dest, ImageSetMetaData meta); 
+void readImageSet(Image *dest, ImageSetMetadata meta); 
 /** @brief Convert CSV rows into Image structs.
  * 
  *  @param buffer A string version of the rows of the CSV. 
@@ -79,3 +79,11 @@ void transformImageSet(Image *imgs, int size, TransformCallback transformCb);
  *  @return Void.
  */
 void freeImageSet(Image *imgs, int size);
+/** @brief Checks if the metadata has valid
+ *  values.
+ * 
+ *  @param metadata The metadata to be checked.
+ *  @return 1 - If the metadata is valid. 0 - If
+ *  it is not.
+ */
+int isValidMetadata(ImageSetMetadata metadata);

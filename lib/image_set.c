@@ -23,23 +23,25 @@
 #define throwInvalidArgs(arg, msg) { fprintf(stderr, "Invalid %s Argument. %s", arg, msg); exit(1); }
 #define SHOULD_BE_POSITIVE "It should be a positive integer."
 #define SHOULD_NOT_BE_NULL "Argument should not be null."
+#define NOT_VALID_METADATA "Metadata contains invalid values."
 
 InitReadCSVFunc(Image, Mnist);
 
-const ImageSetMetaData TRAIN_DATA = {
+const ImageSetMetadata TRAIN_DATA = {
     "dataset/mnist_train",
     60000,
     BUFFER_SIZE_DEFAULT
 };
 
-const ImageSetMetaData TEST_DATA = {
+const ImageSetMetadata TEST_DATA = {
     "dataset/mnist_test",
     10000,
     BUFFER_SIZE_DEFAULT
 };
 
-void readImageSet(Image *dest, ImageSetMetaData meta)
+void readImageSet(Image *dest, ImageSetMetadata meta)
 {
+    if(!isValidMetadata(meta)) throwInvalidArgs("meta", NOT_VALID_METADATA);
     readMnistCSV(dest, meta.FILE_NAME, meta.SIZE, meta.BUFFER_SIZE, bufferToImage);
 }
 
@@ -98,4 +100,12 @@ void freeImageSet(Image *imgs, int size)
         imgs[idx].value = 0;
         freeMatrix(&imgs[idx].pixels);
     }
+}
+
+int isValidMetadata(ImageSetMetadata metadata)
+{
+    int hasValidSize = metadata.SIZE > 0;
+    int hasValidBufferSize = metadata.BUFFER_SIZE > 0;
+
+    return hasValidSize && hasValidBufferSize ? 1 : 0;
 }
