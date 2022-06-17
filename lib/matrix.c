@@ -195,3 +195,17 @@ void flatten(Matrix* a, MatrixAxis axis)
     freeMatrix(a);
     *a = m;
 }
+
+void copyMatrix(Matrix src, Matrix dest)
+{
+    if(dest.col < src.col && dest.row < src.row)
+        throwInvalidArgs("", "Dimensions of source matrix must be equal or less than the dimensions of the dest matrix.");
+
+    int row, col;
+
+    for(row = 0; row < dest.row; row++) {
+        for(col = 0; col < dest.col; col++) {
+            dest.entries[row][col] = row < src.row && col < src.col ? src.entries[row][col] : 0;
+        }
+    }
+}

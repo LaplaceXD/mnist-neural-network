@@ -112,3 +112,16 @@ void transpose(Matrix* a);
  *  @return Void.
  */
 void flatten(Matrix* a, MatrixAxis axis); 
+/** @brief Copies the entries of a src matrix into
+ *  the the entries of a destination matrix with similar
+ *  size. If the src is smaller than the dest, then the 
+ *  dest entries is padded with 0s.
+ *  
+ *  NOTE: The dimensions of the destination matrix must be bigger
+ *  or equal to the dimensions of the source matrix.
+ *  
+ *  @param dest The destination matrix. 
+ *  @param src The source matrix. 
+ *  @return Void.
+ */
+void copyMatrix(Matrix src, Matrix dest);
