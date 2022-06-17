@@ -22,6 +22,7 @@
 
 #define throwInvalidArgs(arg, msg) { fprintf(stderr, "Invalid %s Argument. %s", arg, msg); exit(1); }
 #define SHOULD_BE_POSITIVE "It should be a positive integer."
+#define SHOULD_NOT_BE_NULL "Argument should not be null."
 
 InitReadCSVFunc(Image, Mnist);
 
@@ -59,8 +60,10 @@ Image bufferToImage(char *buffer)
     return img;
 }
 
-void transformImage(Image *img, TransformFunc transformCb)
+void transformImage(Image *img, TransformCallback transformCb)
 {
+    if(transformCb == NULL) throwInvalidArgs("transformCb", SHOULD_NOT_BE_NULL);
+    
     int row, size = img->pixels.row * img->pixels.col;
     double pixelBuffer[size], *bufferPos;
 
@@ -77,9 +80,10 @@ void transformImage(Image *img, TransformFunc transformCb)
     }
 }
 
-void transformImageSet(Image *imgs, int size, TransformFunc transformCb)
+void transformImageSet(Image *imgs, int size, TransformCallback transformCb)
 {
     if(size <= 0) throwInvalidArgs("size", SHOULD_BE_POSITIVE);
+    if(transformCb == NULL) throwInvalidArgs("transformCb", SHOULD_NOT_BE_NULL);
 
     int idx;
     for(idx = 0; idx < size; idx++) {

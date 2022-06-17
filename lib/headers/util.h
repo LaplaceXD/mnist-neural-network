@@ -62,7 +62,7 @@ void read##FOR##CSV(DATA_TYPE *dest, char *fileName, int rows, int rowSize, DATA
 }
 
 /** @brief Type definition for Data Transforming functions. */
-typedef void (*TransformFunc)(double *data, int size);
+typedef void (*TransformCallback)(double *data, int size);
 
 /** @brief Returns the minimum value in an array.
  * 
