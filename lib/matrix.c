@@ -17,6 +17,7 @@
 #define throwMallocFailed() { fprintf(stderr, "Memory Allocation Failed."); exit(1); }
 #define throwMismatchedDimensions(msg) { fprintf(stderr, "Matrix Dimensions Mismatched. %s", msg); exit(1); }
 #define SHOULD_BE_POSITIVE "It should be a positive integer."
+#define NOT_A_MATRIX "Argument is not a valid matrix."
 
 Matrix createMatrix(int row, int col)
 {
@@ -45,6 +46,8 @@ Matrix createZeroMatrix()
 
 void fillMatrix(Matrix* m, double val)
 {
+    if(!isValidMatrix(*m)) throwInvalidArgs("m", NOT_A_MATRIX);
+
     int row, col;
     for(row = 0; row < m->row; row++) {
         for(col = 0; col < m->col; col++) {
@@ -55,6 +58,8 @@ void fillMatrix(Matrix* m, double val)
 
 void fillMatrixRandn(Matrix* m, double min, double max, double mult)
 {
+    if(!isValidMatrix(*m)) throwInvalidArgs("m", NOT_A_MATRIX);
+    
     int row, col;
     double boundRand, range = min - max;
 
@@ -68,6 +73,8 @@ void fillMatrixRandn(Matrix* m, double min, double max, double mult)
 
 void freeMatrix(Matrix* m)
 {
+    if(!isValidMatrix(*m)) throwInvalidArgs("m", NOT_A_MATRIX);
+    
     int row;
     for(row = 0; row < m->row; row++) {
         free(m->entries[row]);
@@ -79,6 +86,8 @@ void freeMatrix(Matrix* m)
 
 void printMatrix(Matrix m)
 {
+    if(!isValidMatrix(m)) throwInvalidArgs("m", NOT_A_MATRIX);
+    
     int row, col;
     for(row = 0; row < m.row; row++) {
         for(col = 0; col < m.col; col++) {
@@ -89,8 +98,36 @@ void printMatrix(Matrix m)
     }
 }
 
+int isValidMatrix(Matrix m)
+{
+    return (m.row > 0 && m.col > 0) || isZeroMatrix(m) ? 1 : 0;
+}
+
+int isColumnMatrix(Matrix m)
+{
+    if(!isValidMatrix(m)) throwInvalidArgs("m", NOT_A_MATRIX);
+    // m.row > 1, since 1 x 1 matrices can be
+    // tagged as column matrices, when they are not
+    return m.row > 1 && m.col == 1 ? 1 : 0;
+}
+
+int isRowMatrix(Matrix m)
+{
+    if(!isValidMatrix(m)) throwInvalidArgs("m", NOT_A_MATRIX);
+    // m.col > 1, since 1 x 1 matrices can be
+    // tagged as row matrices, when they are not
+    return m.row == 1 && m.col > 1 ? 1 : 0; 
+}
+
+int isZeroMatrix(Matrix m)
+{
+    return m.row == 0 && m.col == 0 ? 1 : 0;
+}
+
 Matrix add(Matrix a, Matrix b)
 {
+    if(!isValidMatrix(a)) throwInvalidArgs("a", NOT_A_MATRIX);
+    if(!isValidMatrix(b)) throwInvalidArgs("b", NOT_A_MATRIX);
     if(a.row != b.row || a.col != b.col) throwInvalidArgs("Matrices can't be added.", "");
 
     Matrix m;
@@ -108,6 +145,8 @@ Matrix add(Matrix a, Matrix b)
 
 Matrix scale(Matrix a, double val)
 {
+    if(!isValidMatrix(a)) throwInvalidArgs("a", NOT_A_MATRIX);
+    
     Matrix m = createMatrix(a.row, a.col);
     int row, col;
     
@@ -122,6 +161,8 @@ Matrix scale(Matrix a, double val)
 
 Matrix dot(Matrix a, Matrix b)
 {
+    if(!isValidMatrix(a)) throwInvalidArgs("a", NOT_A_MATRIX);
+    if(!isValidMatrix(b)) throwInvalidArgs("b", NOT_A_MATRIX);
     if(a.col != b.row && b.col != a.row) throwMismatchedDimensions("Matrices can't be dotted.");
     
     Matrix m;
@@ -154,6 +195,8 @@ Matrix dot(Matrix a, Matrix b)
 
 void transpose(Matrix* a)
 {
+    if(!isValidMatrix(*a)) throwInvalidArgs("a", NOT_A_MATRIX);
+    
     Matrix m = createMatrix(a->col, a->row);
     int row, col;
     
@@ -169,6 +212,8 @@ void transpose(Matrix* a)
 
 void flatten(Matrix* a, MatrixAxis axis)
 {
+    if(!isValidMatrix(*a)) throwInvalidArgs("a", NOT_A_MATRIX);
+    
     Matrix m;
     int row, col, matrixSize;
 
@@ -197,6 +242,8 @@ void flatten(Matrix* a, MatrixAxis axis)
 
 void copyMatrix(Matrix src, Matrix dest)
 {
+    if(!isValidMatrix(src)) throwInvalidArgs("src", NOT_A_MATRIX);
+    if(!isValidMatrix(dest)) throwInvalidArgs("dest", NOT_A_MATRIX);
     if(dest.col < src.col && dest.row < src.row)
         throwInvalidArgs("", "Dimensions of source matrix must be equal or less than the dimensions of the dest matrix.");
 

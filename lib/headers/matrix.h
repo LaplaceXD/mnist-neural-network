@@ -67,6 +67,38 @@ void freeMatrix(Matrix* m);
  */
 void printMatrix(Matrix m);
 
+/** @brief Checks if the matrix supplied is
+ *  valid. 
+ * 
+ *  @param m The matrix to be checked. 
+ *  @return 1 - If matrix is valid. 0 - If it is not.
+ */
+int isValidMatrix(Matrix m);
+/** @brief Checks if the matrix supplied is
+ *  a column matrix. 
+ * 
+ *  @param m The matrix to be checked. 
+ *  @return 1 - If matrix is a column matrix. 
+ *  0 - If it is not.
+ */
+int isColumnMatrix(Matrix m);
+/** @brief Checks if the matrix supplied is
+ *  a row matrix. 
+ * 
+ *  @param m The matrix to be checked. 
+ *  @return 1 - If matrix is a row matrix. 
+ *  0 - If it is not.
+ */
+int isRowMatrix(Matrix m);
+/** @brief Checks if the matrix supplied is
+ *  a zero matrix. 
+ * 
+ *  @param m The matrix to be checked. 
+ *  @return 1 - If matrix is a zero matrix. 
+ *  0 - If it is not.
+ */
+int isZeroMatrix(Matrix m);
+
 /** @brief Adds two matrices together.
  * 
  *  The two matrices should be of the same dimensions.
