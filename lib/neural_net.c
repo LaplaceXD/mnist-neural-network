@@ -40,7 +40,7 @@ NeuralNetwork createNeuralNet(NeuralNetOpt opt, LayerDesign *layers, int size)
     return nn; 
 }
 
-void fillWeights(Matrix *wts, double distSize, DistStrategy distStrat)
+void activateWeights(Matrix *wts, double distSize, DistStrategy distStrat)
 {
     double mult, bounds;
     int row, col;
@@ -81,8 +81,8 @@ void activateLayer(Layer *layer, int prevNodes, NeuralNetOpt nnOpt)
     } else {
         layer->weights = createMatrix(layer->nodes, prevNodes);
         layer->bias = createMatrix(layer->nodes, 1);
-        fillWeights(&layer->weights, nnOpt.distSize, nnOpt.distStrat);
-        fillMatrix(&layer->bias, nnOpt.initialBias);
+        activateWeights(&layer->weights, nnOpt.distSize, nnOpt.distStrat);
+        fillMatrix(&layer->bias, nnOpt.initialBias); // activate bias
     }
 }
 
