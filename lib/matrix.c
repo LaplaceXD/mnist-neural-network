@@ -74,8 +74,7 @@ void freeMatrix(Matrix* m)
     }
 
     free(m->entries);
-    m->row = 0;
-    m->col = 0;
+    *m = createZeroMatrix();
 }
 
 void printMatrix(Matrix m)

@@ -84,6 +84,9 @@ void deleteFromList(DoublyLinkedList *ll, int index, CleanupCallback cleanupCb)
     free(temp);
 
     ll->size--;
+    if(ll->size == 0) {
+        ll->list = NULL;
+    }
 }
 
 void clearList(DoublyLinkedList *ll, CleanupCallback cleanupCb)
