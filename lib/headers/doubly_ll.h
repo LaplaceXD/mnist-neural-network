@@ -11,8 +11,8 @@
  */
 #pragma once
 
-/** @brief A callback for cleaning up the item inside of node in the list. */
-typedef enum TravDirection { NEXT, PREV } TravDirection;
+/** @brief An enum for the possible directions of navigation in a list. */
+typedef enum NavDirection { NEXT, PREV } NavDirection;
 
 /** @brief Structure for the nodes in the List */
 typedef struct Node {
@@ -81,9 +81,10 @@ void clearList(DoublyLinkedList *ll, CleanupCallback cleanupCb);
  *  @return A pointer to the item of the list.
  */
 void* getItemByIndex(DoublyLinkedList ll, int index);
-/** @brief Traverses a list forwards or backwards, 
- *  returning an item, if any, for each traversal.
- * 
+/** @brief Navigates through the items of a list in order,
+ *  based on a given direction, and the item in the 
+ *  current position is returned.
+ *  
  *  Only the first call to this function should the list
  *  be passed, since it maintains a static pointer to the
  *  contents of the list. Thus, the next calls should
@@ -91,16 +92,17 @@ void* getItemByIndex(DoublyLinkedList ll, int index);
  *  items from the list.
  * 
  *  @example
- *  trav(&ll, NEXT);
- *  trav(NULL, PREV);
+ *  getItem(&ll, NEXT);
+ *  getItem(NULL, PREV);
  *  
- *  @param ll A pointer to the list to be traversed.
- *  @param dir The direction of the traversal, NEXT 
- *  or PREV.
- *  @return A pointer to the item of the list, else
- *  a NULL is returned.
+ *  @param ll A pointer to the list to be navigated.
+ *  @param dir The direction used to navigate the list
+ *  at a given step, NEXT or PREV.
+ *  @return A pointer to the data contained in the 
+ *  current position of the navigation, else a NULL
+ *  is returned.
  */ 
-void *getItem(DoublyLinkedList *ll, TravDirection dir);
+void *getItem(DoublyLinkedList *ll, NavDirection dir);
 /** @brief Checks if a list is empty.
  *  
  *  @param ll The list to be checked.

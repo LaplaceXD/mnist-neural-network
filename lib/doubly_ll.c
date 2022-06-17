@@ -121,7 +121,7 @@ void *getItemByIndex(DoublyLinkedList ll, int index)
     return trav->item;
 }
 
-void *getItem(DoublyLinkedList *ll, TravDirection dir)
+void *getItem(DoublyLinkedList *ll, NavDirection dir)
 {
     void *item = NULL;
     static List list = NULL;
