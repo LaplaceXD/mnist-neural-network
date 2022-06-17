@@ -12,7 +12,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-#define ReadCSVDataType(DATA_TYPE) \
+#define InitReadCSVFunc(DATA_TYPE, FOR) \
 /** @brief A function that reads data from a csv.
  * 
  *  Each row in the csv is held inside a buffer,
@@ -35,7 +35,7 @@
  *  appropriate data that is to be stored in dest.
  *  @return Void.
  */ \
-void readCSVData(DATA_TYPE *dest, char *fileName, int rows, int rowSize, DATA_TYPE (*cb)(char *buffer)) \
+void read##FOR##CSV(DATA_TYPE *dest, char *fileName, int rows, int rowSize, DATA_TYPE (*cb)(char *buffer)) \
 { \
     if(rows <= 0 || rowSize <= 0) { \
         fprintf(stderr, "CSV Reading Failed. Rows and their sizes should be a positive integer."); \

@@ -23,7 +23,7 @@
 #define throwInvalidArgs(arg, msg) { fprintf(stderr, "Invalid %s Argument. %s", arg, msg); exit(1); }
 #define SHOULD_BE_POSITIVE "It should be a positive integer."
 
-ReadCSVDataType(Image);
+InitReadCSVFunc(Image, Mnist);
 
 const ImageSetMetaData TRAIN_DATA = {
     "dataset/mnist_train",
@@ -39,7 +39,7 @@ const ImageSetMetaData TEST_DATA = {
 
 void readImageSet(Image *dest, ImageSetMetaData meta)
 {
-    readCSVData(dest, meta.FILE_NAME, meta.SIZE, meta.BUFFER_SIZE, bufferToImage);
+    readMnistCSV(dest, meta.FILE_NAME, meta.SIZE, meta.BUFFER_SIZE, bufferToImage);
 }
 
 Image bufferToImage(char *buffer)
