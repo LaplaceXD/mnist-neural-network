@@ -30,11 +30,11 @@ You can then run the compiled `mnist.exe` program using `./mnist` in the console
 There are currently 5 libraries that I created for this project. They are completely reusable depending on the needs of your project. However, do take note of their header files and dependencies when copying.
 
 | Library  | Dependencies      | Description |
-|:---------|:-----------------:|:------------|
+|:---------|:------------------|:------------|
 |util      | none              | A utility library for reading CSV files, using extended math functions, and random number generation. |
 |matrix    | none              | A library for working with matrices. |
 |doubly_ll | none              | A library for working with doubly linked list. |
-|image_set | util              | A library for working with the MNIST digit dataset. |
+|image_set | matrix, util      | A library for working with the MNIST digit dataset. |
 |neural_net| matrix, doubly_ll | A library for creating and working with neural networks. |
 |ml        | WIP               | WIP |
 
