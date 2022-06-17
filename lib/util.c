@@ -101,7 +101,7 @@ void normalize(double *data, int size)
 
     minimum = min(data, size);
     maximum = max(data, size);
-    range = minimum - maximum;
+    range = maximum - minimum;
     
     if(!isDoubleEq(range, 0)) {
         for(idx = 0; idx < size; idx++) {
