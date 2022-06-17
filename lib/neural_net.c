@@ -160,6 +160,15 @@ void insertLayer(NeuralNetwork *nn, int pos, int nodes, LayerType type)
     }
 }
 
+Layer *travNeuralNet(NeuralNetwork *nn, TravDirection dir)
+{
+    if(dir != FORWARD && dir != BACKWARD) throwInvalidArgs("dir", "");
+
+    NavDirection nav = dir == FORWARD ? NEXT : PREV;
+    DoublyLinkedList *ll = nn == NULL ? NULL : &nn->layers;  
+    return (Layer *) getItem(ll, nav);
+}
+
 void freeLayer(void *item) 
 {
     Layer *layer = (Layer *) item;

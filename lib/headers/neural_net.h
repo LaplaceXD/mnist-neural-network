@@ -21,6 +21,8 @@
 typedef enum DistStrategy { RANDOM, ZERO, HE, XAVIER, HE_XAVIER } DistStrategy;
 /** @brief The different layer types. */
 typedef enum LayerType { INPUT, HIDDEN, OUTPUT } LayerType;
+/** @brief The different possible direction of traversing a Neural Network. */
+typedef enum TravDirection { FORWARD, BACKWARD } TravDirection;
 
 /** @brief Stucture for the Layer of the Neural Network. */
 typedef struct Layer {
@@ -89,6 +91,24 @@ void insertLayer(NeuralNetwork *nn, int pos, int nodes, LayerType type);
  *  @return Void. 
  */
 void deleteLayer(NeuralNetwork *nn, int pos);
+/** @brief Traverses a neural network in a given direction
+ *  while returning the layer contained in each traversal.
+ * 
+ *  Only the first call of this function should the pointer to 
+ *  the Neural Network be passed. Succeeding calls should have
+ *  a NULL passed to nn, since it would reset the traversal back
+ *  to the start. 
+ * 
+ *  @example
+ *  travNeuralNet(&nn, FORWARD);
+ *  travNeuralNet(&nn, BACKWARD); 
+ *  
+ *  @param nn A pointer to the Neural Network to be traversed. 
+ *  @param dir The direction of traversal. 
+ *  @return A pointer to the layer contained in the current 
+ *  position of the traversal, else NULL is returned
+ */
+Layer *travNeuralNet(NeuralNetwork *nn, TravDirection dir);
 /** @brief Frees the Neural Network from memory.
  * 
  *  @param nn A pointer to the Neural Network to be freed. 
