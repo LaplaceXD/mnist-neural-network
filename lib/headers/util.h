@@ -41,18 +41,27 @@ void read##FOR##CSV(DATA_TYPE *dest, char *fileName, int rows, int rowSize, DATA
         fprintf(stderr, "CSV Reading Failed. Rows and their sizes should be a positive integer."); \
         exit(1); \
     } \
+    if(cb == NULL) { \
+        fprintf(stderr, "CSV Reading Failed. Callback can't be NULL."); \
+        exit(1); \
+    } \
      \
     int idx; \
     char rowBuffer[rowSize]; \
     FILE* csv = fopen(strcat(fileName, ".csv"), "r"); \
+    if(csv == NULL) { \
+        fprintf(stderr, "CSV Reading Failed. Unable to open file."); \
+        exit(1); \
+    } \
      \
     for(idx = 0; idx < rows && fgets(rowBuffer, rowSize, csv); idx++) { \
         dest[idx] = cb(rowBuffer); \
     } \
+     \
+    fclose(csv); \
 }
 
-/** @brief Type definition for Data Transforming functions.
- */
+/** @brief Type definition for Data Transforming functions. */
 typedef void (*TransformFunc)(double *data, int size);
 
 /** @brief Returns the minimum value in an array.
