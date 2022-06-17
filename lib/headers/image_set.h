@@ -53,22 +53,22 @@ void readImageSet(Image *dest, ImageSetMetaData meta);
  *  the buffer.
  */
 Image bufferToImage(char *buffer);
-/** @brief Normalizes image pixel values to ensure that the pixel values
- *  are withing the 0 to 1 range.
+/** @brief Transform image pixel values based on a given function.
  * 
  *  @param img A pointer to an image, whose pixels are to be
- *  normalized.
- *  @param transformCb A transform callback function that \
- *  is used to convert the image values. 
+ *  transformed.
+ *  @param transformCb A transform callback function that 
+ *  is used to convert the image pixel values. 
  *  @return Void.
  */
 void transformImage(Image *img, TransformCallback transformCb);
-/** @brief Normalizes a batch of images in an array.
+/** @brief Transforms a batch of images in an array based
+ *  on a given function.
  * 
- *  @param imgs An array of images to be normalized. 
+ *  @param imgs An array of images to be transformed. 
  *  @param size The size of the dataset. 
- *  @param transformCb A transform callback function that \
- *  is used to convert the image values. 
+ *  @param transformCb A transform callback function that 
+ *  is used to convert the image pixel values. 
  *  @return Void.
  */
 void transformImageSet(Image *imgs, int size, TransformCallback transformCb);
