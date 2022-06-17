@@ -95,3 +95,11 @@ void deleteLayer(NeuralNetwork *nn, int pos);
  *  @return Void. 
  */
 void freeNeuralNet(NeuralNetwork *nn);
+/** @brief Checks if the passed neural net options contains
+ *  valid values.
+ * 
+ *  @param opt The options to be checked. 
+ *  @return 1 - If the options are valid.
+ *  0 - If it is not. 
+ */
+int isValidNeuralNetOpt(NeuralNetOpt opt);

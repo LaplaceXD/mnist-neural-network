@@ -22,9 +22,11 @@
 #define throwMallocFailed() { fprintf(stderr, "Memory Allocation Failed."); exit(1); }
 #define SHOULD_BE_POSITIVE "It should be a positive integer."
 #define SHOULD_BE_NON_NEGATIVE "It should be a non-negative integer."
+#define INVALID_NEURAL_NET_OPT "Neural Network Options contain invalid values."
 
 NeuralNetwork createNeuralNet(NeuralNetOpt opt, LayerDesign *layers, int size)
 {
+    if(!isValidNeuralNetOpt(opt)) throwInvalidArgs("opt", INVALID_NEURAL_NET_OPT);
     if(size < 0) throwInvalidArgs("size", SHOULD_BE_POSITIVE);
     
     int idx;
@@ -42,12 +44,14 @@ NeuralNetwork createNeuralNet(NeuralNetOpt opt, LayerDesign *layers, int size)
     return nn; 
 }
 
-void activateWeights(Matrix *wts, double distSize, DistStrategy distStrat)
+void activateWeights(Matrix *wts, NeuralNetOpt opt)
 {
+    if(!isValidNeuralNetOpt(opt)) throwInvalidArgs("opt", INVALID_NEURAL_NET_OPT);
+
     double mult, bounds;
     int row, col;
 
-    switch(distStrat) {
+    switch(opt.distStrat) {
         case HE:
             mult = sqrt(2.0 / wts->row);
             break;
@@ -67,14 +71,16 @@ void activateWeights(Matrix *wts, double distSize, DistStrategy distStrat)
             throwInvalidArgs("distStrat", "");
     }
 
-    if(distStrat != ZERO) {
-        bounds = distSize / sqrt(wts->row * wts->col);
+    if(opt.distStrat != ZERO) {
+        bounds = opt.distSize / sqrt(wts->row * wts->col);
         fillMatrixRandn(wts, -1 * bounds, bounds, mult);
     }
 }
 
-void activateLayer(Layer *layer, int prevNodes, NeuralNetOpt nnOpt)
+void activateLayer(Layer *layer, int prevNodes, NeuralNetOpt opt)
 {
+    if(!isValidNeuralNetOpt(opt)) throwInvalidArgs("opt", INVALID_NEURAL_NET_OPT);
+    
     if(prevNodes < 0) {
         throwInvalidArgs("prevNodes", SHOULD_BE_NON_NEGATIVE);
     } else if(prevNodes == 0) {
@@ -83,32 +89,34 @@ void activateLayer(Layer *layer, int prevNodes, NeuralNetOpt nnOpt)
     } else {
         layer->weights = createMatrix(layer->nodes, prevNodes);
         layer->bias = createMatrix(layer->nodes, 1);
-        activateWeights(&layer->weights, nnOpt.distSize, nnOpt.distStrat);
-        fillMatrix(&layer->bias, nnOpt.initialBias); // activate bias
+        activateWeights(&layer->weights, opt);
+        fillMatrix(&layer->bias, opt.initialBias); // activate bias
     }
 }
 
-void reactivateLayer(Layer *layer, int prevNodes, NeuralNetOpt nnOpt)
+void reactivateLayer(Layer *layer, int prevNodes, NeuralNetOpt opt)
 {
     if(prevNodes < 0) throwInvalidArgs("prevNodes", SHOULD_BE_NON_NEGATIVE);
+    if(!isValidNeuralNetOpt(opt)) throwInvalidArgs("opt", INVALID_NEURAL_NET_OPT);
     
     freeMatrix(&layer->weights);
     freeMatrix(&layer->bias);
-    activateLayer(layer, prevNodes, nnOpt);
+    activateLayer(layer, prevNodes, opt);
 }
 
-Layer *createLayer(int nodes, int prevNodes, LayerType type, NeuralNetOpt nnOpt)
+Layer *createLayer(int nodes, int prevNodes, LayerType type, NeuralNetOpt opt)
 {
     if(nodes <= 0) throwInvalidArgs("nodes", SHOULD_BE_POSITIVE)
     if(prevNodes < 0) throwInvalidArgs("prevNodes", SHOULD_BE_NON_NEGATIVE);
     if(type != INPUT && type != HIDDEN && type != OUTPUT) throwInvalidArgs("type", ""); 
+    if(!isValidNeuralNetOpt(opt)) throwInvalidArgs("opt", INVALID_NEURAL_NET_OPT);
 
     Layer *layer = (Layer *) malloc(sizeof(Layer));
     if(layer == NULL) throwMallocFailed();
     
     layer->nodes = nodes;
     layer->type = type;
-    activateLayer(layer, prevNodes, nnOpt);
+    activateLayer(layer, prevNodes, opt);
 
     return layer;
 }
@@ -193,4 +201,18 @@ void freeNeuralNet(NeuralNetwork *nn)
     nn->options.distSize = 0;
     nn->options.distStrat = ZERO;
     nn->options.initialBias = 0;
+}
+
+int isValidNeuralNetOpt(NeuralNetOpt opt)
+{
+    DistStrategy type = opt.distStrat;
+    int hasValidDistStrat = type == HE 
+        || type == HE_XAVIER 
+        || type == ZERO 
+        || type == RANDOM 
+        || type == XAVIER;
+
+    int hasValidDistSize = opt.distSize >= 0;
+
+    return hasValidDistSize && hasValidDistStrat ? 1 : 0;
 }
