@@ -1,6 +1,6 @@
 # MNIST Neural Network in C
 
-A small project that was inspired by [Mark Kraay's Video](https://www.youtube.com/watch?v=ReOxVMxS83o), where he created a Neural Network from Scratch in C. This led me to a rabbit hole in machine learning, where I started learning about the mathematics behind machine learning, forward propagation, backward propagation, neural network architecture, and so on. Now, it would be boring if all I learned are theories, thus I wanted to try making my own rendition of a Neural Network in C, using the [MNIST digit dataset](https://git-disl.github.io/GTDLBench/datasets/mnist_datasets/),
+A small project that was inspired by [Mark Kraay's Video](https://www.youtube.com/watch?v=ReOxVMxS83o), where he created a Neural Network from Scratch in C. This led me to a rabbit hole in machine learning, where I started learning about the mathematics behind machine learning, forward propagation, backward propagation, neural network architecture, and so on. Now, it would be boring if all I learned are theories, thus I wanted to try making my own rendition of a Neural Network in C, using the [MNIST digit dataset](https://git-disl.github.io/GTDLBench/datasets/mnist_datasets/).
 
 ## Usage
 
@@ -9,13 +9,14 @@ A small project that was inspired by [Mark Kraay's Video](https://www.youtube.co
 
 Without `MakeFile`:
 ```bash
+gcc lib/util.c -o output/util.o -c
 gcc lib/matrix.c -o output/matrix.o -c
-gcc lib/data.c -o output/data.o -c
-gcc lib/mnist_img.c -o output/mnist_img.o -c
+gcc lib/doubly_ll.c -o output/doubly_ll.o -c
+gcc lib/image_set.c -o output/image_set.o -c
 gcc lib/neural_net.c -o output/neural_net.o -c
 gcc main.c -o output/main.o -c
 cd output
-gcc -o mnist main.o matrix.o data.o mnist_img.o neural_net.o -c
+gcc -o mnist main.o matrix.o util.o image_set.o neural_net.o doubly_ll.o -c
 ```
 With `MakeFile`:
 ```bash
@@ -23,6 +24,19 @@ make
 ```
 
 You can then run the compiled `mnist.exe` program using `./mnist` in the console.
+
+## Libraries Created
+
+There are currently 5 libraries that I created for this project. They are completely reusable depending on the needs of your project. However, do take note of their header files and dependencies when copying.
+
+| Library  | Dependencies      | Description |
+|:---------|:-----------------:|:------------|
+|util      | none              | A utility library for reading CSV files, using extended math functions, and random number generation. |
+|matrix    | none              | A library for working with matrices. |
+|doubly_ll | none              | A library for working with doubly linked list. |
+|image_set | util              | A library for working with the MNIST digit dataset. |
+|neural_net| matrix, doubly_ll | A library for creating and working with neural networks. |
+|ml        | WIP               | WIP |
 
 ## Bibliography
 - [3Blue1Brown - Deep Learning Series](https://www.youtube.com/watch?v=aircAruvnKk&list=PLZHQObOWTQDNU6R1_67000Dx_ZCJB-3pi&index=1)
