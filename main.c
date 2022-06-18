@@ -2,38 +2,65 @@
 #include <math.h>
 #include <time.h>
 #include "lib/headers/util.h"
+#include "lib/headers/matrix.h"
+#include "lib/headers/doubly_ll.h"
 #include "lib/headers/image_set.h"
 #include "lib/headers/neural_net.h"
 
+// void printLayer(Layer l)
+// {
+//     char *type = l.type == INPUT ? "INPUT" : l.type == HIDDEN ? "HIDDEN" : "OUTPUT";
+
+//     printf("Nodes: %d\n", l.nodes);
+//     printf("Type: %s\n", type);
+//     printf("====================WEIGHTS====================\n");
+//     printMatrix(l.weights);
+//     printf("=====================BIASES====================\n");
+//     printMatrix(l.bias);
+// }
+
 int main(int argc, char **argv)
 {
-    srand((unsigned int) time(NULL)); // initialize randomizer
- 
-    LayerDesign layers[] = {{IMG_SIZE, INPUT}, {16, HIDDEN}, {16, HIDDEN}, {10, OUTPUT}};
-    NeuralNetOpt opt = { .distStrat = HE_XAVIER, .distSize = 1, .initialBias = 0 };
-    NeuralNetwork nn = createNeuralNet(opt, layers, 4);
+    Matrix m = createMatrix(2, 3);
+    int num = 1, size = 10;
+    for(int row = 0; row < m.row; row++) {
+        for(int col = 0; col < m.col; col++) {
+            m.entries[row][col] = num++;
+        }
+    }
+
+    printMatrix(m);
     
-    /* =============== TRAINING ================== */
-    Image trainImgs[TRAIN_DATA.SIZE];
-    readImageSet(trainImgs, TRAIN_DATA);
-    transformImageSet(trainImgs, TRAIN_DATA.SIZE, normalize);
+    double arr[size];
 
-    // WIP
+    copyMatrixToArr(m, arr, size);
+    for(num = 0; num < size; num++) printf("%.2lf ", arr[num]);
+    
+    // srand((unsigned int) time(NULL)); // initialize randomizer
 
-    freeImageSet(trainImgs, TRAIN_DATA.SIZE);
-    /* =========== END OF TRAINING ============== */
+    // LayerDesign layers[] = {{10, INPUT}, {5, HIDDEN}, {4, HIDDEN}, {10, OUTPUT}};
+    // NeuralNetOpt opt = { .distStrat = HE_XAVIER, .distSize = 1, .initialBias = 0 };
+    // NeuralNetwork nn = createNeuralNet(opt, layers, 4);
 
-    /* =============== TESTING ================== */
-    Image testImgs[TEST_DATA.SIZE];
-    readImageSet(testImgs, TEST_DATA);
-    transformImageSet(testImgs, TEST_DATA.SIZE, normalize);
+    // /* =============== TRAINING ================== */
+    // Image trainImgs[TRAIN_DATA.SIZE];
+    // readImageSet(trainImgs, TRAIN_DATA);
+    // transformImageSet(trainImgs, TRAIN_DATA.SIZE, normalize);
 
-    // WIP
+    // freeImageSet(trainImgs, TRAIN_DATA.SIZE);
+    // /* =========== END OF TRAINING ============== */
 
-    freeImageSet(testImgs, TEST_DATA.SIZE);
-    /* =========== END OF TESTING ============== */
+    // /* =============== TESTING ================== */
+    // Image testImgs[TEST_DATA.SIZE];
+    // readImageSet(testImgs, TEST_DATA);
+    // transformImageSet(testImgs, TEST_DATA.SIZE, normalize);
 
-    freeNeuralNet(&nn);
+    // // WIP
+
+    // freeImageSet(testImgs, TEST_DATA.SIZE);
+    // /* =========== END OF TESTING ============== */
+
+    // freeNeuralNet(&nn);
 
     return 0;
 }
