@@ -24,7 +24,7 @@
 #define SHOULD_BE_NON_NEGATIVE "It should be a non-negative integer."
 #define INVALID_NEURAL_NET_OPT "Neural Network Options contain invalid values."
 
-NeuralNetwork createNeuralNet(NeuralNetOpt opt, LayerDesign *layers, int size)
+NeuralNetwork createNeuralNet(NeuralNetOpt opt, LayerDesign layers[], int size)
 {
     if(!isValidNeuralNetOpt(opt)) throwInvalidArgs("opt", INVALID_NEURAL_NET_OPT);
     if(size < 0) throwInvalidArgs("size", SHOULD_BE_POSITIVE);

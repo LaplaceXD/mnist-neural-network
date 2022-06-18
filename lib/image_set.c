@@ -39,7 +39,7 @@ const ImageSetMetadata TEST_DATA = {
     BUFFER_SIZE_DEFAULT
 };
 
-void readImageSet(Image *dest, ImageSetMetadata meta)
+void readImageSet(Image dest[], ImageSetMetadata meta)
 {
     if(!isValidMetadata(meta)) throwInvalidArgs("meta", NOT_VALID_METADATA);
     readMnistCSV(dest, meta.FILE_NAME, meta.SIZE, meta.BUFFER_SIZE, bufferToImage);
@@ -74,7 +74,7 @@ void transformImage(Image *img, TransformCallback transformCb)
     copyArrToMatrix(pixelBuffer, size, img->pixels);
 }
 
-void transformImageSet(Image *imgs, int size, TransformCallback transformCb)
+void transformImageSet(Image imgs[], int size, TransformCallback transformCb)
 {
     if(size <= 0) throwInvalidArgs("size", SHOULD_BE_POSITIVE);
     if(transformCb == NULL) throwInvalidArgs("transformCb", SHOULD_NOT_BE_NULL);
@@ -85,7 +85,7 @@ void transformImageSet(Image *imgs, int size, TransformCallback transformCb)
     }
 }
 
-void freeImageSet(Image *imgs, int size)
+void freeImageSet(Image imgs[], int size)
 {
     int idx;
     for(idx = 0; idx < size; idx++) {

@@ -45,7 +45,7 @@ extern const ImageSetMetadata TEST_DATA;
  *  @param meta The metadata for the Mnist CSV to be used.
  *  @return Void.
  */
-void readImageSet(Image *dest, ImageSetMetadata meta); 
+void readImageSet(Image dest[], ImageSetMetadata meta); 
 /** @brief Convert CSV rows into Image structs.
  * 
  *  @param buffer A string version of the rows of the CSV. 
@@ -71,14 +71,14 @@ void transformImage(Image *img, TransformCallback transformCb);
  *  is used to convert the image pixel values. 
  *  @return Void.
  */
-void transformImageSet(Image *imgs, int size, TransformCallback transformCb);
+void transformImageSet(Image imgs[], int size, TransformCallback transformCb);
 /** @brief Frees up loaded images from memory.
  * 
  *  @param imgs An array of images to be freed. 
  *  @param size The size of the dataset. 
  *  @return Void.
  */
-void freeImageSet(Image *imgs, int size);
+void freeImageSet(Image imgs[], int size);
 /** @brief Checks if the metadata has valid
  *  values.
  * 

@@ -20,7 +20,7 @@ int isDoubleEq(double x, double y)
     return fabs(x - y) <= __DBL_EPSILON__;
 }
 
-double min(double *arr, int size)
+double min(double arr[], int size)
 {
     if(size <= 0) throwInvalidArgs("size", SHOULD_BE_POSITIVE);
     
@@ -37,7 +37,7 @@ double min(double *arr, int size)
     return minimum;
 }
 
-double max(double *arr, int size)
+double max(double arr[], int size)
 {
     if(size <= 0) throwInvalidArgs("size", SHOULD_BE_POSITIVE);
     
@@ -54,7 +54,7 @@ double max(double *arr, int size)
     return maximum;
 }
 
-double average(double *arr, int size)
+double average(double arr[], int size)
 {
     if(size <= 0) throwInvalidArgs("size", SHOULD_BE_POSITIVE);
     
@@ -69,7 +69,7 @@ double average(double *arr, int size)
     return sum / size;
 }
 
-double stddev(double *arr, int size)
+double stddev(double arr[], int size)
 {
     if(size <= 0) throwInvalidArgs("size", SHOULD_BE_POSITIVE);
     
@@ -92,7 +92,7 @@ double randn(double min, double max)
     return min + ((double) rand() / RAND_MAX) * range;
 }
 
-void normalize(double *data, int size)
+void normalize(double data[], int size)
 {
     if(size <= 0) throwInvalidArgs("size", SHOULD_BE_POSITIVE);
     
@@ -110,7 +110,7 @@ void normalize(double *data, int size)
     }
 }
 
-void standardize(double *data, int size)
+void standardize(double data[], int size)
 {
     if(size <= 0) throwInvalidArgs("size", SHOULD_BE_POSITIVE);
     

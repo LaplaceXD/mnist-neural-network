@@ -174,7 +174,7 @@ void copyMatrix(Matrix src, Matrix dest);
  *  @param dest The matrix destination for the contents.
  *  @return Void.
  */
-void copyArrToMatrix(double *src, int size, Matrix dest);
+void copyArrToMatrix(double src[], int size, Matrix dest);
 /** @brief Copies the contents of a matrix into an array
  *  following a row-first order.
  *  
@@ -188,4 +188,4 @@ void copyArrToMatrix(double *src, int size, Matrix dest);
  *  @param size The size of the destination array.
  *  @return Void.
  */ 
-void copyMatrixToArr(Matrix src, double *dest, int size);
+void copyMatrixToArr(Matrix src, double dest[], int size);

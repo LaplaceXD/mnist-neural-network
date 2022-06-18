@@ -60,7 +60,7 @@ typedef struct NeuralNetwork {
  *  @param size The number of layers in the layers array.
  *  @return A Neural Network.
  */
-NeuralNetwork createNeuralNet(NeuralNetOpt opt, LayerDesign *layers, int size);
+NeuralNetwork createNeuralNet(NeuralNetOpt opt, LayerDesign layers[], int size);
 /** @brief Creates the options for the Neural Network.
  *  
  *  @param dist The distribution type used to initialize

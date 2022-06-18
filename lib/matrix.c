@@ -263,7 +263,7 @@ void copyMatrix(Matrix src, Matrix dest)
     }
 }
 
-void copyArrToMatrix(double *src, int size, Matrix dest)
+void copyArrToMatrix(double src[], int size, Matrix dest)
 {
     if(size < 0) throwInvalidArgs("size", SHOULD_BE_NON_NEGATIVE);
     if(!isValidMatrix(dest)) throwInvalidArgs("dest", NOT_A_MATRIX);
@@ -289,7 +289,7 @@ void copyArrToMatrix(double *src, int size, Matrix dest)
     }
 }
 
-void copyMatrixToArr(Matrix src, double *dest, int size)
+void copyMatrixToArr(Matrix src, double dest[], int size)
 {
     if(size <= 0) throwInvalidArgs("size", SHOULD_BE_POSITIVE);
     if(dest == NULL) throwInvalidArgs("dest", "It should not be null.");
