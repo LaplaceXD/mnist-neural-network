@@ -217,26 +217,26 @@ void flatten(Matrix* a, MatrixAxis axis)
     if(!isValidMatrix(*a)) throwInvalidArgs("a", NOT_A_MATRIX);
     
     Matrix m;
-    int row, col, matrixSize;
+    int row, col;
 
-    matrixSize = a->row * a->col;
-    if(axis == COL) {
-        m = createMatrix(matrixSize, 1);
-    } else if (axis == ROW) {
-        m = createMatrix(1, matrixSize);
-    } else {
-        throwInvalidArgs("axis", "");
-    }
-
-    for(row = 0; row < a->row; row++) {
-        for(col = 0; col < a->col; col++) {
-            if(axis == COL) {
-                m.entries[row * a->col + col][0] = a->entries[row][col];
-            } else if (axis == ROW) {
-                m.entries[0][row * a->col + col] = a->entries[row][col];
+    switch(axis) {
+        case COL:
+            m = createMatrix(a->row * a->col, 1);
+            for(row = 0; row < a->row; row++) {
+                for(col = 0; col < a->col; col++) {
+                    m.entries[row * a->col + col][0] = a->entries[row][col];
+                }
             }
-        }
-    } 
+            break;
+        case ROW:
+            m = createMatrix(1, a->row * a->col);
+            for(row = 0; row < a->row; col = (++row) * a->col) {
+                memcpy(m.entries[0]+col, a->entries[row], a->col * sizeof(double));
+            }
+            break;
+        default:
+            throwInvalidArgs("axis", "");
+    }
     
     freeMatrix(a);
     *a = m;
