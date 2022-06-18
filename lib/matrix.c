@@ -50,11 +50,15 @@ void fillMatrix(Matrix* m, double val)
 {
     if(!isValidMatrix(*m)) throwInvalidArgs("m", NOT_A_MATRIX);
 
-    int row, col;
-    for(row = 0; row < m->row; row++) {
-        for(col = 0; col < m->col; col++) {
-            m->entries[row][col] = val;
-        }
+    int idx;
+    double fill[m->col];
+
+    for(idx = 0; idx < m->col; idx++) {
+        fill[idx] = val;
+    }
+    
+    for(idx = 0; idx < m->row; idx++) {
+        memcpy(m->entries[idx], fill, m->col * sizeof(double));
     }
 }
 
