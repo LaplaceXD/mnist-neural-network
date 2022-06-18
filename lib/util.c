@@ -92,37 +92,37 @@ double randn(double min, double max)
     return min + ((double) rand() / RAND_MAX) * range;
 }
 
-void normalize(double data[], int size)
+void normalize(double arr[], int size)
 {
     if(size <= 0) throwInvalidArgs("size", SHOULD_BE_POSITIVE);
     
     int idx; 
     double minimum, maximum, range;
 
-    minimum = min(data, size);
-    maximum = max(data, size);
+    minimum = min(arr, size);
+    maximum = max(arr, size);
     range = maximum - minimum;
     
     if(!isDoubleEq(range, 0)) {
         for(idx = 0; idx < size; idx++) {
-            data[idx] = (data[idx] - minimum) / range;
+            arr[idx] = (arr[idx] - minimum) / range;
         }
     }
 }
 
-void standardize(double data[], int size)
+void standardize(double arr[], int size)
 {
     if(size <= 0) throwInvalidArgs("size", SHOULD_BE_POSITIVE);
     
     int idx;
     double mean, sdev;
     
-    mean = average(data, size);
-    sdev = stddev(data, size);
+    mean = average(arr, size);
+    sdev = stddev(arr, size);
     
     if(!isDoubleEq(sdev, 0)) {
         for(idx = 0; idx < size; idx++) {
-            data[idx] = (data[idx] - mean) / sdev;
+            arr[idx] = (arr[idx] - mean) / sdev;
         }
     }
 }

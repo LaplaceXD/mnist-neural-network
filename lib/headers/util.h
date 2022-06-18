@@ -61,38 +61,38 @@ void read##FOR##CSV(DATA_TYPE dest[], char *fileName, int rows, int rowSize, DAT
     fclose(csv); \
 }
 
-/** @brief Type definition for Data Transforming functions. */
-typedef void (*TransformCallback)(double data[], int size);
+/** @brief Type definition for Array Transforming functions. */
+typedef void (*TransformCallback)(double arr[], int size);
 
 /** @brief Returns the minimum value in an array.
  * 
- * @param data An array of values.
+ * @param arr An array of values.
  * @param size The size of the array.
  * @return The minimum value of an array.
  */
-double min(double data[], int size);
+double min(double arr[], int size);
 /** @brief Returns the maximum value in an array.
  * 
- * @param data An array of values.
+ * @param arr An array of values.
  * @param size The size of the array.
  * @return The maximum value of an array.
  */
-double max(double data[], int size);
+double max(double arr[], int size);
 /** @brief Calculates the average value of an array.
  * 
- * @param data An array of values.
+ * @param arr An array of values.
  * @param size The size of the array.
  * @return The average value of an array.
  */
-double average(double data[], int size);
+double average(double arr[], int size);
 /** @brief Calculates the standard deviation of
  * the values in an array.
  * 
- * @param data An array of values.
+ * @param arr An array of values.
  * @param size The size of the array.
  * @return The standard deviation of an array.
  */
-double stddev(double data[], int size);
+double stddev(double arr[], int size);
 /** @brief Returns a random number within the range [min, max].
  * 
  * @param min The minimum possible random number.
@@ -106,11 +106,11 @@ double randn(double min, double max);
  * each value by the minimum and dividing them
  * by the range of the dataset.
  * 
- * @param data An array containing all the values to normalize.
+ * @param arr An array containing all the values to normalize.
  * @param size The size of the array.
  * @return Void.
  */
-void normalize(double data[], int size);
+void normalize(double arr[], int size);
 /** @brief Standardizes the values in an array.
  * 
  * This is calculated by subtracting the mean
@@ -118,8 +118,8 @@ void normalize(double data[], int size);
  * then dividing them with the standard deviation
  * of the set.
  * 
- * @param data An array containing all the values to standardize.
+ * @param arr An array containing all the values to standardize.
  * @param size The size of the array.
  * @return Void.
  */
-void standardize(double data[], int size);
+void standardize(double arr[], int size);
