@@ -69,17 +69,9 @@ void transformImage(Image *img, TransformCallback transformCb)
     int row, size = img->pixels.row * img->pixels.col;
     double pixelBuffer[size], *bufferPos;
 
-    for(row = 0; row < img->pixels.row; row++) {
-        bufferPos = pixelBuffer + row * img->pixels.col;
-        memcpy(bufferPos, img->pixels.entries[row], sizeof(double) * img->pixels.col);
-    }
-
+    copyMatrixToArr(img->pixels, pixelBuffer, size);
     transformCb(pixelBuffer, size);
-
-    for(row = 0; row < img->pixels.row; row++) {
-        bufferPos = pixelBuffer + row * img->pixels.col;
-        memcpy(img->pixels.entries[row], bufferPos, sizeof(double) * img->pixels.col);
-    }
+    copyArrToMatrix(pixelBuffer, size, img->pixels);
 }
 
 void transformImageSet(Image *imgs, int size, TransformCallback transformCb)
