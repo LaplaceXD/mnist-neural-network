@@ -10,6 +10,7 @@
  */
 #include <stdio.h>
 #include <stdlib.h>
+#include <string.h>
 #include <math.h>
 #include "headers/matrix.h"
 
@@ -17,6 +18,7 @@
 #define throwMallocFailed() { fprintf(stderr, "Memory Allocation Failed."); exit(1); }
 #define throwMismatchedDimensions(msg) { fprintf(stderr, "Matrix Dimensions Mismatched. %s", msg); exit(1); }
 #define SHOULD_BE_POSITIVE "It should be a positive integer."
+#define SHOULD_BE_NON_NEGATIVE "It should be a non-negative integer."
 #define NOT_A_MATRIX "Argument is not a valid matrix."
 
 Matrix createMatrix(int row, int col)
@@ -253,5 +255,53 @@ void copyMatrix(Matrix src, Matrix dest)
         for(col = 0; col < dest.col; col++) {
             dest.entries[row][col] = row < src.row && col < src.col ? src.entries[row][col] : 0;
         }
+    }
+}
+
+void copyArrToMatrix(double *src, int size, Matrix dest)
+{
+    if(size < 0) throwInvalidArgs("size", SHOULD_BE_NON_NEGATIVE);
+    if(!isValidMatrix(dest)) throwInvalidArgs("dest", NOT_A_MATRIX);
+
+    int row, idx, mSize, noOfItems;
+    mSize = dest.row * dest.col;
+
+    row = 0;
+    for(idx = 0; idx < size && idx < mSize; idx = (++row) * dest.col) {
+        noOfItems = size < idx + dest.col ? size - idx : dest.col;
+        memcpy(dest.entries[row], src+idx, noOfItems * sizeof(double));
+    }
+
+    if(idx < mSize) {
+        // fill remaining spaces with 0 in the row if there is any
+        row = row == 0 ? 0 : row - 1;
+        memset(dest.entries[row]+noOfItems, 0, (dest.col - noOfItems) * sizeof(double));
+
+        // fill remaining rows with 0 if there is any
+        for(row = row + 1; row < dest.row; row++) {
+            memset(dest.entries[row], 0, dest.col * sizeof(double));
+        }
+    }
+}
+
+void copyMatrixToArr(Matrix src, double *dest, int size)
+{
+    if(size <= 0) throwInvalidArgs("size", SHOULD_BE_POSITIVE);
+    if(dest == NULL) throwInvalidArgs("dest", "It should not be null.");
+    if(!isValidMatrix(src)) throwInvalidArgs("src", NOT_A_MATRIX);
+
+    int row, idx, mSize, noOfItems;
+    mSize = src.row * src.col;
+
+    row = 0;
+    for(idx = 0; idx < size && idx < mSize; idx = (++row) * src.col) {
+        noOfItems = size < idx + src.col ? size - idx : src.col;
+        memcpy(dest+idx, src.entries[row], noOfItems * sizeof(double));
+    }
+
+    if(idx < size) {
+        // fill remaining spaces with 0
+        noOfItems = size - idx;
+        memset(dest+idx, 0, noOfItems * sizeof(double));
     }
 }

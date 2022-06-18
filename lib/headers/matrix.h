@@ -144,6 +144,7 @@ void transpose(Matrix* a);
  *  @return Void.
  */
 void flatten(Matrix* a, MatrixAxis axis); 
+
 /** @brief Copies the entries of a src matrix into
  *  the the entries of a destination matrix with similar
  *  size. If the src is smaller than the dest, then the 
@@ -157,3 +158,34 @@ void flatten(Matrix* a, MatrixAxis axis);
  *  @return Void.
  */
 void copyMatrix(Matrix src, Matrix dest);
+/** @brief Copies the contents of an array into 
+ *  a matrix following a row-first order. 
+ *  
+ *  If the size of the array is lesser than 
+ *  that of the matrix, then the matrix is padded
+ *  with 0s. Else if, the size of the array is bigger
+ *  then only the contents up to the size of the 
+ *  matrix size would be copied, and the rest would be 
+ *  cut-off.
+ * 
+ *  @param src The source array whose contents are 
+ *  to be copied.
+ *  @param size The size of the source array.
+ *  @param dest The matrix destination for the contents.
+ *  @return Void.
+ */
+void copyArrToMatrix(double *src, int size, Matrix dest);
+/** @brief Copies the contents of a matrix into an array
+ *  following a row-first order.
+ *  
+ *  If the matrix has a bigger size than the destination
+ *  array, then only the contents up to the size of the
+ *  array would be copied, and teh rest would be cut-off.
+ * 
+ *  @param src The source matrix whose contents are 
+ *  to be copied.
+ *  @param dest The array destination for the contents.
+ *  @param size The size of the destination array.
+ *  @return Void.
+ */ 
+void copyMatrixToArr(Matrix src, double *dest, int size);
