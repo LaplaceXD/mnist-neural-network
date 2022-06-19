@@ -27,7 +27,7 @@ You can then run the compiled `mnist.exe` program using `./mnist` in the console
 
 ## Libraries Created
 
-There are currently 5 libraries that I created for this project. They are completely reusable depending on the needs of your project. However, do take note of their header files and dependencies when copying. The documentation for the functions stored in these libraries can be found in their respective header files.
+There are currently 6 libraries that I created for this project. They are completely reusable depending on the needs of your project. However, do take note of their header files and dependencies when copying. The documentation for the functions stored in these libraries can be found in their respective header files.
 
 | Library      | Dependencies              | Description |
 |:-------------|:--------------------------|:------------|
