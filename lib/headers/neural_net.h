@@ -45,10 +45,16 @@ typedef struct LayerDesign {
 
 /** @brief Stucture for the NeuralNetOptions. */
 typedef struct NeuralNetOpt {
+    // The orientation of the nodes in the neural netowrk.
     NodeOrientation nodeOrient;
+    // The distribution strategy to be used for intializing
+    // the weights.
     DistStrategy distStrat;
+    // The size of the distribution.
     double distSize;
+    // The initial value for the biases of the layers.
     double initialBias;
+    // The learning rate of the neural network.
     int lr;
 } NeuralNetOpt;
 
