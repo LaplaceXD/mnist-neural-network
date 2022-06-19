@@ -33,7 +33,7 @@ typedef MapFunc ActivationFunc;
  *  The input values of the data is flattened based on an 
  *  axis, and then formatted based on a transform function.
  * 
- *  @param data The data to be prepared.
+ *  @param data A pointer to the data to be prepared.
  *  @param axis The matrix axis that the input values should 
  *  be flattened to. This should be the same as the node orientation 
  *  of the Neural Network to be able to feed it properly.
@@ -41,7 +41,7 @@ typedef MapFunc ActivationFunc;
  *  of the Data into a much suitable format for the Neural Network.
  *  @return Void.
  */
-void prepData(Data data, MatrixAxis axis, TransformFunc transform);
+void prepData(Data *data, MatrixAxis axis, TransformFunc transform);
 /** @brief Formats an entire dataset into a much understandable format 
  *  by the Neural Network to maximize learning.
  * 
