@@ -4,26 +4,22 @@
  *  This contains the prototypes, type definitions,
  *  constants, and globals for the image set library.
  * 
- *  DEPENDENCIES: util, matrix
+ *  DEPENDENCIES: matrix, ml
  * 
  *  @author Jonh Alexis Buot (LaplaceXD)
  *  @bug No known bugs.
  */
 #pragma once
 
-#include "matrix.h"
-#include "stats.h"
+#include "ml.h"
 
 #define BUFFER_SIZE_DEFAULT 2048
 #define IMG_HEIGHT 28
 #define IMG_WIDTH 28
 #define IMG_SIZE IMG_HEIGHT * IMG_WIDTH
 
-/** @brief Stucture for MNIST dataset images.*/
-typedef struct Image {
-    int value;
-    Matrix pixels; 
-} Image;
+/** @brief MNIST dataset images.*/
+typedef Data Image;
 
 /** @brief Contains all the necessary data to parse a CSV.*/
 typedef struct CSVMetadata {
@@ -54,25 +50,6 @@ void readImageSet(Image dest[], int size, ImageSetMetadata meta);
  *  the buffer.
  */
 Image bufferToImage(char *buffer);
-/** @brief Transform image pixel values based on a given function.
- * 
- *  @param img A pointer to an image, whose pixels are to be
- *  transformed.
- *  @param transform A transform callback function that 
- *  is used to convert the image pixel values. 
- *  @return Void.
- */
-void transformImage(Image *img, TransformFunc transform);
-/** @brief Transforms a batch of images in an array based
- *  on a given function.
- * 
- *  @param imgs An array of images to be transformed. 
- *  @param size The size of the dataset. 
- *  @param transform A transform callback function that 
- *  is used to convert the image pixel values. 
- *  @return Void.
- */
-void transformImageSet(Image imgs[], int size, TransformFunc transform);
 /** @brief Frees up loaded images from memory.
  * 
  *  @param imgs An array of images to be freed. 
