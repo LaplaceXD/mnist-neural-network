@@ -74,6 +74,29 @@ Matrix forwardPropagate(Data data, NeuralNetwork nn, ActivationFunc activate)
     return res;
 }
 
+double networkTest(Data dataset[], int size, NeuralNetwork nn, ActivationFunc activate)
+{
+    if(size <= 0) throwInvalidArgs("size", SHOULD_BE_POSITIVE);
+    if(activate == NULL) throwInvalidArgs("activate", SHOULD_NOT_BE_NULL);
+    
+    int idx, resVal, correctItems;
+    Matrix res;
+
+    correctItems = 0;
+    for(idx = 0; idx < size; idx++) {
+        res = forwardPropagate(dataset[idx], nn, activate);
+        resVal = evalResult(res);
+
+        if(resVal == dataset[idx].expVal) {
+            correctItems++;
+        }
+
+        freeMatrix(&res);
+    }
+
+    return (double) correctItems / size;
+}
+
 int evalResult(Matrix m)
 {
     if(!isValidMatrix(m)) throwInvalidArgs("m", "Matrix is in an invalid format.");

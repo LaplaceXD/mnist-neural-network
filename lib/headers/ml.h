@@ -81,6 +81,17 @@ Matrix forwardPropagate(Data data, NeuralNetwork nn, ActivationFunc activate);
  *  @return Void. 
  */
 void networkTrain(Data dataset[], int size, NeuralNetwork nn, ActivationFunc activate);
+/** @brief Tests a Neural Network based on a given dataset.
+ *  
+ *  @param dataset The dataset that the Neural Network has to test against.
+ *  @param size The size of the dataset.
+ *  @param nn The Neural Network to be tested.
+ *  @param activate The activation function to activate the neurons 
+ *  in the Neural Network (sigmoid, reLU, tanh).
+ *  @return The accuracy of the neural network's prediction 
+ *  in decimal.
+ */
+double networkTest(Data dataset[], int size, NeuralNetwork nn, ActivationFunc activate);
 /** @brief Evaluates the resulting matrix and returns the predicted value 
  *  by the Neural Network as an integer.
  * 
