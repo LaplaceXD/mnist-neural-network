@@ -44,6 +44,6 @@ clean_up:
 run:
 	@./${OUT_NAME}.exe	
 
-remove:
+clean:
 	@echo "Removing ${OUT_NAME}.exe..."
 	@rm -rf ${OUT_NAME}.exe
