@@ -77,6 +77,19 @@ void fillMatrixRandn(Matrix m, double min, double max, double mult)
     }
 }
 
+void mapMatrix(Matrix m, MapFunc map)
+{
+    if(!isValidMatrix(m)) throwInvalidArgs("m", NOT_A_MATRIX);
+
+    int row, col;
+
+    for(row = 0; row < m.row; row++) {
+        for(col = 0; col < m.col; col++) {
+            m.entries[row][col] = map(m.entries[row][col]);
+        }
+    }
+}
+
 void freeMatrix(Matrix* m)
 {
     if(!isValidMatrix(*m)) throwInvalidArgs("m", NOT_A_MATRIX);

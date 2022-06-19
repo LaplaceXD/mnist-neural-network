@@ -19,6 +19,9 @@ typedef struct Matrix {
     int col;
 } Matrix;
 
+/** @brief A function that maps a double to another double value */
+typedef double (*MapFunc)(double val);
+
 /** @brief Specifies the Axis of the Matrix. */
 typedef enum MatrixAxis { ROW, COL } MatrixAxis;
 
@@ -52,6 +55,15 @@ void fillMatrix(Matrix m, double val);
  *  @return Void.
  */
 void fillMatrixRandn(Matrix m, double min, double max, double mult);
+/** @brief Maps the values in a matrix based on an applied 
+ *  function.
+ * 
+ *  @param m The matrix whose values are to be mapped. 
+ *  @param map The mapping function that maps the values 
+ *  of the matrix to another set of values. 
+ *  @return Void.
+ */
+void mapMatrix(Matrix m, MapFunc map);
 /** @brief Frees the dynamically stored entries of the matrix,
  *  and sets the matrix's dimensions to 0x0.
  * 
