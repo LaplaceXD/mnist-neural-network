@@ -78,21 +78,21 @@ int evalResult(Matrix m)
 {
     if(!isValidMatrix(m)) throwInvalidArgs("m", "Matrix is in an invalid format.");
 
-    int row, col, minRow, minCol, isNotEq, currIsLessThanMin;
+    int row, col, maxRow, maxCol, isNotEq, currIsGreaterThanMax;
 
-    minRow = 0;
-    minCol = 0;
+    maxRow = 0;
+    maxCol = 0;
     for(row = 0; row < m.row; row++) {
         for(col = 0; col < m.col; col++) {
-            isNotEq = !isDoubleEq(m.entries[row][col], m.entries[minRow][minCol]);
-            currIsLessThanMin = m.entries[row][col] < m.entries[minRow][minCol];
+            isNotEq = !isDoubleEq(m.entries[row][col], m.entries[maxRow][maxCol]);
+            currIsGreaterThanMax = m.entries[row][col] > m.entries[maxRow][maxCol];
 
-            if(isNotEq && currIsLessThanMin) {
-                minRow = row;
-                minCol = col;
+            if(isNotEq && currIsGreaterThanMax) {
+                maxRow = row;
+                maxCol = col;
             }
         }
     }
 
-    return minRow * m.col + minCol + 1;
+    return maxRow * m.col + maxCol;
 }
