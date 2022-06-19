@@ -235,6 +235,10 @@ int isValidNeuralNetOpt(NeuralNetOpt opt)
         || opt.nodeOrient == COL;
 
     int hasValidDistSize = opt.distSize >= 0;
+    int hasValidLR = opt.lr >= 0;
 
-    return hasValidDistSize && hasValidDistStrat & hasValidOrientation ? 1 : 0;
+    return hasValidDistSize 
+        && hasValidDistStrat 
+        && hasValidOrientation
+        && hasValidLR ? 1 : 0;
 }
