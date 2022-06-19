@@ -42,10 +42,11 @@ extern const ImageSetMetadata TEST_DATA;
  * 
  *  @param dest The destination array where all the images
  *  are to be stored.
+ *  @param size The size of the destination array.
  *  @param meta The metadata for the Mnist CSV to be used.
  *  @return Void.
  */
-void readImageSet(Image dest[], ImageSetMetadata meta); 
+void readImageSet(Image dest[], int size, ImageSetMetadata meta); 
 /** @brief Convert CSV rows into Image structs.
  * 
  *  @param buffer A string version of the rows of the CSV. 

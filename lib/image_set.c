@@ -25,24 +25,33 @@
 #define SHOULD_NOT_BE_NULL "Argument should not be null."
 #define NOT_VALID_METADATA "Metadata contains invalid values."
 
-InitReadCSVFunc(Image, Mnist);
-
 const ImageSetMetadata TRAIN_DATA = {
-    "dataset/mnist_train",
+    "dataset/mnist_train.csv",
     60000,
     BUFFER_SIZE_DEFAULT
 };
 
 const ImageSetMetadata TEST_DATA = {
-    "dataset/mnist_test",
+    "dataset/mnist_test.csv",
     10000,
     BUFFER_SIZE_DEFAULT
 };
 
-void readImageSet(Image dest[], ImageSetMetadata meta)
+void readImageSet(Image dest[], int size, ImageSetMetadata meta)
 {
+    if(size <= 0) throwInvalidArgs("size", SHOULD_BE_POSITIVE);
     if(!isValidMetadata(meta)) throwInvalidArgs("meta", NOT_VALID_METADATA);
-    readMnistCSV(dest, meta.FILE_NAME, meta.SIZE, meta.BUFFER_SIZE, bufferToImage);
+
+    int idx;
+    char buffer[meta.BUFFER_SIZE];
+    FILE *fp = fopen(meta.FILE_NAME, "r");
+    if(fp == NULL) throwInvalidArgs("meta", "Unable to open file.");
+
+    for(idx = 0; idx < size && fgets(buffer, meta.BUFFER_SIZE, fp); idx++) {
+        dest[idx] = bufferToImage(buffer);
+    } 
+
+    fclose(fp);
 }
 
 Image bufferToImage(char *buffer)
