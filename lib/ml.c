@@ -7,6 +7,8 @@
  *  in a neural network. It also allows users to train 
  *  Neural Network based on a dataset.
  *
+ *  DEPENDENCIES: matrix, stats, neural_net 
+ *  
  *  @author Jonh Alexis Buot (LaplaceXD)
  *  @bug No know bugs.
  */

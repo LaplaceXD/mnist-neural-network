@@ -6,6 +6,8 @@
  *  constants, and globals for the machine learning 
  *  library.
  * 
+ *  DEPENDENCIES: matrix, stats, neural_net 
+ * 
  *  @author Jonh Alexis Buot (LaplaceXD)
  *  @bug No known bugs.
  */
