@@ -18,7 +18,7 @@
 
 int isDoubleEq(double x, double y)
 {
-    return fabs(x - y) <= __DBL_EPSILON__;
+    return fabs(x - y) <= __DBL_EPSILON__ ? 1 : 0;
 }
 
 double min(double arr[], int size)

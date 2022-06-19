@@ -15,6 +15,14 @@
 /** @brief Type definition for Array Transforming functions. */
 typedef void (*TransformFunc)(double arr[], int size);
 
+/** @brief Checks if two doubles are equal.
+ * 
+ *  @param x A double.
+ *  @param y A double.
+ *  @return 1 - If the two doubles are equal. 
+ *  0 - If it is not.
+ */
+int isDoubleEq(double x, double y);
 /** @brief Returns the minimum value in an array.
  * 
  * @param arr An array of values.
