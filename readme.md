@@ -9,21 +9,25 @@ A small project that was inspired by [Mark Kraay's Video](https://www.youtube.co
 
 Without `MakeFile`:
 ```bash
+mkdir output
 gcc lib/stats.c -o output/stats.o -c
 gcc lib/matrix.c -o output/matrix.o -c
 gcc lib/doubly_ll.c -o output/doubly_ll.o -c
 gcc lib/image_set.c -o output/image_set.o -c
 gcc lib/neural_net.c -o output/neural_net.o -c
+gcc lib/ml.c -o output/ml.o -c
 gcc main.c -o output/main.o -c
 cd output
-gcc -o mnist main.o matrix.o stats.o image_set.o neural_net.o doubly_ll.o -c
+gcc -o ../mnist main.o stats.o matrix.o doubly_ll.o image_set.o neural_net.o ml.o
+cd ..
+rm -rf output
 ```
 With `MakeFile`:
 ```bash
 make
 ```
 
-You can then run the compiled `mnist.exe` program using `./mnist` in the console.
+You can then run the compiled `mnist.exe` program using by typing `./mnist` or `make run` if `MakeFile` is installed, in the console.
 
 ## Libraries Created
 
