@@ -186,7 +186,8 @@ Matrix dot(Matrix a, Matrix b)
     if(a.col != b.row && b.col != a.row) throwMismatchedDimensions("Matrices can't be dotted.");
     
     Matrix m;
-    int row, addTrav, col, sum;
+    int row, addTrav, col;
+    double sum;
 
     // swap a and b, if a.col != b.row, since it's possible that
     // b.col == a.row. This is also necessary for the dot calculation
