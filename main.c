@@ -10,9 +10,9 @@ int main(int argc, char **argv)
 {
     srand((unsigned int) time(NULL)); // initialize randomizer
 
-    LayerDesign layers[] = {{10, INPUT}, {5, HIDDEN}, {4, HIDDEN}, {10, OUTPUT}};
+    LayerDesign layers[] = {{IMG_SIZE, INPUT}, {300, HIDDEN}, {10, OUTPUT}};
     NeuralNetOpt opt = { .distSize = 1, .distStrat = HE, .initialBias = 0, .nodeOrient = ROW, .lr = 0.1 };
-    NeuralNetwork nn = createNeuralNet(opt, layers, 4);
+    NeuralNetwork nn = createNeuralNet(opt, layers, sizeof(layers) / sizeof(LayerDesign));
 
     /* =============== TRAINING ================== */
     Image trainImgs[TRAIN_DATA.SIZE];
@@ -28,12 +28,13 @@ int main(int argc, char **argv)
 
     /* =============== TESTING ================== */
     Image testImgs[TEST_DATA.SIZE];
-    readImageSet(testImgs, TRAIN_DATA.SIZE, TEST_DATA);
+    readImageSet(testImgs, TEST_DATA.SIZE, TEST_DATA);
 
     // flatten to node orientation, normalize values
     prepDataset(testImgs, TEST_DATA.SIZE, nn.options.nodeOrient, normalize);
 
-    // WIP
+    double acc = networkTest(testImgs, TEST_DATA.SIZE, nn, tanh);
+    printf("Accuracy: %.2lf percent.", acc * 100);
 
     freeImageSet(testImgs, TEST_DATA.SIZE);
     /* =========== END OF TESTING ============== */
