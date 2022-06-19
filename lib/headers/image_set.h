@@ -58,21 +58,21 @@ Image bufferToImage(char *buffer);
  * 
  *  @param img A pointer to an image, whose pixels are to be
  *  transformed.
- *  @param transformCb A transform callback function that 
+ *  @param transform A transform callback function that 
  *  is used to convert the image pixel values. 
  *  @return Void.
  */
-void transformImage(Image *img, TransformFunc transformCb);
+void transformImage(Image *img, TransformFunc transform);
 /** @brief Transforms a batch of images in an array based
  *  on a given function.
  * 
  *  @param imgs An array of images to be transformed. 
  *  @param size The size of the dataset. 
- *  @param transformCb A transform callback function that 
+ *  @param transform A transform callback function that 
  *  is used to convert the image pixel values. 
  *  @return Void.
  */
-void transformImageSet(Image imgs[], int size, TransformFunc transformCb);
+void transformImageSet(Image imgs[], int size, TransformFunc transform);
 /** @brief Frees up loaded images from memory.
  * 
  *  @param imgs An array of images to be freed. 

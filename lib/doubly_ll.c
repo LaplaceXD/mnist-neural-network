@@ -59,7 +59,7 @@ void insertToList(DoublyLinkedList *ll, int index, void *item)
     ll->size++;
 }
 
-void deleteFromList(DoublyLinkedList *ll, int index, CleanupFunc cleanupCb)
+void deleteFromList(DoublyLinkedList *ll, int index, CleanupFunc cleanup)
 {
     if(index < 0) throwInvalidArgs("index", SHOULD_BE_NON_NEGATIVE);
     if(index >= ll->size) throwInvalidArgs("index", SHOULD_BE_LESS_THAN_LIST);
@@ -78,8 +78,8 @@ void deleteFromList(DoublyLinkedList *ll, int index, CleanupFunc cleanupCb)
         (*trav)->prev = temp->prev;
     }
 
-    if(cleanupCb != NULL) {
-        cleanupCb(temp->item);
+    if(cleanup != NULL) {
+        cleanup(temp->item);
     }
     free(temp);
 
@@ -89,7 +89,7 @@ void deleteFromList(DoublyLinkedList *ll, int index, CleanupFunc cleanupCb)
     }
 }
 
-void clearList(DoublyLinkedList *ll, CleanupFunc cleanupCb)
+void clearList(DoublyLinkedList *ll, CleanupFunc cleanup)
 {
     List *trav, temp;   
     
@@ -97,8 +97,8 @@ void clearList(DoublyLinkedList *ll, CleanupFunc cleanupCb)
         temp = *trav;
         trav = &(*trav)->next;
 
-        if(cleanupCb != NULL) {
-            cleanupCb(temp->item);
+        if(cleanup != NULL) {
+            cleanup(temp->item);
         }
         free(temp);
     }

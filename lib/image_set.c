@@ -71,26 +71,26 @@ Image bufferToImage(char *buffer)
     return img;
 }
 
-void transformImage(Image *img, TransformFunc transformCb)
+void transformImage(Image *img, TransformFunc transform)
 {
-    if(transformCb == NULL) throwInvalidArgs("transformCb", SHOULD_NOT_BE_NULL);
+    if(transform == NULL) throwInvalidArgs("transform", SHOULD_NOT_BE_NULL);
     
     int row, size = img->pixels.row * img->pixels.col;
     double pixelBuffer[size], *bufferPos;
 
     copyMatrixToArr(img->pixels, pixelBuffer, size);
-    transformCb(pixelBuffer, size);
+    transform(pixelBuffer, size);
     copyArrToMatrix(pixelBuffer, size, img->pixels);
 }
 
-void transformImageSet(Image imgs[], int size, TransformFunc transformCb)
+void transformImageSet(Image imgs[], int size, TransformFunc transform)
 {
     if(size <= 0) throwInvalidArgs("size", SHOULD_BE_POSITIVE);
-    if(transformCb == NULL) throwInvalidArgs("transformCb", SHOULD_NOT_BE_NULL);
+    if(transform == NULL) throwInvalidArgs("transform", SHOULD_NOT_BE_NULL);
 
     int idx;
     for(idx = 0; idx < size; idx++) {
-        transformImage(imgs+idx, transformCb);
+        transformImage(imgs+idx, transform);
     }
 }
 

@@ -60,19 +60,19 @@ void insertToList(DoublyLinkedList *ll, int index, void *item);
  *  @param ll A pointer to the list.
  *  @param index The index of the item to
  *  be deleted (starts at 0).
- *  @param cleanupCb A callback called to cleanup
+ *  @param cleanup A callback called to cleanup
  *  the item in the list.
  *  @return Void.
  */
-void deleteFromList(DoublyLinkedList *ll, int index, CleanupFunc cleanupCb);
+void deleteFromList(DoublyLinkedList *ll, int index, CleanupFunc cleanup);
 /** @brief Deletes all items in a list.
  *  
  *  @param ll A pointer to the list.
- *  @param cleanupCb A callback called to cleanup
+ *  @param cleanup A callback called to cleanup
  *  the items in the list.
  *  @return Void.
  */
-void clearList(DoublyLinkedList *ll, CleanupFunc cleanupCb);
+void clearList(DoublyLinkedList *ll, CleanupFunc cleanup);
 /** @brief Returns an item from the list at a given
  *  index.
  *  
