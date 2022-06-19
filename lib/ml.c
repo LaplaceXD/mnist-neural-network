@@ -103,16 +103,13 @@ int evalResult(Matrix m)
 {
     if(!isValidMatrix(m)) throwInvalidArgs("m", "Matrix is in an invalid format.");
 
-    int row, col, maxRow, maxCol, isNotEq, currIsGreaterThanMax;
+    int row, col, maxRow, maxCol;
 
     maxRow = 0;
     maxCol = 0;
     for(row = 0; row < m.row; row++) {
         for(col = 0; col < m.col; col++) {
-            isNotEq = !isDoubleEq(m.entries[row][col], m.entries[maxRow][maxCol]);
-            currIsGreaterThanMax = m.entries[row][col] > m.entries[maxRow][maxCol];
-
-            if(isNotEq && currIsGreaterThanMax) {
+            if(m.entries[row][col] > m.entries[maxRow][maxCol]) {
                 maxRow = row;
                 maxCol = col;
             }

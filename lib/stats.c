@@ -30,7 +30,7 @@ double min(double arr[], int size)
 
     minimum = arr[0];
     for(idx = 1; idx < size; idx++) {
-        if(!isDoubleEq(arr[idx], minimum) && arr[idx] < minimum) {
+        if(arr[idx] < minimum) {
             minimum = arr[idx];
         }
     }
@@ -47,7 +47,7 @@ double max(double arr[], int size)
 
     maximum = arr[0];
     for(idx = 1; idx < size; idx++) {
-        if(!isDoubleEq(arr[idx], maximum) && arr[idx] > maximum) {
+        if(arr[idx] > maximum) {
             maximum = arr[idx];
         }
     }
