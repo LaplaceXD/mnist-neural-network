@@ -49,17 +49,20 @@ void activateWeights(Matrix *wts, NeuralNetOpt opt)
     if(!isValidNeuralNetOpt(opt)) throwInvalidArgs("opt", INVALID_NEURAL_NET_OPT);
 
     double mult, bounds;
-    int row, col;
+    int row, col, currNodes, prevNodes;
+
+    currNodes = opt.nodeOrient == COL ? wts->row : wts->col;
+    prevNodes = opt.nodeOrient == COL ? wts->col : wts->row;
 
     switch(opt.distStrat) {
         case HE:
-            mult = sqrt(2.0 / wts->row);
+            mult = sqrt(2.0 / currNodes);
             break;
         case HE_XAVIER:
-            mult = sqrt(2.0 / (wts->row + wts->col));
+            mult = sqrt(2.0 / (currNodes + prevNodes));
             break;
         case XAVIER:
-            mult = sqrt(2.0 / wts->col);
+            mult = sqrt(2.0 / prevNodes);
             break;
         case RANDOM:
             mult = 1;
@@ -80,16 +83,23 @@ void activateWeights(Matrix *wts, NeuralNetOpt opt)
 void activateLayer(Layer *layer, int prevNodes, NeuralNetOpt opt)
 {
     if(!isValidNeuralNetOpt(opt)) throwInvalidArgs("opt", INVALID_NEURAL_NET_OPT);
-    
+
+    int row, col;
+
     if(prevNodes < 0) {
         throwInvalidArgs("prevNodes", SHOULD_BE_NON_NEGATIVE);
     } else if(prevNodes == 0) {
         layer->weights = createZeroMatrix();
         layer->bias = createZeroMatrix();
     } else {
-        layer->weights = createMatrix(layer->nodes, prevNodes);
-        layer->bias = createMatrix(layer->nodes, 1);
+        row = opt.nodeOrient == COL ? layer->nodes : prevNodes;
+        col = opt.nodeOrient == COL ? prevNodes : layer->nodes;
+        layer->weights = createMatrix(row, col);
         activateWeights(&layer->weights, opt);
+        
+        row = opt.nodeOrient == COL ? layer->nodes : 1;
+        col = opt.nodeOrient == COL ? 1 : layer->nodes;
+        layer->bias = createMatrix(row, col);
         fillMatrix(&layer->bias, opt.initialBias); // activate bias
     }
 }
@@ -221,7 +231,10 @@ int isValidNeuralNetOpt(NeuralNetOpt opt)
         || type == RANDOM 
         || type == XAVIER;
 
+    int hasValidOrientation = opt.nodeOrient == ROW
+        || opt.nodeOrient == COL;
+
     int hasValidDistSize = opt.distSize >= 0;
 
-    return hasValidDistSize && hasValidDistStrat ? 1 : 0;
+    return hasValidDistSize && hasValidDistStrat & hasValidOrientation ? 1 : 0;
 }

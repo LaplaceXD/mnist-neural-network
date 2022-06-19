@@ -23,6 +23,11 @@ typedef enum DistStrategy { RANDOM, ZERO, HE, XAVIER, HE_XAVIER } DistStrategy;
 typedef enum LayerType { INPUT, HIDDEN, OUTPUT } LayerType;
 /** @brief The different possible direction of traversing a Neural Network. */
 typedef enum TravDirection { FORWARD, BACKWARD } TravDirection;
+/** @brief Specifies the orientation of the nodes in the Neural Network.
+ *  Row nodes lets the dataset take up less space and calculations becomes more performant.
+ *  Column nodes are more semantic, and in-line with visualizations in the Internet.
+ */
+typedef MatrixAxis NodeOrientation;
 
 /** @brief Stucture for the Layer of the Neural Network. */
 typedef struct Layer {
@@ -43,6 +48,7 @@ typedef struct NeuralNetOpt {
     DistStrategy distStrat;
     double distSize;
     double initialBias;
+    NodeOrientation nodeOrient;
 } NeuralNetOpt;
 
 /** @brief Stucture for the NeuralNetwork. */
