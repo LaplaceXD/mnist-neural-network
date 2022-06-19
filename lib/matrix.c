@@ -248,6 +248,7 @@ void flatten(Matrix* a, MatrixAxis axis)
             break;
         case ROW:
             m = createMatrix(1, a->row * a->col);
+            col = 0;
             for(row = 0; row < a->row; col = (++row) * a->col) {
                 memcpy(m.entries[0]+col, a->entries[row], a->col * sizeof(double));
             }
