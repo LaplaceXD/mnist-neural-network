@@ -19,7 +19,7 @@
 #define SHOULD_NOT_BE_NULL "It should not be a null value."
 #define SHOULD_BE_POSITIVE "It should be a positive number."
 
-void prepdata(Data *data, MatrixAxis axis, TransformFunc transform)
+void prepData(Data *data, MatrixAxis axis, TransformFunc transform)
 {
     if(axis != ROW && axis != COL) throwInvalidArgs("axis", "");
     if(transform == NULL) throwInvalidArgs("transform", SHOULD_NOT_BE_NULL);
