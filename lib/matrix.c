@@ -80,6 +80,7 @@ void fillMatrixRandn(Matrix m, double min, double max, double mult)
 void mapMatrix(Matrix m, MapFunc map)
 {
     if(!isValidMatrix(m)) throwInvalidArgs("m", NOT_A_MATRIX);
+    if(map == NULL) throwInvalidArgs("map", "It should not be null.");
 
     int row, col;
 
