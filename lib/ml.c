@@ -73,3 +73,23 @@ Matrix forwardPropagate(Data data, NeuralNetwork nn, ActivationFunc activate)
 
     return res;
 }
+
+int evalResult(Matrix m)
+{
+    if(!isValidMatrix(m)) throwInvalidArgs("m", "Matrix is in an invalid format.");
+
+    int row, col, minRow, minCol;
+
+    minRow = 0;
+    minCol = 0;
+    for(row = 0; row < m.row; row++) {
+        for(col = 0; col < m.col; col++) {
+            if(m.entries[row][col] < m.entries[minRow][minCol]) {
+                minRow = row;
+                minCol = col;
+            }
+        }
+    }
+
+    return minRow * m.col + minCol + 1;
+}
