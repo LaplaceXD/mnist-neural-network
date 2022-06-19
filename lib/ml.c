@@ -44,3 +44,32 @@ void prepDataset(Data dataset[], int size, MatrixAxis axis, TransformFunc transf
         prepData(dataset+idx, axis, transform);
     }
 }
+
+Matrix forwardPropagate(Data data, NeuralNetwork nn, ActivationFunc activate)
+{
+    if(activate == NULL) throwInvalidArgs("activate", SHOULD_NOT_BE_NULL);
+
+    int isFirst = 1;
+    Layer *layer;
+    Matrix res, weighted;
+
+    res = data.inputValues;
+    copyMatrix(data.inputValues, res);
+    
+    weighted = createZeroMatrix();
+    layer = travNeuralNet(&nn, FORWARD);
+
+    while(layer = travNeuralNet(NULL, FORWARD)) {
+        freeMatrix(&weighted); // free previous contents before assigning
+        weighted = dot(res, layer->weights);
+
+        // The first run of the loop res is data.inputValues
+        // It should not be freed only the succeeding ones
+        !isFirst ? freeMatrix(&res) : !isFirst;
+        res = add(weighted, layer->bias);
+
+        mapMatrix(res, activate);
+    }
+
+    return res;
+}
