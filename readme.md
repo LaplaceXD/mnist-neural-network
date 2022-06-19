@@ -31,10 +31,10 @@ There are currently 5 libraries that I created for this project. They are comple
 
 | Library      | Dependencies      | Description |
 |:-------------|:------------------|:------------|
-|**stats**      | none              | A utility library which contains different statistical functions. |
+|**stats**     | none              | A utility library which contains different statistical functions. |
 |**matrix**    | none              | A library for working with matrices. |
 |**doubly_ll** | none              | A library for working with doubly linked list. |
-|**image_set** | matrix, util      | A library for working with the MNIST digit dataset. |
+|**image_set** | matrix, stats     | A library for working with the MNIST digit dataset. |
 |**neural_net**| matrix, doubly_ll | A library for creating and working with neural networks. |
 |**ml**        | WIP               | WIP |
 
