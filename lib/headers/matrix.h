@@ -36,22 +36,22 @@ Matrix createMatrix(int row, int col);
 Matrix createZeroMatrix();
 /** @brief Fills all of the entries of matrix m, with the given value.
  * 
- *  @param m A pointer to the matrix to be filled with a value. 
+ *  @param m The matrix to be filled with a value. 
  *  @param val The value that is would occupy the entries of m.
  *  @return Void.
  */
-void fillMatrix(Matrix* m, double val);
+void fillMatrix(Matrix m, double val);
 /** @brief Fills all of the entries of matrix m, with a randomly generated
  *  value.
  * 
- *  @param m A pointer to the matrix to be filled with a value. 
+ *  @param m The matrix to be filled with a value. 
  *  @param min The minimum possible value to be randomly generated. 
  *  @param max The maximum possible value to be randomly generated. 
  *  @param mult A scaling factor to the randomly generated values
  *  (set to 1, if you don't want to scale the values).
  *  @return Void.
  */
-void fillMatrixRandn(Matrix* m, double min, double max, double mult);
+void fillMatrixRandn(Matrix m, double min, double max, double mult);
 /** @brief Frees the dynamically stored entries of the matrix,
  *  and sets the matrix's dimensions to 0x0.
  * 

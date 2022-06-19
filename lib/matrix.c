@@ -46,33 +46,33 @@ Matrix createZeroMatrix()
     return m;
 }
 
-void fillMatrix(Matrix* m, double val)
+void fillMatrix(Matrix m, double val)
 {
-    if(!isValidMatrix(*m)) throwInvalidArgs("m", NOT_A_MATRIX);
+    if(!isValidMatrix(m)) throwInvalidArgs("m", NOT_A_MATRIX);
 
     int idx;
-    double fill[m->col];
+    double fill[m.col];
 
-    for(idx = 0; idx < m->col; idx++) {
+    for(idx = 0; idx < m.col; idx++) {
         fill[idx] = val;
     }
     
-    for(idx = 0; idx < m->row; idx++) {
-        memcpy(m->entries[idx], fill, m->col * sizeof(double));
+    for(idx = 0; idx < m.row; idx++) {
+        memcpy(m.entries[idx], fill, m.col * sizeof(double));
     }
 }
 
-void fillMatrixRandn(Matrix* m, double min, double max, double mult)
+void fillMatrixRandn(Matrix m, double min, double max, double mult)
 {
-    if(!isValidMatrix(*m)) throwInvalidArgs("m", NOT_A_MATRIX);
+    if(!isValidMatrix(m)) throwInvalidArgs("m", NOT_A_MATRIX);
     
     int row, col;
     double boundRand, range = min - max;
 
-    for(row = 0; row < m->row; row++) {
-        for(col = 0; col < m->col; col++) {
+    for(row = 0; row < m.row; row++) {
+        for(col = 0; col < m.col; col++) {
             boundRand = min + ((double) (rand() % RAND_MAX) / RAND_MAX) * range;
-            m->entries[row][col] = boundRand * mult;
+            m.entries[row][col] = boundRand * mult;
         }
     }
 }
