@@ -27,7 +27,7 @@ With `MakeFile`:
 make
 ```
 
-You can then run the compiled `mnist.exe` program using by typing `./mnist` or `make run` if `MakeFile` is installed, in the console.
+You can then run the compiled `mnist.exe` program using by typing in the console: `./mnist` or `make run` if `MakeFile` is installed.
 
 ## Libraries Created
 
