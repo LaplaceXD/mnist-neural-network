@@ -16,7 +16,7 @@
 
 #include <string.h>
 #include <stdlib.h>
-#include "headers/util.h"
+#include "headers/stats.h"
 #include "headers/matrix.h"
 #include "headers/image_set.h"
 

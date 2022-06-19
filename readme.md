@@ -9,14 +9,14 @@ A small project that was inspired by [Mark Kraay's Video](https://www.youtube.co
 
 Without `MakeFile`:
 ```bash
-gcc lib/util.c -o output/util.o -c
+gcc lib/stats.c -o output/stats.o -c
 gcc lib/matrix.c -o output/matrix.o -c
 gcc lib/doubly_ll.c -o output/doubly_ll.o -c
 gcc lib/image_set.c -o output/image_set.o -c
 gcc lib/neural_net.c -o output/neural_net.o -c
 gcc main.c -o output/main.o -c
 cd output
-gcc -o mnist main.o matrix.o util.o image_set.o neural_net.o doubly_ll.o -c
+gcc -o mnist main.o matrix.o stats.o image_set.o neural_net.o doubly_ll.o -c
 ```
 With `MakeFile`:
 ```bash
@@ -31,7 +31,7 @@ There are currently 5 libraries that I created for this project. They are comple
 
 | Library      | Dependencies      | Description |
 |:-------------|:------------------|:------------|
-|**util**      | none              | A utility library for reading CSV files, using extended math functions, and random number generation. |
+|**stats**      | none              | A utility library which contains different statistical functions. |
 |**matrix**    | none              | A library for working with matrices. |
 |**doubly_ll** | none              | A library for working with doubly linked list. |
 |**image_set** | matrix, util      | A library for working with the MNIST digit dataset. |

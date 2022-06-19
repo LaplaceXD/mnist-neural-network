@@ -1,16 +1,17 @@
-/** @file util.c
+/** @file stats.c
  *  @brief A utility functions library which contains
- *  basic auxilliary function.
+ *  different stats functions.
  *
- *  This library contains functions for CSV reading,
- *  extra math functions, and random number generators.
+ *  This library contains functions various statistical 
+ *  operations on arrays, such as min, max, standard deviation,
+ *  averaging, and data transformation.
  *
  *  @author Jonh Alexis Buot (LaplaceXD)
  *  @bug No know bugs.
  */
 #include <stdio.h>
 #include <math.h>
-#include "headers/util.h"
+#include "headers/stats.h"
 
 #define throwInvalidArgs(arg, msg) { fprintf(stderr, "Invalid %s Argument. %s", arg, msg); exit(1); }
 #define SHOULD_BE_POSITIVE "It should be a positive integer."

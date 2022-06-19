@@ -12,7 +12,7 @@
 #pragma once
 
 #include "matrix.h"
-#include "util.h"
+#include "stats.h"
 
 #define BUFFER_SIZE_DEFAULT 2048
 #define IMG_HEIGHT 28
