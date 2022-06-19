@@ -10,10 +10,10 @@
  *  @author Jonh Alexis Buot (LaplaceXD)
  *  @bug No know bugs.
  */
-#include "headers/matrix.h";
-#include "headers/stats.h";
-#include "headers/neural_net.h";
-#include "headers/ml.h";
+#include "headers/matrix.h"
+#include "headers/stats.h"
+#include "headers/neural_net.h"
+#include "headers/ml.h"
 
 #define throwInvalidArgs(arg, msg) { fprintf(stderr, "Invalid %s Argument. %s", arg, msg); exit(1); }
 #define SHOULD_NOT_BE_NULL "It should not be a null value."
