@@ -28,7 +28,7 @@ typedef struct DoublyLinkedList {
 } DoublyLinkedList;
 
 /** @brief A callback for cleaning up the item inside of node in the list. */
-typedef void (*CleanupCallback)(void *item);
+typedef void (*CleanupFunc)(void *item);
 
 /** @brief Creates a doubly linked list.
  * 
@@ -64,7 +64,7 @@ void insertToList(DoublyLinkedList *ll, int index, void *item);
  *  the item in the list.
  *  @return Void.
  */
-void deleteFromList(DoublyLinkedList *ll, int index, CleanupCallback cleanupCb);
+void deleteFromList(DoublyLinkedList *ll, int index, CleanupFunc cleanupCb);
 /** @brief Deletes all items in a list.
  *  
  *  @param ll A pointer to the list.
@@ -72,7 +72,7 @@ void deleteFromList(DoublyLinkedList *ll, int index, CleanupCallback cleanupCb);
  *  the items in the list.
  *  @return Void.
  */
-void clearList(DoublyLinkedList *ll, CleanupCallback cleanupCb);
+void clearList(DoublyLinkedList *ll, CleanupFunc cleanupCb);
 /** @brief Returns an item from the list at a given
  *  index.
  *  

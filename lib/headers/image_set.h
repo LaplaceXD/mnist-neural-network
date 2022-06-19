@@ -62,7 +62,7 @@ Image bufferToImage(char *buffer);
  *  is used to convert the image pixel values. 
  *  @return Void.
  */
-void transformImage(Image *img, TransformCallback transformCb);
+void transformImage(Image *img, TransformFunc transformCb);
 /** @brief Transforms a batch of images in an array based
  *  on a given function.
  * 
@@ -72,7 +72,7 @@ void transformImage(Image *img, TransformCallback transformCb);
  *  is used to convert the image pixel values. 
  *  @return Void.
  */
-void transformImageSet(Image imgs[], int size, TransformCallback transformCb);
+void transformImageSet(Image imgs[], int size, TransformFunc transformCb);
 /** @brief Frees up loaded images from memory.
  * 
  *  @param imgs An array of images to be freed. 

@@ -59,7 +59,7 @@ void insertToList(DoublyLinkedList *ll, int index, void *item)
     ll->size++;
 }
 
-void deleteFromList(DoublyLinkedList *ll, int index, CleanupCallback cleanupCb)
+void deleteFromList(DoublyLinkedList *ll, int index, CleanupFunc cleanupCb)
 {
     if(index < 0) throwInvalidArgs("index", SHOULD_BE_NON_NEGATIVE);
     if(index >= ll->size) throwInvalidArgs("index", SHOULD_BE_LESS_THAN_LIST);
@@ -89,7 +89,7 @@ void deleteFromList(DoublyLinkedList *ll, int index, CleanupCallback cleanupCb)
     }
 }
 
-void clearList(DoublyLinkedList *ll, CleanupCallback cleanupCb)
+void clearList(DoublyLinkedList *ll, CleanupFunc cleanupCb)
 {
     List *trav, temp;   
     

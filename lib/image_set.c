@@ -71,7 +71,7 @@ Image bufferToImage(char *buffer)
     return img;
 }
 
-void transformImage(Image *img, TransformCallback transformCb)
+void transformImage(Image *img, TransformFunc transformCb)
 {
     if(transformCb == NULL) throwInvalidArgs("transformCb", SHOULD_NOT_BE_NULL);
     
@@ -83,7 +83,7 @@ void transformImage(Image *img, TransformCallback transformCb)
     copyArrToMatrix(pixelBuffer, size, img->pixels);
 }
 
-void transformImageSet(Image imgs[], int size, TransformCallback transformCb)
+void transformImageSet(Image imgs[], int size, TransformFunc transformCb)
 {
     if(size <= 0) throwInvalidArgs("size", SHOULD_BE_POSITIVE);
     if(transformCb == NULL) throwInvalidArgs("transformCb", SHOULD_NOT_BE_NULL);

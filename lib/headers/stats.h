@@ -13,7 +13,7 @@
 #include <stdlib.h>
 
 /** @brief Type definition for Array Transforming functions. */
-typedef void (*TransformCallback)(double arr[], int size);
+typedef void (*TransformFunc)(double arr[], int size);
 
 /** @brief Returns the minimum value in an array.
  * 
