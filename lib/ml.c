@@ -62,7 +62,6 @@ Matrix forwardPropagate(Data data, NeuralNetwork nn, ActivationFunc activate)
     layer = travNeuralNet(&nn, FORWARD);
 
     while(layer = travNeuralNet(NULL, FORWARD)) {
-        freeMatrix(&weighted); // free previous contents before assigning
         weighted = dot(res, layer->weights);
 
         // The first run of the loop res is data.inputValues
@@ -71,6 +70,9 @@ Matrix forwardPropagate(Data data, NeuralNetwork nn, ActivationFunc activate)
         res = add(weighted, layer->bias);
 
         mapMatrix(res, activate);
+        
+        // free weights before the next assignment
+        freeMatrix(&weighted);
     }
 
     return res;
