@@ -1,6 +1,7 @@
 # Usage:
-# make			# compile all binary
-# make clean	# remove ALL binaries and object
+# make				# compile ALL binaries
+# make clean_dir	# remove ALL output directories
+# make clean		# remove ALL binaries
 
 .PHONY = all
 
@@ -43,6 +44,10 @@ clean_up:
 
 run:
 	@./${OUT_NAME}.exe	
+
+clean_dir:
+	@echo "Removing output directories..."
+	@$(foreach DUPE, ${OUTPUT_DUPES}, rm -rf "${DUPE}";)
 
 clean:
 	@echo "Removing ${OUT_NAME}.exe..."
