@@ -124,7 +124,7 @@ int evalResult(Matrix m)
 
 double sigmoid(double val)
 {
-    return 1 / (1 + exp(-1 * val));
+    return 1.0 / (1 + exp(-1 * val));
 }
 
 double reLu(double val)
