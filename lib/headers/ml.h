@@ -114,7 +114,7 @@ double sigmoid(double val);
  *  @param val The value that the reLu function takes in.
  *  @return The result from applying the reLu function.
  */
-double reLu(double val);
+double reLU(double val);
 // tanh function is in math.h
 
 /** @brief The derivative of sigmoid.
