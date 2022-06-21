@@ -122,12 +122,12 @@ int evalResult(Matrix m)
     return maxRow * m.col + maxCol;
 }
 
-void sigmoid(double val)
+double sigmoid(double val)
 {
     return 1 / (1 + exp(-1 * val));
 }
 
-void reLu(double val)
+double reLu(double val)
 {
     return val > 0 ? val : 0;
 }

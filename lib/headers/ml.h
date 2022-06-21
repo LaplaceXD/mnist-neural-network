@@ -108,10 +108,10 @@ int evalResult(Matrix m);
  *  @param val The value that the sigmoid function takes in.
  *  @return The result from applying the sigmoid function.
  */
-void sigmoid(double val);
+double sigmoid(double val);
 /** @brief A function used in activation.
  *  
  *  @param val The value that the reLu function takes in.
  *  @return The result from applying the reLu function.
  */
-void reLu(double val);
+double reLu(double val);
