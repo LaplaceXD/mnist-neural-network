@@ -131,3 +131,19 @@ double reLu(double val)
 {
     return val > 0 ? val : 0;
 }
+
+double sigmoidPrime(double val)
+{
+    double x = exp(-1 * val);
+    return x / ((1 + x) * (1 + x));
+}
+
+double reLUPrime(double val)
+{
+    return val > 0 ? 1 : 0;
+}
+
+double tanhPrime(double val)
+{
+    return 1 - tanh(val) * tanh(val);
+}
