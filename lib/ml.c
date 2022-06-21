@@ -12,6 +12,7 @@
  *  @author Jonh Alexis Buot (LaplaceXD)
  *  @bug No know bugs.
  */
+#include <math.h>
 #include "headers/matrix.h"
 #include "headers/stats.h"
 #include "headers/neural_net.h"
@@ -119,4 +120,14 @@ int evalResult(Matrix m)
     }
 
     return maxRow * m.col + maxCol;
+}
+
+void sigmoid(double val)
+{
+    return 1 / (1 + exp(-1 * val));
+}
+
+void reLU(double val)
+{
+    return val > 0 ? val : 0;
 }
