@@ -51,6 +51,7 @@ There are currently 6 libraries that I created for this project. They are comple
 - [What is a Makefile and how does it work?](https://opensource.com/article/18/8/what-how-makefile)
 - [Weight Initialization Techniques in Neural Networks](https://towardsdatascience.com/weight-initialization-techniques-in-neural-networks-26c649eb3b78)
 - [Bias Initialization in a Neural Network](https://medium.com/@glenmeyerowitz/bias-initialization-in-a-neural-network-2e5d26fed0f0)
+- [Activation Functions](https://ml-cheatsheet.readthedocs.io/en/latest/activation_functions.html)
 
 ## License
 [MIT](https://github.com/LaplaceXD/mnist-neural-network/blob/master/LICENSE)
