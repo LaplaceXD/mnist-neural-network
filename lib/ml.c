@@ -135,7 +135,9 @@ double reLU(double val)
 double sigmoidPrime(double val)
 {
     double x = exp(-1 * val);
-    return x / ((1 + x) * (1 + x));
+    double y = 1 + x;
+
+    return x / (y * y);
 }
 
 double reLUPrime(double val)
@@ -145,5 +147,7 @@ double reLUPrime(double val)
 
 double tanhPrime(double val)
 {
-    return 1 - tanh(val) * tanh(val);
+    double x = tanh(val);
+
+    return 1 - x * x;
 }
