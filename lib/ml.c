@@ -188,7 +188,6 @@ Matrix ssrPrime(Matrix obs[], Matrix exp[], int size)
             sum = buffer;
             freeMatrix(&diff);
         }
-        printMatrix(sum);
     }
 
     buffer = scale(sum, -2.0);

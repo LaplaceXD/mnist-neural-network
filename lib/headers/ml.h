@@ -78,11 +78,12 @@ Matrix forwardPropagate(Data data, NeuralNetwork nn, ActivationFunc activate);
  *  @param nn The Neural Network to be trained.
  *  @param activate The activation function to activate the neurons 
  *  in the Neural Network (sigmoid, reLU, tanh).
+ *  @param batchSize The size of each batch to be used for back propagation.
  *  @param dataset The dataset that the Neural Network has to learn.
  *  @param size The size of the dataset.
  *  @return Void. 
  */
-void networkTrain(NeuralNetwork nn, ActivationFunc activate, Data dataset[], int size);
+void networkTrain(NeuralNetwork nn, ActivationFunc activate, int batchSize, Data dataset[], int size);
 /** @brief Tests a Neural Network based on a given dataset.
  *  
  *  @param nn The Neural Network to be tested.
