@@ -79,6 +79,26 @@ Matrix forwardPropagate(Data data, NeuralNetwork nn, ActivationFunc activate)
     return res;
 }
 
+Matrix valToMatrix(int val, NeuralNetwork nn)
+{
+    Layer layer;
+    Matrix res;
+    
+    layer = *(Layer *) getItemByIndex(nn.layers, nn.layers.size - 1);
+
+    if(0 > val || val > layer.nodes)
+        throwInvalidArgs("val", "It should be less than the number of output layer nodes and greater than 0.")
+
+    res = createMatrix(1, layer.nodes);
+    fillMatrix(res, 0);
+    res.entries[0][val] = 1;
+
+    if(nn.options.nodeOrient == COL) {
+        transpose(&res);
+    }
+
+    return res;
+}
 
 double networkTest(NeuralNetwork nn, ActivationFunc activate, Data dataset[], int size)
 {
