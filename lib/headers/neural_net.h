@@ -55,7 +55,7 @@ typedef struct NeuralNetOpt {
     // The initial value for the biases of the layers.
     double initialBias;
     // The learning rate of the neural network.
-    int lr;
+    double lr;
 } NeuralNetOpt;
 
 /** @brief Stucture for the NeuralNetwork. */
