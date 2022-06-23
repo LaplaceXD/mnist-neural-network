@@ -138,3 +138,12 @@ double reLUPrime(double val);
  *  @return The result from the function.
  */
 double tanhPrime(double val);
+/** @brief Derivative of Sum of Square residuals
+ *  of matrices.
+ * 
+ *  @param obs Array of observed Matrix values.
+ *  @param exp Array of expected Matrix values.
+ *  @param size Size of the two arrays.
+ *  @return A matrix.
+ */
+Matrix ssrPrime(Matrix obs[], Matrix exp[], int size);

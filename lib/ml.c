@@ -79,6 +79,32 @@ Matrix forwardPropagate(Data data, NeuralNetwork nn, ActivationFunc activate)
     return res;
 }
 
+Matrix ssrPrime(Matrix obs[], Matrix exp[], int size)
+{
+    Matrix diff, sum, buffer;
+    int idx;
+
+    sum = createZeroMatrix();
+    for(idx = 0; idx < size; idx++) {
+        diff = subtract(exp[idx], obs[idx]);
+
+        if(isZeroMatrix(sum)) {
+            sum = diff;
+        } else {
+            buffer = add(sum, diff);
+            freeMatrix(&sum);
+            sum = buffer;
+            freeMatrix(&diff);
+        }
+        printMatrix(sum);
+    }
+
+    buffer = scale(sum, -2.0);
+    freeMatrix(&sum);
+
+    return buffer;
+}
+
 double networkTest(Data dataset[], int size, NeuralNetwork nn, ActivationFunc activate)
 {
     if(size <= 0) throwInvalidArgs("size", SHOULD_BE_POSITIVE);
