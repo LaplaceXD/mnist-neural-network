@@ -179,6 +179,14 @@ Layer *travNeuralNet(NeuralNetwork *nn, TravDirection dir)
     return (Layer *) getItem(ll, nav);
 }
 
+Layer getLayer(NeuralNetwork nn, int pos)
+{
+    if(pos <= 0) throwInvalidArgs("pos", SHOULD_BE_POSITIVE);
+    if(pos > nn.layers.size) throwInvalidArgs("pos", "It should not be bigger than the layer size.");
+
+    return *(Layer *) getItemByIndex(nn.layers, pos - 1);
+}
+
 void freeLayer(void *item) 
 {
     Layer *layer = (Layer *) item;

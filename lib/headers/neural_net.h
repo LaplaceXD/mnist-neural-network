@@ -122,6 +122,14 @@ void deleteLayer(NeuralNetwork *nn, int pos);
  *  position of the traversal, else NULL is returned
  */
 Layer *travNeuralNet(NeuralNetwork *nn, TravDirection dir);
+/** @brief Gets the layer of a Neural Network on a given position.
+ * 
+ *  @param nn The Neural Network where the layer is a part of.
+ *  @param pos The position of the layer in the Neural Network 
+ *  (starting at 1).
+ *  @return The layer. 
+ */
+Layer getLayer(NeuralNetwork nn, int pos);
 /** @brief Frees the Neural Network from memory.
  * 
  *  @param nn A pointer to the Neural Network to be freed. 
