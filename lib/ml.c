@@ -105,7 +105,7 @@ Matrix ssrPrime(Matrix obs[], Matrix exp[], int size)
     return buffer;
 }
 
-double networkTest(Data dataset[], int size, NeuralNetwork nn, ActivationFunc activate)
+double networkTest(NeuralNetwork nn, ActivationFunc activate, Data dataset[], int size)
 {
     if(size <= 0) throwInvalidArgs("size", SHOULD_BE_POSITIVE);
     if(activate == NULL) throwInvalidArgs("activate", SHOULD_NOT_BE_NULL);
