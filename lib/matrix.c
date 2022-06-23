@@ -163,6 +163,25 @@ Matrix add(Matrix a, Matrix b)
     return m;
 }
 
+Matrix subtract(Matrix min, Matrix sub)
+{
+    if(!isValidMatrix(min)) throwInvalidArgs("min", NOT_A_MATRIX);
+    if(!isValidMatrix(sub)) throwInvalidArgs("sub", NOT_A_MATRIX);
+    if(min.row != sub.row || min.col != sub.col) throwInvalidArgs("Matrices can't be added.", "");
+
+    Matrix m;
+    int row, col;
+
+    m = createMatrix(min.row, min.col);
+    for(row = 0; row < min.row; row++) {
+        for(col = 0; col < min.col; col++) {
+            m.entries[row][col] = min.entries[row][col] - sub.entries[row][col];
+        }
+    }
+
+    return m;
+}
+
 Matrix scale(Matrix a, double val)
 {
     if(!isValidMatrix(a)) throwInvalidArgs("a", NOT_A_MATRIX);

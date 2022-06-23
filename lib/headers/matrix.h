@@ -124,6 +124,19 @@ int isZeroMatrix(Matrix m);
  *  @return A Matrix that is the sum of a and b.
  */
 Matrix add(Matrix a, Matrix b);
+/** @brief Subracts two matrices together.
+ * 
+ *  The two matrices should be of the same dimensions.
+ *  If the dimensions of the matrices do not match, then
+ *  this function will throw an error. Else, it returns a
+ *  matrix that contains the subtracted result of the two
+ *  matrices.
+ * 
+ *  @param min Minuend matrix. 
+ *  @param sub Subtrahend matrix. 
+ *  @return A Matrix that is the difference of a and b.
+ */
+Matrix subtract(Matrix min, Matrix sub);
 /** @brief Scales the values of a matrix a by a factor val.
  * 
  *  @param a The matrix to be scaled. 

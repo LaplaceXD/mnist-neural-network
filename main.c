@@ -39,7 +39,7 @@ int main(int argc, char **argv)
     freeImageSet(testImgs, TEST_DATA.SIZE);
     /* =========== END OF TESTING ============== */
 
-    freeNeuralNet(&nn);
+    // freeNeuralNet(&nn);
 
     return 0;
 }
