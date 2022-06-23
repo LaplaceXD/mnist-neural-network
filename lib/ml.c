@@ -98,6 +98,44 @@ Matrix valToMatrix(int val, int outputNodes, MatrixAxis axis)
     return res;
 }
 
+void networkTrain(NeuralNetwork nn, ActivationFunc activate, int batchSize, Data dataset[], int size)
+{
+    if(size <= 0) throwInvalidArgs("size", SHOULD_BE_POSITIVE);
+    if(activate == NULL) throwInvalidArgs("activate", SHOULD_NOT_BE_NULL);
+
+    Matrix obs[batchSize], exp[batchSize];
+    Matrix diff, buffer, step;
+    Layer layer;
+    int idx, batch;
+
+    // We are just updating the last set of biases for now
+    layer = getLayer(nn, nn.layers.size);
+
+    for(batch = 1; batch <= size / batchSize; batch++) {
+        // get expected and observed values
+        for(idx = 0; idx < batchSize; idx++) {
+            obs[idx] = forwardPropagate(dataset[idx], nn, activate);
+            exp[idx] = valToMatrix(dataset[idx].expVal, layer.nodes, nn.options.nodeOrient);
+        }
+
+        // backward propagate
+        buffer = ssrPrime(obs, exp, batchSize);
+        step = scale(buffer, nn.options.lr);
+        diff = subtract(layer.bias, step);
+        // update biases
+        copyMatrix(diff, layer.bias);
+
+        // cleanup
+        freeMatrix(&buffer);
+        freeMatrix(&step);
+        freeMatrix(&diff);
+        for(idx = 0; idx < batchSize; idx++) {
+            freeMatrix(obs+idx);
+            freeMatrix(exp+idx);
+        }
+    }
+}
+
 double networkTest(NeuralNetwork nn, ActivationFunc activate, Data dataset[], int size)
 {
     if(size <= 0) throwInvalidArgs("size", SHOULD_BE_POSITIVE);
