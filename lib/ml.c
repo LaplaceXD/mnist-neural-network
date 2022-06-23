@@ -79,21 +79,19 @@ Matrix forwardPropagate(Data data, NeuralNetwork nn, ActivationFunc activate)
     return res;
 }
 
-Matrix valToMatrix(int val, NeuralNetwork nn)
+Matrix valToMatrix(int val, int outputNodes, MatrixAxis axis)
 {
-    Layer layer;
+    if(axis != ROW && axis != COL) throwInvalidArgs("axis", ""); 
+    if(0 > val || val > outputNodes)
+        throwInvalidArgs("val", "It should be less than the number of output layer nodes and greater than 0.")
+    
     Matrix res;
     
-    layer = *(Layer *) getItemByIndex(nn.layers, nn.layers.size - 1);
-
-    if(0 > val || val > layer.nodes)
-        throwInvalidArgs("val", "It should be less than the number of output layer nodes and greater than 0.")
-
-    res = createMatrix(1, layer.nodes);
+    res = createMatrix(1, outputNodes);
     fillMatrix(res, 0);
     res.entries[0][val] = 1;
 
-    if(nn.options.nodeOrient == COL) {
+    if(axis == COL) {
         transpose(&res);
     }
 
