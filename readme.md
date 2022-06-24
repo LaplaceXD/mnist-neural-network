@@ -43,8 +43,8 @@ There are currently 6 libraries that I created for this project. They are comple
 |**ml**        | matrix, stats, neural_net | A library for training and testing neural networks against a dataset. |
 
 ## Bibliography
-- [3Blue1Brown - Deep Learning Series](https://www.youtube.com/watch?v=aircAruvnKk&list=PLZHQObOWTQDNU6R1_67000Dx_ZCJB-3pi&index=1) - Very intuitive look into neural networks and machine learning
-- [Neural Networks/Deep Learning](https://www.youtube.com/playlist?list=PLblh5JKOoLUIxGDQs4LFFD--41Vzf-ME1) - This playlist is what made it click for me, especially in understanding back propagation
+- [3Blue1Brown - Deep Learning Series](https://www.youtube.com/watch?v=aircAruvnKk&list=PLZHQObOWTQDNU6R1_67000Dx_ZCJB-3pi&index=1) - Very intuitive look into neural networks and machine learning.
+- [Neural Networks/Deep Learning](https://www.youtube.com/playlist?list=PLblh5JKOoLUIxGDQs4LFFD--41Vzf-ME1) - This playlist is what made it click for me, especially in understanding back propagation.
 - [Gradient Descent](https://vitalflux.com/gradient-descent-explained-simply-with-examples/)
 - [Samson Zhong - Building a Neural Network From Scratch (Numpy & Maths)](https://www.youtube.com/watch?v=w8yWXqWQYmU&t=1612s)
 - [Neural Network from Scratch | Mathematics & Python Code](https://www.youtube.com/watch?v=pauPCy_s0Ok)
