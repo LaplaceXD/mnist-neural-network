@@ -43,7 +43,8 @@ There are currently 6 libraries that I created for this project. They are comple
 |**ml**        | matrix, stats, neural_net | A library for training and testing neural networks against a dataset. |
 
 ## Bibliography
-- [3Blue1Brown - Deep Learning Series](https://www.youtube.com/watch?v=aircAruvnKk&list=PLZHQObOWTQDNU6R1_67000Dx_ZCJB-3pi&index=1)
+- [3Blue1Brown - Deep Learning Series](https://www.youtube.com/watch?v=aircAruvnKk&list=PLZHQObOWTQDNU6R1_67000Dx_ZCJB-3pi&index=1) - Very intuitive look into neural networks and machine learning
+- [Neural Networks/Deep Learning](https://www.youtube.com/playlist?list=PLblh5JKOoLUIxGDQs4LFFD--41Vzf-ME1) - This playlist is what made it click for me, especially in understanding back propagation
 - [Gradient Descent](https://vitalflux.com/gradient-descent-explained-simply-with-examples/)
 - [Samson Zhong - Building a Neural Network From Scratch (Numpy & Maths)](https://www.youtube.com/watch?v=w8yWXqWQYmU&t=1612s)
 - [Neural Network from Scratch | Mathematics & Python Code](https://www.youtube.com/watch?v=pauPCy_s0Ok)
@@ -52,6 +53,5 @@ There are currently 6 libraries that I created for this project. They are comple
 - [Weight Initialization Techniques in Neural Networks](https://towardsdatascience.com/weight-initialization-techniques-in-neural-networks-26c649eb3b78)
 - [Bias Initialization in a Neural Network](https://medium.com/@glenmeyerowitz/bias-initialization-in-a-neural-network-2e5d26fed0f0)
 - [Activation Functions](https://ml-cheatsheet.readthedocs.io/en/latest/activation_functions.html)
-
 ## License
 [MIT](https://github.com/LaplaceXD/mnist-neural-network/blob/master/LICENSE)
