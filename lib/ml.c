@@ -48,6 +48,44 @@ void prepDataset(Data dataset[], int size, MatrixAxis axis, TransformFunc transf
     }
 }
 
+// Returns the resulting matrix for each layer, as opposed to foward propagate
+// which only returns the resulting matrix of the last layer
+Matrix stagForwardProp(Data data, NeuralNetwork *nn, ActivationFunc activate)
+{
+    if(activate == NULL) throwInvalidArgs("activate", SHOULD_NOT_BE_NULL);
+
+    static int isFirst;
+    static Matrix prevData;
+    Layer *layer;
+    Matrix res, weighted;
+
+    if(nn != NULL) {
+        isFirst = 1;
+    }
+
+    layer = travNeuralNet(nn, FORWARD);
+    if(isFirst) {
+        res = createMatrix(data.inputValues.row, data.inputValues.col);
+        copyMatrix(data.inputValues, res);
+        isFirst = 0;
+    } else if(layer != NULL) {
+        weighted = dot(prevData, layer->weights);
+        res = add(weighted, layer->bias);
+        mapMatrix(res, activate);
+
+        freeMatrix(&weighted);
+    } else {
+        res = createZeroMatrix();
+    }
+
+    // keep track of the previous data
+    // after each forward prop, since it will be used
+    // in the next forward prop
+    prevData = res;
+
+    return res;
+}
+
 Matrix forwardPropagate(Data data, NeuralNetwork nn, ActivationFunc activate)
 {
     if(activate == NULL) throwInvalidArgs("activate", SHOULD_NOT_BE_NULL);
