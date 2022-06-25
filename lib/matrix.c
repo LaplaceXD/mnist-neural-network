@@ -167,7 +167,7 @@ Matrix subtract(Matrix min, Matrix sub)
 {
     if(!isValidMatrix(min)) throwInvalidArgs("min", NOT_A_MATRIX);
     if(!isValidMatrix(sub)) throwInvalidArgs("sub", NOT_A_MATRIX);
-    if(min.row != sub.row || min.col != sub.col) throwInvalidArgs("Matrices can't be added.", "");
+    if(min.row != sub.row || min.col != sub.col) throwInvalidArgs("Matrices can't be subtracted.", "");
 
     Matrix m;
     int row, col;
