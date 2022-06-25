@@ -6,6 +6,7 @@
 .PHONY = all
 
 CC = gcc				# compiler
+CFLAGS = -Wall -Werror -Os
 LIB_DIR = lib
 OUTPUT_DIR = output
 OUT_NAME = mnist		# binary filename
@@ -30,7 +31,7 @@ make_output_dir:
 
 compile:
 	@echo "Creating objects..."
-	@$(foreach BIN, ${LIB_BINS}, ${CC} ${LIB_DIR}/${BIN}.c -o ${OUTPUT_DIR}/${BIN}.o -c;)
+	@$(foreach BIN, ${LIB_BINS}, ${CC} ${CFLAGS} -c ${LIB_DIR}/${BIN}.c -o ${OUTPUT_DIR}/${BIN}.o;)
 	@echo "Creating main..."
 	@${CC} ${MAIN}.c -o ${OUTPUT_DIR}/${MAIN}.o -c
 
