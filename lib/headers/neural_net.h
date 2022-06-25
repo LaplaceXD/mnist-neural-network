@@ -74,6 +74,24 @@ typedef struct NeuralNetwork {
  *  @return A Neural Network.
  */
 NeuralNetwork createNeuralNet(NeuralNetOpt opt, LayerDesign layers[], int size);
+/** @brief Creates an empty weights matrix of the given nodes,
+ *  and prevNodes.
+ * 
+ *  @param nodes The nodes of the current layer.
+ *  @param prevNodes The nodes of the previous layer.
+ *  @param opt The options used for the creation of the 
+ *  Neural Network.
+ *  @return An empty matrix.
+ */
+Matrix createEmptyWeights(int nodes, int prevNodes, NeuralNetOpt opt);
+/** @brief Creates an empty bias matrix of the given nodes.
+ * 
+ *  @param nodes The nodes of the current layer.
+ *  @param opt The options used for the creation of the 
+ *  Neural Network.
+ *  @return An empty matrix.
+ */
+Matrix createEmptyBias(int nodes, NeuralNetOpt opt);
 /** @brief Appends a layer to the Neural Network.
  *  
  *  @param nn A pointer to the Neural Network where 
