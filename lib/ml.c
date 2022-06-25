@@ -95,7 +95,6 @@ Matrix forwardPropagate(Data data, NeuralNetwork nn, ActivationFunc activate)
     Matrix res, weighted;
 
     res = data.inputValues;
-    copyMatrix(data.inputValues, res);
     
     weighted = createZeroMatrix();
     layer = travNeuralNet(&nn, FORWARD);
