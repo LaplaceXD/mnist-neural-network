@@ -114,19 +114,22 @@ void reactivateLayer(Layer *layer, int prevNodes, NeuralNetOpt opt)
     activateLayer(layer, prevNodes, opt);
 }
 
-Layer *createLayer(int nodes, int prevNodes, LayerType type, NeuralNetOpt opt)
+Layer *createLayer(int nodes, int pos, LayerType type, NeuralNetwork nn)
 {
     if(nodes <= 0) throwInvalidArgs("nodes", SHOULD_BE_POSITIVE)
-    if(prevNodes < 0) throwInvalidArgs("prevNodes", SHOULD_BE_NON_NEGATIVE);
+    if(pos <= 0) throwInvalidArgs("pos", SHOULD_BE_NON_NEGATIVE);
     if(type != INPUT && type != HIDDEN && type != OUTPUT) throwInvalidArgs("type", ""); 
-    if(!isValidNeuralNetOpt(opt)) throwInvalidArgs("opt", INVALID_NEURAL_NET_OPT);
 
-    Layer *layer = (Layer *) malloc(sizeof(Layer));
+    Layer *layer; 
+    int prevNodes;
+
+    layer = (Layer *) malloc(sizeof(Layer));
     if(layer == NULL) throwMallocFailed();
     
     layer->nodes = nodes;
     layer->type = type;
-    activateLayer(layer, prevNodes, opt);
+    prevNodes = pos == 1 ? 0 : getLayer(nn, pos).nodes;
+    activateLayer(layer, prevNodes, nn.options);
 
     return layer;
 }
@@ -139,10 +142,7 @@ void addLayer(NeuralNetwork *nn, int nodes, LayerType type)
     int prevLayerNodes;
     Layer *prev, *layer;
     
-    prev = isListEmpty(nn->layers) ? NULL : (Layer *) getItemByIndex(nn->layers, nn->layers.size - 1);
-    prevLayerNodes = prev == NULL ? 0 : prev->nodes;
-
-    layer = createLayer(nodes, prevLayerNodes, type, nn->options);
+    layer = createLayer(nodes, nn->layers.size + 1, type, *nn);
     addToList(&nn->layers, layer); 
 }
 
@@ -150,22 +150,17 @@ void insertLayer(NeuralNetwork *nn, int pos, int nodes, LayerType type)
 {
     if(nodes <= 0) throwInvalidArgs("nodes", SHOULD_BE_POSITIVE);
     if(pos <= 0) throwInvalidArgs("pos", SHOULD_BE_POSITIVE);
-    if(pos > nn->layers.size + 1) throwInvalidArgs("pos", "It should be bigger than the network size plus one.");
+    if(pos > nn->layers.size + 1) throwInvalidArgs("pos", "It should be lesser than or equal to the network size plus one.");
     if(type != INPUT && type != HIDDEN && type != OUTPUT) throwInvalidArgs("type", ""); 
     
-    int index, prevLayerNodes;
-    Layer *prev, *curr, *next;
+    Layer *curr, *next;
 
-    index = pos - 1; // position always starts at 1, index always starts at 0
-    prev = isListEmpty(nn->layers) || pos == 1 ? NULL : (Layer *) getItemByIndex(nn->layers, index - 1);
-    prevLayerNodes = prev == NULL ? 0 : prev->nodes;
-    
-    curr = createLayer(nodes, prevLayerNodes, type, nn->options);
-    insertToList(&nn->layers, index, curr);
+    curr = createLayer(nodes, pos, type, *nn);
+    insertToList(&nn->layers, pos - 1, curr);
 
     // Reinitialize succeeding layer
-    if(index + 1 < nn->layers.size) {
-        next = (Layer *) getItemByIndex(nn->layers, index + 1);
+    if(pos < nn->layers.size) {
+        next = (Layer *) getItemByIndex(nn->layers, pos);
         reactivateLayer(next, curr->nodes, nn->options);
     }
 }
@@ -201,24 +196,18 @@ void freeLayer(void *item)
 void deleteLayer(NeuralNetwork *nn, int pos)
 {
     if(pos <= 0) throwInvalidArgs("pos", SHOULD_BE_POSITIVE);
-    if(pos > nn->layers.size) throwInvalidArgs("pos", "It should not be bigger than the layer size.");
+    if(pos > nn->layers.size) throwInvalidArgs("pos", "It should not be bigger than the network size.");
 
-    int index, prevLayerNodes;
-    Layer *prev, *curr;
+    int prevNodes;
+    Layer *curr;
 
-    index = pos - 1; // position always starts at 1, index always starts at 0
-    deleteFromList(&nn->layers, index, freeLayer);
+    deleteFromList(&nn->layers, pos - 1, freeLayer);
     
     // Reinitialize previously succeeding layer
-    if(index == 1) {
-        curr = (Layer *) getItemByIndex(nn->layers, index);
-        freeMatrix(&curr->weights);
-        freeMatrix(&curr->bias);
-    } else if (index < nn->layers.size) {
-        curr = (Layer *) getItemByIndex(nn->layers, index);
-        prev = isListEmpty(nn->layers) || pos == 1 ? NULL : (Layer *) getItemByIndex(nn->layers, index - 1);
-        prevLayerNodes = prev == NULL ? 0 : prev->nodes;
-        reactivateLayer(curr, prevLayerNodes, nn->options);
+    if(pos <= nn->layers.size) {
+        curr = (Layer *) getItemByIndex(nn->layers, pos);
+        prevNodes = pos == 1 ? 0 : getLayer(*nn, pos - 1).nodes;
+        reactivateLayer(curr, prevNodes, nn->options);
     }
 }
 
