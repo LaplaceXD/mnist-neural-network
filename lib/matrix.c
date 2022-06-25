@@ -288,7 +288,7 @@ void copyMatrix(Matrix src, Matrix dest)
     if(dest.col < src.col && dest.row < src.row)
         throwInvalidArgs("", "Dimensions of source matrix must be equal or less than the dimensions of the dest matrix.");
 
-    int row, col, noOfItems, noOfGaps;
+    int row;
 
     for(row = 0; row < dest.row; row++) {
         memcpy(dest.entries[row], src.entries[row], src.col * sizeof(double));
