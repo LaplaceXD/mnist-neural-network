@@ -51,7 +51,7 @@ Matrix createEmptyWeights(int nodes, int prevNodes, NeuralNetOpt opt)
     int row, col;
 
     row = opt.nodeOrient == COL ? nodes : prevNodes;
-    col = opt.nodeOrient == COL ? prevNodes : prevNodes;
+    col = opt.nodeOrient == COL ? prevNodes : nodes;
     return createMatrix(row, col);
 }
 
