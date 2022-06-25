@@ -106,8 +106,6 @@ void activateLayer(Layer *layer, int prevNodes, NeuralNetOpt opt)
 {
     if(!isValidNeuralNetOpt(opt)) throwInvalidArgs("opt", INVALID_NEURAL_NET_OPT);
 
-    int row, col;
-
     if(prevNodes < 0) {
         throwInvalidArgs("prevNodes", SHOULD_BE_NON_NEGATIVE);
     } else if(prevNodes == 0) {
@@ -157,10 +155,7 @@ void addLayer(NeuralNetwork *nn, int nodes, LayerType type)
     if(nodes <= 0) throwInvalidArgs("nodes", SHOULD_BE_POSITIVE);
     if(type != INPUT && type != HIDDEN && type != OUTPUT) throwInvalidArgs("type", "");
 
-    int prevLayerNodes;
-    Layer *prev, *layer;
-    
-    layer = createLayer(nodes, nn->layers.size + 1, type, *nn);
+    Layer *layer = createLayer(nodes, nn->layers.size + 1, type, *nn);
     addToList(&nn->layers, layer); 
 }
 
