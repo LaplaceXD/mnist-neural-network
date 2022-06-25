@@ -306,6 +306,7 @@ void copyArrToMatrix(double src[], int size, Matrix dest)
     int row, idx, mSize, noOfItems;
     mSize = dest.row * dest.col;
 
+    noOfItems = 0;
     row = 0;
     for(idx = 0; idx < size && idx < mSize; idx = (++row) * dest.col) {
         noOfItems = size < idx + dest.col ? size - idx : dest.col;
