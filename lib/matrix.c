@@ -182,25 +182,6 @@ Matrix subtract(Matrix min, Matrix sub)
     return m;
 }
 
-Matrix multiply(Matrix a, Matrix b)
-{
-    if(!isValidMatrix(a)) throwInvalidArgs("a", NOT_A_MATRIX);
-    if(!isValidMatrix(b)) throwInvalidArgs("b", NOT_A_MATRIX);
-    if(a.row != b.row || a.col != b.col) throwInvalidArgs("Matrices can't be multiplied.", "");
-
-    Matrix m;
-    int row, col;
-
-    m = createMatrix(a.row, b.col);
-    for(row = 0; row < a.row; row++) {
-        for(col = 0; col < a.col; col++) {
-            m.entries[row][col] = a.entries[row][col] * b.entries[row][col];
-        }
-    }
-
-    return m;
-}
-
 Matrix scale(Matrix a, double val)
 {
     if(!isValidMatrix(a)) throwInvalidArgs("a", NOT_A_MATRIX);
