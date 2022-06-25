@@ -44,6 +44,28 @@ NeuralNetwork createNeuralNet(NeuralNetOpt opt, LayerDesign layers[], int size)
     return nn; 
 }
 
+Matrix createEmptyWeights(int nodes, int prevNodes, NeuralNetOpt opt)
+{
+    if(!isValidNeuralNetOpt(opt)) throwInvalidArgs("opt", INVALID_NEURAL_NET_OPT);
+    
+    int row, col;
+
+    row = opt.nodeOrient == COL ? nodes : prevNodes;
+    col = opt.nodeOrient == COL ? prevNodes : prevNodes;
+    return createMatrix(row, col);
+}
+
+Matrix createEmptyBias(int nodes, NeuralNetOpt opt)
+{
+    if(!isValidNeuralNetOpt(opt)) throwInvalidArgs("opt", INVALID_NEURAL_NET_OPT);
+
+    int row, col;
+
+    row = opt.nodeOrient == COL ? nodes: 1;
+    col = opt.nodeOrient == COL ? 1 : nodes;
+    return createMatrix(row, col);
+}
+
 void activateWeights(Matrix wts, NeuralNetOpt opt)
 {
     if(!isValidNeuralNetOpt(opt)) throwInvalidArgs("opt", INVALID_NEURAL_NET_OPT);
@@ -92,14 +114,10 @@ void activateLayer(Layer *layer, int prevNodes, NeuralNetOpt opt)
         layer->weights = createZeroMatrix();
         layer->bias = createZeroMatrix();
     } else {
-        row = opt.nodeOrient == COL ? layer->nodes : prevNodes;
-        col = opt.nodeOrient == COL ? prevNodes : layer->nodes;
-        layer->weights = createMatrix(row, col);
+        layer->weights = createEmptyWeights(layer->nodes, prevNodes, opt);
         activateWeights(layer->weights, opt);
         
-        row = opt.nodeOrient == COL ? layer->nodes : 1;
-        col = opt.nodeOrient == COL ? 1 : layer->nodes;
-        layer->bias = createMatrix(row, col);
+        layer->bias = createEmptyBias(layer->nodes, opt);
         fillMatrix(layer->bias, opt.initialBias); // activate bias
     }
 }
