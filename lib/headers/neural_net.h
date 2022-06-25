@@ -74,14 +74,13 @@ typedef struct NeuralNetwork {
  *  @return A Neural Network.
  */
 NeuralNetwork createNeuralNet(NeuralNetOpt opt, LayerDesign layers[], int size);
-/** @brief Creates the options for the Neural Network.
+/** @brief Appends a layer to the Neural Network.
  *  
- *  @param dist The distribution type used to initialize
- *  the weights of the layers.
- *  @param distSize The spread of the distribution.
- *  @param initialBias The initial bias value used to
- *  intialize the biases of the layers.
- *  @return Options for a Neural Network.
+ *  @param nn A pointer to the Neural Network where 
+ *  the layer would be attached to.
+ *  @param nodes The number of nodes the layer should have.
+ *  @param type The type of the layer.
+ *  @return Void.
  */
 void addLayer(NeuralNetwork *nn, int nodes, LayerType type);
 /** @brief Removes a layer from the Neural Network,
@@ -91,6 +90,8 @@ void addLayer(NeuralNetwork *nn, int nodes, LayerType type);
  *  the layer would be attached to.
  *  @param pos The position of the layer in the
  *  Neural Network (starting at 1).
+ *  @param nodes The number of nodes the layer should have.
+ *  @param type The type of the layer.
  *  @return Void. 
  */
 void insertLayer(NeuralNetwork *nn, int pos, int nodes, LayerType type);
