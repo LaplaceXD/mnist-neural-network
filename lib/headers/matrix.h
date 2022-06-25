@@ -137,6 +137,20 @@ Matrix add(Matrix a, Matrix b);
  *  @return A Matrix that is the difference of a and b.
  */
 Matrix subtract(Matrix min, Matrix sub);
+/** @brief Multiplies each entry on the same row and column
+ *  of two matrices together.
+ * 
+ *  The two matrices should be of the same dimensions.
+ *  If the dimensions of the matrices do not match, then
+ *  this function will throw an error. Else, it returns a
+ *  matrix that contains the product result of the two
+ *  matrices.
+ * 
+ *  @param a Factor matrix. 
+ *  @param b Factor matrix. 
+ *  @return A Matrix that is the product of a and b.
+ */
+Matrix multiply(Matrix a, Matrix b);
 /** @brief Scales the values of a matrix a by a factor val.
  * 
  *  @param a The matrix to be scaled. 
