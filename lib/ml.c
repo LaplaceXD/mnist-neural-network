@@ -62,7 +62,7 @@ Matrix forwardPropagate(Data data, NeuralNetwork nn, ActivationFunc activate)
     weighted = createZeroMatrix();
     layer = travNeuralNet(&nn, FORWARD);
 
-    while(layer = travNeuralNet(NULL, FORWARD)) {
+    while((layer = travNeuralNet(NULL, FORWARD))) {
         weighted = dot(res, layer->weights);
 
         // The first run of the loop res is data.inputValues

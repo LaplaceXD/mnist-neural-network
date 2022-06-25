@@ -49,7 +49,7 @@ void activateWeights(Matrix wts, NeuralNetOpt opt)
     if(!isValidNeuralNetOpt(opt)) throwInvalidArgs("opt", INVALID_NEURAL_NET_OPT);
 
     double mult, bounds;
-    int row, col, currNodes, prevNodes;
+    int currNodes, prevNodes;
 
     currNodes = opt.nodeOrient == COL ? wts.row : wts.col;
     prevNodes = opt.nodeOrient == COL ? wts.col : wts.row;
