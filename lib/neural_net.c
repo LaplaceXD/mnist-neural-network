@@ -144,7 +144,7 @@ Layer *createLayer(int nodes, int pos, LayerType type, NeuralNetwork nn)
     
     layer->nodes = nodes;
     layer->type = type;
-    prevNodes = pos == 1 ? 0 : getLayer(nn, pos).nodes;
+    prevNodes = pos == 1 ? 0 : getLayer(nn, pos - 1).nodes;
     activateLayer(layer, prevNodes, nn.options);
 
     return layer;
