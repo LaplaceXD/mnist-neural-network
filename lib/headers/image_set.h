@@ -26,11 +26,8 @@ typedef struct ImageSetMetadata {
     int noOfImages;
 } ImageSetMetadata;
 
-/** @brief Options for MNIST data training CSV.*/
-extern const ImageSetMetadata TRAIN_DATA;  
-
-/** @brief Options for MNIST data testing CSV.*/
-extern const ImageSetMetadata TEST_DATA;
+/** @brief The dataset type to be parsed. */
+typedef enum DatasetType { TRAINING, TESTING } DatasetType;
 
 /** @brief Read Image Dataset.
  * 
@@ -41,6 +38,13 @@ extern const ImageSetMetadata TEST_DATA;
  *  @return Void.
  */
 void readImageSet(Image dest[], int size, ImageSetMetadata meta); 
+/** @brief Gets the metadata of the dataset type to be parsed
+ *  from the MNIST image dataset.
+ * 
+ *  @param type The type of dataset to be parsed.
+ *  @return The metadata for the CSV of that dataset.
+ */
+ImageSetMetadata getMetadata(DatasetType type);
 /** @brief Convert CSV rows into Image structs.
  * 
  *  @param buffer A string version of the rows of the CSV. 

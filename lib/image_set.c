@@ -25,16 +25,6 @@
 
 #define BUFFER_SIZE 2048
 
-const ImageSetMetadata TRAIN_DATA = {
-    "dataset/mnist_train.csv",
-    60000
-};
-
-const ImageSetMetadata TEST_DATA = {
-    "dataset/mnist_test.csv",
-    10000
-};
-
 void readImageSet(Image dest[], int size, ImageSetMetadata meta)
 {
     if(size <= 0) throwInvalidArgs("size", SHOULD_BE_POSITIVE);
@@ -50,6 +40,26 @@ void readImageSet(Image dest[], int size, ImageSetMetadata meta)
     } 
 
     fclose(fp);
+}
+
+ImageSetMetadata getMetadata(DatasetType type)
+{
+    ImageSetMetadata meta;
+
+    switch(type) {
+        case TRAINING:
+            strcpy(meta.fileName, "dataset/mnist_train.csv");
+            meta.noOfImages = 60000;
+            break;
+        case TESTING:
+            strcpy(meta.fileName, "dataset/mnist_test.csv");
+            meta.noOfImages = 10000;
+            break;
+        default:
+            throwInvalidArgs("type", "");
+    }
+
+    return meta;
 }
 
 Image bufferToImage(char *buffer)
