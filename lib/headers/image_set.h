@@ -13,7 +13,6 @@
 
 #include "ml.h"
 
-#define BUFFER_SIZE_DEFAULT 2048
 #define IMG_HEIGHT 28
 #define IMG_WIDTH 28
 #define IMG_SIZE IMG_HEIGHT * IMG_WIDTH
@@ -21,11 +20,10 @@
 /** @brief MNIST dataset images.*/
 typedef Data Image;
 
-/** @brief Contains all the necessary data to parse a CSV.*/
-typedef struct CSVMetadata {
-    char FILE_NAME[128];
-    int SIZE;
-    int BUFFER_SIZE;
+/** @brief Contains all the necessary data to parse the MNIST CSV.*/
+typedef struct ImageSetMetadata {
+    char fileName[128];
+    int noOfImages;
 } ImageSetMetadata;
 
 /** @brief Options for MNIST data training CSV.*/

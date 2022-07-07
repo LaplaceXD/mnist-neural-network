@@ -23,16 +23,16 @@
 #define SHOULD_NOT_BE_NULL "Argument should not be null."
 #define NOT_VALID_METADATA "Metadata contains invalid values."
 
+#define BUFFER_SIZE 2048
+
 const ImageSetMetadata TRAIN_DATA = {
     "dataset/mnist_train.csv",
-    60000,
-    BUFFER_SIZE_DEFAULT
+    60000
 };
 
 const ImageSetMetadata TEST_DATA = {
     "dataset/mnist_test.csv",
-    10000,
-    BUFFER_SIZE_DEFAULT
+    10000
 };
 
 void readImageSet(Image dest[], int size, ImageSetMetadata meta)
@@ -41,11 +41,11 @@ void readImageSet(Image dest[], int size, ImageSetMetadata meta)
     if(!isValidMetadata(meta)) throwInvalidArgs("meta", NOT_VALID_METADATA);
 
     int idx;
-    char buffer[meta.BUFFER_SIZE];
-    FILE *fp = fopen(meta.FILE_NAME, "r");
-    if(fp == NULL) throwInvalidArgs("meta", "Unable to open file.");
+    char buffer[BUFFER_SIZE];
+    FILE *fp = fopen(meta.fileName, "r");
+    if(fp == NULL) throwInvalidArgs("meta file name", "Unable to open file.");
 
-    for(idx = 0; idx < size && fgets(buffer, meta.BUFFER_SIZE, fp); idx++) {
+    for(idx = 0; idx < size && fgets(buffer, BUFFER_SIZE, fp); idx++) {
         dest[idx] = bufferToImage(buffer);
     } 
 
@@ -80,8 +80,7 @@ void freeImageSet(Image imgs[], int size)
 
 int isValidMetadata(ImageSetMetadata metadata)
 {
-    int hasValidSize = metadata.SIZE > 0;
-    int hasValidBufferSize = metadata.BUFFER_SIZE > 0;
+    int hasValidNoOfImages = metadata.noOfImages > 0;
 
-    return hasValidSize && hasValidBufferSize ? 1 : 0;
+    return hasValidNoOfImages ? 1 : 0;
 }
