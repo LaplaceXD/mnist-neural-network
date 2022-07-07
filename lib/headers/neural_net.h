@@ -71,6 +71,12 @@ typedef struct NeuralNetwork {
  *  @return A Neural Network.
  */
 NeuralNetwork createNeuralNet(NeuralNetOpt opt);
+/** @brief Gets the default options used for creating
+ *  a neural network.
+ * 
+ *  @return The default neural network options.
+ */
+NeuralNetOpt getDefaultOptions();
 /** @brief Creates an empty weights matrix of the given nodes,
  *  and prevNodes.
  * 

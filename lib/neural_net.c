@@ -43,6 +43,21 @@ NeuralNetwork createNeuralNet(NeuralNetOpt opt)
     return nn; 
 }
 
+NeuralNetOpt getDefaultOptions()
+{
+    NeuralNetOpt opt = { 
+        .distSize = 1,
+        .distStrat = HE_XAVIER,
+        .initialBias = 0,
+        .nodeOrient = ROW,
+        .lr = 0.01,
+        .layerSizes = NULL,
+        .neuralNetSize = 0
+    };
+
+    return opt;
+}
+
 Matrix createEmptyWeights(int nodes, int prevNodes, NeuralNetOpt opt)
 {
     if(!isValidNeuralNetOpt(opt)) throwInvalidArgs("opt", INVALID_NEURAL_NET_OPT);
