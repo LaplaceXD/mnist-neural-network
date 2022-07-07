@@ -24,10 +24,9 @@
 #define SHOULD_BE_NON_NEGATIVE "It should be a non-negative integer."
 #define INVALID_NEURAL_NET_OPT "Neural Network Options contain invalid values."
 
-NeuralNetwork createNeuralNet(NeuralNetOpt opt, LayerDesign layers[], int size)
+NeuralNetwork createNeuralNet(NeuralNetOpt opt)
 {
     if(!isValidNeuralNetOpt(opt)) throwInvalidArgs("opt", INVALID_NEURAL_NET_OPT);
-    if(size < 0) throwInvalidArgs("size", SHOULD_BE_POSITIVE);
     
     int idx;
     NeuralNetwork nn = { 
@@ -35,9 +34,9 @@ NeuralNetwork createNeuralNet(NeuralNetOpt opt, LayerDesign layers[], int size)
         .layers = createList()
     };
     
-    if(layers != NULL) {
-        for(idx = 0; idx < size; idx++) {
-            addLayer(&nn, layers[idx].nodes, layers[idx].type);
+    if(opt.layerSizes != NULL) {
+        for(idx = 0; idx < opt.neuralNetSize; idx++) {
+            addLayer(&nn, opt.layerSizes[idx]);
         }
     }
 
@@ -130,11 +129,10 @@ void reactivateLayer(Layer *layer, int prevNodes, NeuralNetOpt opt)
     activateLayer(layer, prevNodes, opt);
 }
 
-Layer *createLayer(int nodes, int pos, LayerType type, NeuralNetwork nn)
+Layer *createLayer(int nodes, int pos, NeuralNetwork nn)
 {
     if(nodes <= 0) throwInvalidArgs("nodes", SHOULD_BE_POSITIVE)
     if(pos <= 0) throwInvalidArgs("pos", SHOULD_BE_NON_NEGATIVE);
-    if(type != INPUT && type != HIDDEN && type != OUTPUT) throwInvalidArgs("type", ""); 
 
     Layer *layer; 
     int prevNodes;
@@ -143,32 +141,29 @@ Layer *createLayer(int nodes, int pos, LayerType type, NeuralNetwork nn)
     if(layer == NULL) throwMallocFailed();
     
     layer->nodes = nodes;
-    layer->type = type;
     prevNodes = pos == 1 ? 0 : getLayer(nn, pos - 1).nodes;
     activateLayer(layer, prevNodes, nn.options);
 
     return layer;
 }
 
-void addLayer(NeuralNetwork *nn, int nodes, LayerType type)
+void addLayer(NeuralNetwork *nn, int nodes)
 {
     if(nodes <= 0) throwInvalidArgs("nodes", SHOULD_BE_POSITIVE);
-    if(type != INPUT && type != HIDDEN && type != OUTPUT) throwInvalidArgs("type", "");
 
-    Layer *layer = createLayer(nodes, nn->layers.size + 1, type, *nn);
+    Layer *layer = createLayer(nodes, nn->layers.size + 1, *nn);
     addToList(&nn->layers, layer); 
 }
 
-void insertLayer(NeuralNetwork *nn, int pos, int nodes, LayerType type)
+void insertLayer(NeuralNetwork *nn, int pos, int nodes)
 {
     if(nodes <= 0) throwInvalidArgs("nodes", SHOULD_BE_POSITIVE);
     if(pos <= 0) throwInvalidArgs("pos", SHOULD_BE_POSITIVE);
     if(pos > nn->layers.size + 1) throwInvalidArgs("pos", "It should be lesser than or equal to the network size plus one.");
-    if(type != INPUT && type != HIDDEN && type != OUTPUT) throwInvalidArgs("type", ""); 
     
     Layer *curr, *next;
 
-    curr = createLayer(nodes, pos, type, *nn);
+    curr = createLayer(nodes, pos, *nn);
     insertToList(&nn->layers, pos - 1, curr);
 
     // Reinitialize succeeding layer
@@ -199,7 +194,6 @@ void freeLayer(void *item)
 {
     Layer *layer = (Layer *) item;
 
-    layer->type = INPUT;
     layer->nodes = 0;
     freeMatrix(&layer->weights);
     freeMatrix(&layer->bias);

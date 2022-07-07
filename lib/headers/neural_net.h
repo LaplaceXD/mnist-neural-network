@@ -19,8 +19,6 @@
  * https://towardsdatascience.com/weight-initialization-techniques-in-neural-networks-26c649eb3b78
  */
 typedef enum DistStrategy { RANDOM, ZERO, HE, XAVIER, HE_XAVIER } DistStrategy;
-/** @brief The different layer types. */
-typedef enum LayerType { INPUT, HIDDEN, OUTPUT } LayerType;
 /** @brief The different possible direction of traversing a Neural Network. */
 typedef enum TravDirection { FORWARD, BACKWARD } TravDirection;
 /** @brief Specifies the orientation of the nodes in the Neural Network.
@@ -32,16 +30,9 @@ typedef MatrixAxis NodeOrientation;
 /** @brief Stucture for the Layer of the Neural Network. */
 typedef struct Layer {
     int nodes;
-    LayerType type;
     Matrix weights;
     Matrix bias;
 } Layer;
-
-/** @brief Stucture for the LayerDesign. */
-typedef struct LayerDesign {
-    int nodes;
-    LayerType type; 
-} LayerDesign;
 
 /** @brief Stucture for the NeuralNetOptions. */
 typedef struct NeuralNetOpt {
@@ -56,6 +47,12 @@ typedef struct NeuralNetOpt {
     double initialBias;
     // The learning rate of the neural network.
     double lr;
+    // The node sizes of each layer in the neural net
+    // starting from the input layer down to the output
+    // layer.
+    int *layerSizes;
+    // The number of layers in the neural net.
+    int neuralNetSize;
 } NeuralNetOpt;
 
 /** @brief Stucture for the NeuralNetwork. */
@@ -73,7 +70,7 @@ typedef struct NeuralNetwork {
  *  @param size The number of layers in the layers array.
  *  @return A Neural Network.
  */
-NeuralNetwork createNeuralNet(NeuralNetOpt opt, LayerDesign layers[], int size);
+NeuralNetwork createNeuralNet(NeuralNetOpt opt);
 /** @brief Creates an empty weights matrix of the given nodes,
  *  and prevNodes.
  * 
@@ -97,10 +94,9 @@ Matrix createEmptyBias(int nodes, NeuralNetOpt opt);
  *  @param nn A pointer to the Neural Network where 
  *  the layer would be attached to.
  *  @param nodes The number of nodes the layer should have.
- *  @param type The type of the layer.
  *  @return Void.
  */
-void addLayer(NeuralNetwork *nn, int nodes, LayerType type);
+void addLayer(NeuralNetwork *nn, int nodes);
 /** @brief Removes a layer from the Neural Network,
  *  based on a given position.
  * 
@@ -109,10 +105,9 @@ void addLayer(NeuralNetwork *nn, int nodes, LayerType type);
  *  @param pos The position of the layer in the
  *  Neural Network (starting at 1).
  *  @param nodes The number of nodes the layer should have.
- *  @param type The type of the layer.
  *  @return Void. 
  */
-void insertLayer(NeuralNetwork *nn, int pos, int nodes, LayerType type);
+void insertLayer(NeuralNetwork *nn, int pos, int nodes);
 /** @brief Deletes a layer from the Neural Network,
  *  based on a given position.
  * 
