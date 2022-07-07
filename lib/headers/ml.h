@@ -55,8 +55,8 @@ void prepData(Data *data, MatrixAxis axis, TransformFunc transform);
  *  be flattened to. This should be the same as the node orientation 
  *  of the Neural Network to be able to feed it properly.
  *  @param transform The transforming function to map the values 
- *  of the Data in the dataset into a much suitable format for 
- *  the Neural Network.
+ *  of each the Data in the dataset into a much more suitable format 
+ *  for the Neural Network.
  *  @return Void.
  */
 void prepDataset(Data dataset[], int size, MatrixAxis axis, TransformFunc transform);

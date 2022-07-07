@@ -61,9 +61,9 @@ double stddev(double arr[], int size);
 double randn(double min, double max);
 /** @brief Normalizes the values in an array.
  * 
- * This is calculated by scaling subtracting
- * each value by the minimum and dividing them
- * by the range of the dataset.
+ * This is calculated by subtracting
+ * each value in the array by the minimum and then dividing 
+ * it by the range of the values in the array.
  * 
  * @param arr An array containing all the values to normalize.
  * @param size The size of the array.
@@ -73,9 +73,9 @@ void normalize(double arr[], int size);
 /** @brief Standardizes the values in an array.
  * 
  * This is calculated by subtracting the mean
- * of the dataset to each data in the set, and 
- * then dividing them with the standard deviation
- * of the set.
+ * of the array to each value, and then dividing
+ * it with the standard deviation of the values 
+ * int the array.
  * 
  * @param arr An array containing all the values to standardize.
  * @param size The size of the array.
