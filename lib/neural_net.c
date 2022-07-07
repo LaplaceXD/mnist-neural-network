@@ -241,8 +241,19 @@ int isValidNeuralNetOpt(NeuralNetOpt opt)
     int hasValidDistSize = opt.distSize >= 0;
     int hasValidLR = opt.lr >= 0;
 
+    int hasValidLayers = 1;
+    if(opt.layerSizes != NULL) {
+        int idx;
+        for(idx = 0; idx < opt.neuralNetSize && opt.layerSizes[idx] > 0; idx++) {}
+        if(idx < opt.neuralNetSize) hasValidLayers = 0;
+    }
+    int hasValidNeuralNetSize = opt.neuralNetSize >= 0;
+
     return hasValidDistSize 
         && hasValidDistStrat 
         && hasValidOrientation
-        && hasValidLR ? 1 : 0;
+        && hasValidLR
+        && hasValidLayers
+        && hasValidNeuralNetSize
+        ? 1 : 0;
 }
